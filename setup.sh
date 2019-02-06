@@ -95,16 +95,16 @@ fi
 
 if [ ${SHADOW} = true ]; then
     echo "Installing shadow-specific functions.."
-    if [ $(cat ~/.bashrc | grep "list_dex() { curl 10.6.10.7:5000/v2/dexterous-hand/tags/list | jq -r ; }" | wc -l) = 0 ]; then
+    if [ $(cat ~/.bashrc | grep "list_dex()" | wc -l) = 0 ]; then
         echo "list_dex not found, adding..."
-        echo "list_dex() { curl 10.6.10.7:5000/v2/dexterous-hand/tags/list | jq -r ; }" >> ~/.bashrc
+        echo "list_dex() { curl -s 10.6.10.7:5000/v2/dexterous-hand/tags/list | jq -r ; }" >> ~/.bashrc
     else 
         echo "list_dex already here, not adding."
     fi
 
-    if [ $(cat ~/.bashrc | grep "list_flex() { curl 10.6.10.7:5000/v2/flexible-hand/tags/list | jq -r ; }" | wc -l) = 0 ]; then
+    if [ $(cat ~/.bashrc | grep "list_flex()" | wc -l) = 0 ]; then
         echo "list_flex not found, adding..."
-        echo "list_flex() { curl 10.6.10.7:5000/v2/flexible-hand/tags/list | jq -r ; }" >> ~/.bashrc
+        echo "list_flex() { curl -s 10.6.10.7:5000/v2/flexible-hand/tags/list | jq -r ; }" >> ~/.bashrc
     else 
         echo "list_flex already here, not adding."
     fi
