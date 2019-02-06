@@ -19,6 +19,12 @@ esac
 shift
 done
 
+
+if [ -z "${SHADOW}" ]; then   
+    SHADOW=false
+fi 
+
+
 echo ""
 echo "================================================================="
 echo "|                                                               |"
@@ -55,10 +61,6 @@ confirm() {
 if [ -z "${NEW}" ]; then
     echo "Please pass --new true/false"
     exit 1
-fi 
-
-if [ -z "${SHADOW}" ]; then   
-    SHADOW=false
 fi 
 
 if [ ${SHADOW} = false ]; then
