@@ -4,8 +4,8 @@ do
 key="$1"
 
 case $key in
-    -f|--install_fzf)
-    FZF="$2"
+    -n|--new)
+    NEW="$2"
     shift
     ;;
     *)
@@ -15,17 +15,17 @@ esac
 shift
 done
 
-if [ -z "${FZF}" ];
+if [ -z "${NEW}" ];
 then
-    FZF=false
+    NEW=false
 else 
-    FZF=true
+    NEW=true
 fi
 
-if [ ${FZF} = true ]; then
-    echo "yes"
+if [ ${NEW} = true ]; then
+    echo "New flag requested, installing everything"
 else 
-    echo "no"
+    echo "No new flag requested, only updating.."
 fi
 
 #sudo add-apt-repository ppa:gnome-terminator
