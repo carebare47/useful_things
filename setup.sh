@@ -8,6 +8,10 @@ case $key in
     NEW="$2"
     shift
     ;;
+    -s|--shadow)
+    SHADOW="$2"
+    shift
+    ;;    
     *)
     # ignore unknown option
     ;;
@@ -15,10 +19,39 @@ esac
 shift
 done
 
+confirm() {
+    # call with a prompt string or use a default
+    read -r -p "${1:-Are you sure? [y/N]} " response
+    case "$response" in
+        [yY][eE][sS]|[yY]) 
+            true
+            ;;
+        *)
+            false
+            ;;
+    esac
+}
+
 if [ -z "${NEW}" ]; then
     echo "Please pass --new true/false"
     exit 1
 fi 
+
+if [ -z "${SHADOW}" ]; then   
+    SHADOW=false
+fi 
+
+if [ ${SHADOW} = false ]; then
+    echo "Shadow set to false, shadow-specific commands will not be installed."
+else 
+    echo "Shadow set to true, shadow-specific functions will be installed."
+fi
+
+if [ ${NEW} = false ]; then
+    echo "New set to false. Refreshing only·"
+else 
+    echo "New set to true, installing everything."
+fi
   
   
 if [ ${NEW} = true ]; then
@@ -39,20 +72,22 @@ if [ ${NEW} = true ]; then
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all    
 fi
 
-if [ $(cat ~/.bashrc | grep "list_dex() { curl 10.6.10.7:5000/v2/dexterous-hand/tags/list | jq -r ; }" | wc -l) = 0 ]; then
-    echo "list_dex not found, adding..."
-    echo "list_dex() { curl 10.6.10.7:5000/v2/dexterous-hand/tags/list | jq -r ; }" >> ~/.bashrc
-else 
-    echo "list_dex already here, not adding."
-fi
+if [ ${SHADOW} = true ]; then
+    echo "Installing shadow-specific functions.."
+    if [ $(cat ~/.bashrc | grep "list_dex() { curl 10.6.10.7:5000/v2/dexterous-hand/tags/list | jq -r ; }" | wc -l) = 0 ]; then
+        echo "list_dex not found, adding..."
+        echo "list_dex() { curl 10.6.10.7:5000/v2/dexterous-hand/tags/list | jq -r ; }" >> ~/.bashrc
+    else 
+        echo "list_dex already here, not adding."
+    fi
 
-if [ $(cat ~/.bashrc | grep "list_flex() { curl 10.6.10.7:5000/v2/flexible-hand/tags/list | jq -r ; }" | wc -l) = 0 ]; then
-    echo "list_flex not found, adding..."
-    echo "list_flex() { curl 10.6.10.7:5000/v2/flexible-hand/tags/list | jq -r ; }" >> ~/.bashrc
-else 
-    echo "list_flex already here, not adding."
+    if [ $(cat ~/.bashrc | grep "list_flex() { curl 10.6.10.7:5000/v2/flexible-hand/tags/list | jq -r ; }" | wc -l) = 0 ]; then
+        echo "list_flex not found, adding..."
+        echo "list_flex() { curl 10.6.10.7:5000/v2/flexible-hand/tags/list | jq -r ; }" >> ~/.bashrc
+    else 
+        echo "list_flex already here, not adding."
+    fi
 fi
-
 if [ $(cat ~/.bashrc | grep "copy()" | wc -l) = 0 ]; then
     echo "copy function not found, adding..."
     echo "copy() { \"\$1\" | tr -d '\n' | xsel -ib ; }" >> ~/.bashrc
