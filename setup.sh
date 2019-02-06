@@ -134,5 +134,6 @@ if [ ${NEW} = true ]; then
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all    
     sudo snap install slack --classic
 fi
+source ~/.bashrc
 
 
