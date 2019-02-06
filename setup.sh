@@ -15,17 +15,19 @@ esac
 shift
 done
 
-if [ -z "${NEW}" ];
-then
-    NEW=false
-else 
-    NEW=true
-fi
-
+if [ -z "${NEW}" ]; then
+    echo "Please pass --new true/false"
+    exit 1
+fi 
+  
+  
 if [ ${NEW} = true ]; then
     echo "New flag requested, installing everything"
-else 
+elif  [ ${NEW} = true ]; then
     echo "No new flag requested, only updating.."
+else 
+    echo "Status of new flag not recognised, please set to true or false"
+    exit 1
 fi
 
 #sudo add-apt-repository ppa:gnome-terminator
