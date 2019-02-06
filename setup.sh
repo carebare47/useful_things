@@ -110,11 +110,16 @@ else
     echo "copy function already here, not adding."
 fi
 
+echo "Checking for autostart files"
 if [ $(ls ~/.config/autostart/ | grep terminator | wc -l) = 0 ]; then
+    echo "No autostart files found, creating them now ..."
     wget https://raw.githubusercontent.com/carebare47/useful_things/master/set_startup-script.py -P /tmp/startup_script/
     cd /tmp/startup_script/
     python3 set_startup-script.py 'terminator' 'terminator'
     python3 set_startup-script.py 'slack' 'slack'
+    cd -
+else 
+    echo "Autostart files found."
 fi
 
 source ~/.bashrc
