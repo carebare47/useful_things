@@ -40,12 +40,24 @@ if [ ${NEW} = true ]; then
 fi
 
 if [ $(cat ~/.bashrc | grep "list_dex() { curl 10.6.10.7:5000/v2/dexterous-hand/tags/list | jq -r ; }" | wc -l) = 0 ]; then
+    echo "list_dex not found, adding..."
     echo "list_dex() { curl 10.6.10.7:5000/v2/dexterous-hand/tags/list | jq -r ; }" >> ~/.bashrc
+else 
+    echo "list_dex already here, not adding."
 fi
+
 if [ $(cat ~/.bashrc | grep "list_flex() { curl 10.6.10.7:5000/v2/flexible-hand/tags/list | jq -r ; }" | wc -l) = 0 ]; then
+    echo "list_flex not found, adding..."
     echo "list_flex() { curl 10.6.10.7:5000/v2/flexible-hand/tags/list | jq -r ; }" >> ~/.bashrc
+else 
+    echo "list_flex already here, not adding."
 fi
+
 if [ $(cat ~/.bashrc | grep "copy() { \"\$1\" | tr -d '\n' | xsel -ib ; }"| wc -l) = 0 ]; then
+    echo "copy function not found, adding..."
     echo "copy() { \"\$1\" | tr -d '\n' | xsel -ib ; }" >> ~/.bashrc
+else 
+    echo "copy function already here, not adding."
 fi
+
 source ~/.bashrc
