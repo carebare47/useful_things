@@ -19,7 +19,7 @@ esac
 shift
 done
 
-
+echo ""
 echo "================================================================="
 echo "|                                                               |"
 echo "|          Queenys linux setup script (watch it grow)           |"
