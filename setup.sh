@@ -45,6 +45,9 @@ confirm() {
             ;;
         *)
             false
+            echo "Okay, exiting now."
+            sleep 1
+            exit 0
             ;;
     esac
 }
