@@ -52,7 +52,8 @@ if [ ${NEW} = false ]; then
 else 
     echo "New set to true, installing everything."
 fi
-  
+
+confirm "Would you like to continue? [y/n]"
   
 if [ ${NEW} = true ]; then
     echo "New flag requested, installing everything"
