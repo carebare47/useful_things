@@ -71,6 +71,7 @@ if [ ${NEW} = false ]; then
     echo "New set to false. Refreshing only·"
 else 
     echo "New set to true, installing everything."
+    echo "Including: gedit nano git curl terminator xsel jq google-chrome-stable slack & fzf"
 fi
 
 confirm "Would you like to continue? [y/n]"
@@ -84,13 +85,15 @@ else
     exit 1
 fi
 
+
 if [ ${NEW} = true ]; then
     sudo add-apt-repository ppa:gnome-terminator
-fi
-sudo apt-get update
-if [ ${NEW} = true ]; then
-    sudo apt-get install -y gedit nano git curl terminator xsel jq
+    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
+    sudo sh -c 'echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+    sudo apt-get update
+    sudo apt-get install -y gedit nano git curl terminator xsel jq google-chrome-stable
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all    
+    sudo snap install slack --classic
 fi
 
 if [ ${SHADOW} = true ]; then
