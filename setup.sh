@@ -36,9 +36,16 @@ fi
 sudo apt-get update
 if [ ${NEW} = true ]; then
     sudo apt-get install -y gedit nano git curl terminator xsel jq
-    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all
-    echo "copy() { \"\$1\" | tr -d '\n' | xsel -ib ; }" >> ~/.bashrc
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all    
+fi
+
+if [ $(cat ~/.bashrc | grep "list_dex() { curl 10.6.10.7:5000/v2/dexterous-hand/tags/list | jq -r ; }" | wc -l) = 0 ]; then
     echo "list_dex() { curl 10.6.10.7:5000/v2/dexterous-hand/tags/list | jq -r ; }" >> ~/.bashrc
+fi
+if [ $(cat ~/.bashrc | grep "list_flex() { curl 10.6.10.7:5000/v2/flexible-hand/tags/list | jq -r ; }" | wc -l) = 0 ]; then
     echo "list_flex() { curl 10.6.10.7:5000/v2/flexible-hand/tags/list | jq -r ; }" >> ~/.bashrc
+fi
+if [ $(cat ~/.bashrc | grep "copy() { \"\$1\" | tr -d '\n' | xsel -ib ; }"| wc -l) = 0 ]; then
+    echo "copy() { \"\$1\" | tr -d '\n' | xsel -ib ; }" >> ~/.bashrc
 fi
 source ~/.bashrc
