@@ -87,17 +87,6 @@ else
     exit 1
 fi
 
-
-if [ ${NEW} = true ]; then
-    sudo add-apt-repository ppa:gnome-terminator
-    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
-    sudo sh -c 'echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-    sudo apt-get update
-    sudo apt-get install -y gedit nano git curl terminator xsel jq google-chrome-stable
-    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all    
-    sudo snap install slack --classic
-fi
-
 if [ ${SHADOW} = true ]; then
     echo "Installing shadow-specific functions.."
     if [ $(cat ~/.bashrc | grep "list_dex()" | wc -l) = 0 ]; then
@@ -121,4 +110,24 @@ else
     echo "copy function already here, not adding."
 fi
 
+if [ $(ls ~/.config/autostart/ | grep terminator | wc -l) = 0 ]; then
+    wget https://raw.githubusercontent.com/carebare47/useful_things/master/set_startup-script.py -P /tmp/startup_script/
+    cd /tmp/startup_script/
+    python3 set_startup-script.py 'terminator' 'terminator'
+    python3 set_startup-script.py 'slack' 'slack'
+fi
+
 source ~/.bashrc
+
+
+if [ ${NEW} = true ]; then
+    sudo add-apt-repository ppa:gnome-terminator
+    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
+    sudo sh -c 'echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+    sudo apt-get update
+    sudo apt-get install -y gedit nano git curl terminator xsel jq google-chrome-stable
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all    
+    sudo snap install slack --classic
+fi
+
+
