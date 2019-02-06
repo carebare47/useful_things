@@ -53,7 +53,7 @@ else
     echo "list_flex already here, not adding."
 fi
 
-if [ $(cat ~/.bashrc | grep "copy() { \"\$1\" | tr -d '\n' | xsel -ib ; }"| wc -l) = 0 ]; then
+if [ $(cat ~/.bashrc | grep "copy()" | wc -l) = 0 ]; then
     echo "copy function not found, adding..."
     echo "copy() { \"\$1\" | tr -d '\n' | xsel -ib ; }" >> ~/.bashrc
 else 
