@@ -19,6 +19,23 @@ esac
 shift
 done
 
+
+echo "================================================================="
+echo "|                                                               |"
+echo "|          Queenys linux setup script (watch it grow)           |"
+echo "|                                                               |"
+echo "================================================================="
+echo ""
+echo "possible options: "
+echo "  * -n or --new                 Set this to tell the script whether it's ran on this machine before (automate this?)"
+echo "  * -s or --shadow              Set to true when installing on a shadow machine"
+echo ""
+echo "example:  bash <(curl -Ls https://raw.githubusercontent.com/carebare47/useful_things/master/setup.sh) --new true -s true"
+
+echo ""
+echo "new?              = ${NEW}"
+echo "Shadow?           = ${SHADOW}"
+
 confirm() {
     # call with a prompt string or use a default
     read -r -p "${1:-Are you sure? [y/N]} " response
