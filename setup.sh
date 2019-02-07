@@ -4,6 +4,10 @@ do
 key="$1"
 
 case $key in
+    -c|--container)
+    CONTAINER="$2"
+    shift
+    ;;
     -n|--new)
     NEW="$2"
     shift
@@ -24,6 +28,10 @@ if [ -z "${SHADOW}" ]; then
     SHADOW=false
 fi 
 
+if [ -z "${CONTAINER}" ]; then   
+    CONTAINER=true
+fi 
+
 
 echo ""
 echo "================================================================="
@@ -41,6 +49,7 @@ echo "example:  bash <(curl -Ls https://raw.githubusercontent.com/carebare47/use
 echo ""
 echo "new?              = ${NEW}"
 echo "Shadow?           = ${SHADOW}"
+echo "Container?        = ${CONTAINER}"
 
 confirm() {
     # call with a prompt string or use a default
@@ -116,6 +125,15 @@ if [ $(cat ~/.bashrc | grep "copy()" | wc -l) = 0 ]; then
 else 
     echo "copy function already here, not adding."
 fi
+if [ $(cat ~/.bashrc | grep "git_update_all()" | wc -l) = 0 ]; then
+    echo "git_update_all function not found, adding..."
+    echo "git_update_all() { ls | xargs -I{} git -C {} pull ; }" >> ~/.bashrc
+else 
+    echo "copy function already here, not adding."
+fi
+
+
+
 
 echo "Checking for autostart files"
 if [ $(ls ~/.config/autostart/ | grep terminator | wc -l) = 0 ]; then
