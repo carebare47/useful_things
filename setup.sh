@@ -45,7 +45,7 @@ echo "  * -n or --new                 Set this to tell the script whether it's r
 echo "  * -s or --shadow              Set to true when installing on a shadow machine"
 echo ""
 echo "example:  bash <(curl -Ls https://raw.githubusercontent.com/carebare47/useful_things/master/setup.sh) --new true -s true"
-echo "You might need this: curl -H 'Cache-Control: no-cache' 
+echo "You might need this: curl -H 'Cache-Control: no-cache'"
 echo ""
 echo "new?              = ${NEW}"
 echo "Shadow?           = ${SHADOW}"
