@@ -152,10 +152,11 @@ source ~/.bashrc
 
 if [ ${NEW} = true ]; then
     sudo add-apt-repository ppa:gnome-terminator
+    sudo add-apt-repository ppa:peek-developers/stable
     wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
     sudo sh -c 'echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
     sudo apt-get update
-    sudo apt-get install -y gedit nano git curl terminator xsel jq google-chrome-stable
+    sudo apt-get install -y gedit nano git curl terminator xsel jq google-chrome-stable peek
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all    
     sudo snap install slack --classic
 fi
