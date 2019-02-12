@@ -98,6 +98,8 @@ fi
 
 if [ ${SHADOW} = true ]; then
     echo "Installing shadow-specific functions.."
+    git config --global user.email "tom@shadowrobot.com"
+    git config --global user.name "carebare47"    
     if [ $(cat ~/.bashrc | grep "list_dex()" | wc -l) = 0 ]; then
         echo "list_dex not found, adding..."
         echo "list_dex() { curl -s 10.6.10.7:5000/v2/dexterous-hand/tags/list | jq -r ; }" >> ~/.bashrc
