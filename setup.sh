@@ -73,7 +73,7 @@ if [[ "$(confirm)" == "n" ]]; then echo "exiting..." && exit 0 ; fi
 
 
 
-if [[ $ALL == false ]]; then
+if [[ $ALL == false or $CONTAINER == false]]; then
 
 	echo "Install bash functions?"
 	if [[ "$(confirm)" == "y" ]]; then BASH_FUNCTIONS=true ; else BASH_FUNCTIONS=false ; fi
