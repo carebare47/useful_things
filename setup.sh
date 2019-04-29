@@ -35,7 +35,7 @@ fi
 echo ""
 echo "================================================================="
 echo "|                                                               |"
-echo "|          Queenys linux setup script (watch it grow)           |"
+echo "|                 Queenys linux setup script                    |"
 echo "|                                                               |"
 echo "================================================================="
 echo ""
