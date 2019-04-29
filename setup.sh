@@ -197,7 +197,7 @@ fi
 
 
 
-if [[ $INSTALL_TERMINATOR ]]; then
+if [[ "${INSTALL_TERMINATOR}" == true  ]]; then
 	echo "Installing Terminator..."
 	sudo add-apt-repository ppa:gnome-terminator
 	sudo add-apt-repository ppa:peek-developers/stable
@@ -206,13 +206,13 @@ if [[ $INSTALL_TERMINATOR ]]; then
 	echo "Terminator Installed"
 fi
 
-if [[ $INSTALL_SLACK ]]; then
+if [[ "${INSTALL_SLACK}" == true  ]]; then
 	echo "Installing slack..."
 	sudo snap install slack --classic
 fi
 
 
-if [[ $AUTOSTART_TERMINATOR ]]; then
+if [[ "${AUTOSTART_TERMINATOR}" == true  ]]; then
 	echo "Checking for autostart files..."
 	if [ $(ls ~/.config/autostart/ | grep terminator | wc -l) = 0 ]; then
 		echo "No autostart files found, creating them now ..."
@@ -224,7 +224,7 @@ if [[ $AUTOSTART_TERMINATOR ]]; then
 		echo "Autostart files found."
 	fi
 fi
-if [[ $AUTOSTART_SLACK ]]; then
+if [[ "${AUTOSTART_SLACK}" == true ]]; then
 	echo "Checking for autostart files..."
 	if [ $(ls ~/.config/autostart/ | grep slack | wc -l) = 0 ]; then
 		echo "No autostart files found, creating them now ..."
@@ -239,7 +239,7 @@ fi
 
 
 
-if [[ $INSTALL_CHROME ]]; then
+if [[ $"{INSTALL_CHROME}" == true  ]]; then
 	sudo apt-get update
 	sudo apt-get install -y google-chrome-stable
 fi
