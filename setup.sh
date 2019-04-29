@@ -169,7 +169,14 @@ if [[ $BASH_FUNCTIONS ]]; then
 		echo "git_update_all function not found, adding..."
 		echo "git_update_all() { ls | xargs -I{} git -C {} pull ; }" >> ~/.bashrc
 	else
-		echo "copy function already here, not adding."
+		echo "git_update_all function already here, not adding."
+	fi
+	
+	if [ $(cat ~/.bashrc | grep "git_print_log()" | wc -l) = 0 ]; then
+		echo "git_print_log function not found, adding..."
+		echo "git_print_log() { git log --graph --oneline --decorate --all ; }" >> ~/.bashrc
+	else
+		echo "git_print_log function already here, not adding."
 	fi
 
 	if [ $(cat ~/.bashrc | grep "scan_shadow_ports()" | wc -l) = 0 ]; then
