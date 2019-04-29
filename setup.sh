@@ -83,6 +83,9 @@ if [[ "$ALL" == false && "$CONTAINER" == false ]]; then
 	
 	echo "Install fzf?"
 	if [[ "$(confirm)" == "y" ]]; then INSTALL_FZF=true ; else INSTALL_FZF=false ; fi
+	
+	echo "Install peek?"
+	if [[ "$(confirm)" == "y" ]]; then INSTALL_PEEK=true ; else INSTALL_PEEK=false ; fi
 		
 	echo "Install packages?"
 	if [[ "$(confirm)" == "y" ]]; then INSTALL_PACKAGES=true ; else INSTALL_PACKAGES=false ; fi
@@ -112,6 +115,7 @@ else
 	INSTALL_TERMINATOR=true
 	INSTALL_PACKAGES=true
 	INSTALL_FZF=true
+	INSTALL_PEEK=true
 
 fi
 
@@ -125,17 +129,48 @@ if [[ $CONTAINER ]]; then
 	INSTALL_TERMINATOR=false
 	INSTALL_PACKAGES=true
 	INSTALL_FZF=true
+	INSTALL_PEEK=false
 fi
 
+
+if [[ "${INSTALL_PEEK}" == true  ]]; then
+	echo "Adding peek ppa..."
+	sudo add-apt-repository ppa:peek-developers/stable	
+	echo "peek ppa added"
+fi
+
+if [[ "${INSTALL_TERMINATOR}" == true  ]]; then
+	echo "Adding terminator ppa..."
+	sudo add-apt-repository ppa:gnome-terminator
+	echo "Terminator ppa added"
+fi
+
+if [[ "${INSTALL_CHROME}" == true  ]]; then
+	echo "Adding chrome ppa..."
+	wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+	sudo sh -c 'echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+fi
+
+if [[ "${INSTALL_TERMINATOR}" == true  ]]; then
+	sudo apt-get update
+	sudo apt-get install -y terminator
+fi
+	
+if [[ "${INSTALL_PEEK}" == true  ]]; then
+	sudo apt-get update
+	sudo apt-get install -y peek
+fi	
+
 if [[ "${INSTALL_PACKAGES}" == true  ]]; then
-echo "Installing packages"
-sudo apt-get update
-sudo apt-get install -y gedit nano git curl terminator xsel jq peek tree
+	echo "Installing packages"
+	sudo apt-get update
+	sudo apt-get install -y gedit nano git curl xsel jq tree	
+fi
 
 if [[ "${INSTALL_FZF}" == true  ]]; then
-echo "Installing fuzzy history search"
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all
-
+	echo "Installing fuzzy history search"
+	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all
+fi
 
 
 if [[ "${BASH_FUNCTIONS}" == true  ]]; then
@@ -207,23 +242,6 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 	source ~/.bashrc
 fi
 
-
-
-if [[ "${INSTALL_TERMINATOR}" == true  ]]; then
-	echo "Installing Terminator..."
-	sudo add-apt-repository ppa:gnome-terminator
-	sudo add-apt-repository ppa:peek-developers/stable
-	wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-	sudo sh -c 'echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-	echo "Terminator Installed"
-fi
-
-if [[ "${INSTALL_SLACK}" == true  ]]; then
-	echo "Installing slack..."
-	sudo snap install slack --classic
-fi
-
-
 if [[ "${AUTOSTART_TERMINATOR}" == true  ]]; then
 	echo "Checking for autostart files..."
 	if [ $(ls ~/.config/autostart/ | grep terminator | wc -l) = 0 ]; then
@@ -235,6 +253,11 @@ if [[ "${AUTOSTART_TERMINATOR}" == true  ]]; then
 	else
 		echo "Autostart files found."
 	fi
+fi
+
+if [[ "${INSTALL_SLACK}" == true  ]]; then
+	echo "Installing slack..."
+	sudo snap install slack --classic
 fi
 
 if [[ "${AUTOSTART_SLACK}" == true ]]; then
