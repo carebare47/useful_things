@@ -278,3 +278,10 @@ if [[ "${INSTALL_CHROME}" == true  ]]; then
 	sudo apt-get install -y google-chrome-stable
 fi
 
+echo ""
+echo "================================================================="
+echo "|                                                               |"
+echo "|                           Finished!                           |"
+echo "|                                                               |"
+echo "================================================================="
+echo ""
