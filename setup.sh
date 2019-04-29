@@ -80,6 +80,12 @@ if [[ "$ALL" == false && "$CONTAINER" == false ]]; then
 
 	echo "Install bash functions?"
 	if [[ "$(confirm)" == "y" ]]; then BASH_FUNCTIONS=true ; else BASH_FUNCTIONS=false ; fi
+	
+	echo "Install fzf?"
+	if [[ "$(confirm)" == "y" ]]; then INSTALL_FZF=true ; else INSTALL_FZF=false ; fi
+		
+	echo "Install packages?"
+	if [[ "$(confirm)" == "y" ]]; then INSTALL_PACKAGES=true ; else INSTALL_PACKAGES=false ; fi
 
 	echo "Install terminator?"
 	if [[ "$(confirm)" == "y" ]]; then INSTALL_TERMINATOR=true ; else INSTALL_TERMINATOR=false ; fi
@@ -104,6 +110,8 @@ else
 	INSTALL_CHROME=true
 	AUTOSTART_TERMINATOR=true
 	INSTALL_TERMINATOR=true
+	INSTALL_PACKAGES=true
+	INSTALL_FZF=true
 
 fi
 
@@ -115,18 +123,22 @@ if [[ $CONTAINER ]]; then
 	INSTALL_CHROME=false
 	AUTOSTART_TERMINATOR=false
 	INSTALL_TERMINATOR=false
+	INSTALL_PACKAGES=true
+	INSTALL_FZF=true
 fi
 
-
+if [[ "${INSTALL_PACKAGES}" == true  ]]; then
 echo "Installing packages"
 sudo apt-get update
 sudo apt-get install -y gedit nano git curl terminator xsel jq peek tree
 
+if [[ "${INSTALL_FZF}" == true  ]]; then
 echo "Installing fuzzy history search"
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all
 
 
-if [[ $BASH_FUNCTIONS ]]; then
+
+if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 	echo "Configuring git..."
 	git config --global user.email "tom@shadowrobot.com"
 	git config --global user.name "carebare47"
