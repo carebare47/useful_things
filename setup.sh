@@ -224,6 +224,7 @@ if [[ "${AUTOSTART_TERMINATOR}" == true  ]]; then
 		echo "Autostart files found."
 	fi
 fi
+
 if [[ "${AUTOSTART_SLACK}" == true ]]; then
 	echo "Checking for autostart files..."
 	if [ $(ls ~/.config/autostart/ | grep slack | wc -l) = 0 ]; then
@@ -237,12 +238,8 @@ if [[ "${AUTOSTART_SLACK}" == true ]]; then
 	fi
 fi
 
-
-
 if [[ "${INSTALL_CHROME}" == true  ]]; then
 	sudo apt-get update
 	sudo apt-get install -y google-chrome-stable
 fi
 
-
-source ~/.bashrc
