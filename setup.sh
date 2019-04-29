@@ -19,6 +19,9 @@ do
 	shift
 done
 
+if [[ -z "${CONTAINER}" && "${ALL}" == true ]]; then
+	CONTAINER=false
+fi
 
 if [ -z "${ALL}" ]; then
 	ALL=false
@@ -73,22 +76,22 @@ if [[ "$(confirm)" == "n" ]]; then echo "exiting..." && exit 0 ; fi
 
 
 
-if [[ $ALL == false or $CONTAINER == false]]; then
+if [[ "$ALL" == false && "$CONTAINER" == false ]]; then
 
 	echo "Install bash functions?"
 	if [[ "$(confirm)" == "y" ]]; then BASH_FUNCTIONS=true ; else BASH_FUNCTIONS=false ; fi
 
 	echo "Install terminator?"
 	if [[ "$(confirm)" == "y" ]]; then INSTALL_TERMINATOR=true ; else INSTALL_TERMINATOR=false ; fi
-	
+
 	echo "Autostart terminator?"
 	if [[ "$(confirm)" == "y" ]]; then AUTOSTART_TERMINATOR=true ; else AUTOSTART_TERMINATOR=false ; fi
 
 	echo "Install slack?"
 	if [[ "$(confirm)" == "y" ]]; then INSTALL_SLACK=true ; else INSTALL_SLACK=false ; fi
-	
+
 	echo "Autostart slack?"
-	if [[ "$(confirm)" == "y" ]]; then AUTOSTART_SLACK=true ; else AUTOSTART_SLACK=false ; fi	
+	if [[ "$(confirm)" == "y" ]]; then AUTOSTART_SLACK=true ; else AUTOSTART_SLACK=false ; fi
 
 	echo "Install chrome?"
 	if [[ "$(confirm)" == "y" ]]; then INSTALL_CHROME=true ; else INSTALL_CHROME=false ; fi
@@ -101,11 +104,11 @@ else
 	INSTALL_CHROME=true
 	AUTOSTART_TERMINATOR=true
 	INSTALL_TERMINATOR=true
-	
+
 fi
 
-if [[ $CONTAINER ]]; then	
-	
+if [[ $CONTAINER ]]; then
+
 	BASH_FUNCTIONS=true
 	INSTALL_SLACK=false
 	AUTOSTART_SLACK=false
@@ -182,7 +185,10 @@ if [[ $BASH_FUNCTIONS ]]; then
 	else
 		echo "grep_all function already here, not adding."
 	fi
+	source ~/.bashrc
 fi
+
+
 
 if [[ $INSTALL_TERMINATOR ]]; then
 	echo "Installing Terminator..."
@@ -211,7 +217,7 @@ if [[ $AUTOSTART_TERMINATOR ]]; then
 		echo "Autostart files found."
 	fi
 fi
-if [[ $AUTOSTART_SLACK ]]; then	
+if [[ $AUTOSTART_SLACK ]]; then
 	echo "Checking for autostart files..."
 	if [ $(ls ~/.config/autostart/ | grep slack | wc -l) = 0 ]; then
 		echo "No autostart files found, creating them now ..."
@@ -223,7 +229,7 @@ if [[ $AUTOSTART_SLACK ]]; then
 		echo "Autostart files found."
 	fi
 fi
-source ~/.bashrc
+
 
 
 if [[ $INSTALL_CHROME ]]; then
