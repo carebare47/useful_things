@@ -239,7 +239,7 @@ fi
 
 
 
-if [[ $"{INSTALL_CHROME}" == true  ]]; then
+if [[ "${INSTALL_CHROME}" == true  ]]; then
 	sudo apt-get update
 	sudo apt-get install -y google-chrome-stable
 fi
