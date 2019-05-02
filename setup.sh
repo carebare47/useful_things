@@ -147,8 +147,8 @@ fi
 
 if [[ "${INSTALL_CHROME}" == true  ]]; then
 	echo "Adding chrome ppa..."
-	wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-	sudo sh -c 'echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+	sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list'
+	wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 fi
 
 if [[ "${INSTALL_TERMINATOR}" == true  ]]; then
