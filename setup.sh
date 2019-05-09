@@ -164,7 +164,7 @@ fi
 if [[ "${INSTALL_PACKAGES}" == true  ]]; then
 	echo "Installing packages"
 	sudo apt-get update
-	sudo apt-get install -y gedit nano git curl xsel jq tree nmap
+	sudo apt-get install -y gedit nano git curl xsel jq tree nmap gedit-plugins
 fi
 
 if [[ "${INSTALL_FZF}" == true  ]]; then
