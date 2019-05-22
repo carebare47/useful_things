@@ -63,8 +63,7 @@ function confirm() {
 			;;
 	esac
 }
-echo $CONTAINER
-echo $ALL
+
 
 if [[ "${CONTAINER}" == true && "${ALL}" == true ]]; then
 	echo "Container and all are mutually-exclusive!"
@@ -73,8 +72,6 @@ fi
 
 echo "Do the above settings look correct?"
 if [[ "$(confirm)" == "n" ]]; then echo "exiting..." && exit 0 ; fi
-
-
 
 if [[ "$ALL" == false && "$CONTAINER" == false ]]; then
 
@@ -105,21 +102,7 @@ if [[ "$ALL" == false && "$CONTAINER" == false ]]; then
 	echo "Install chrome?"
 	if [[ "$(confirm)" == "y" ]]; then INSTALL_CHROME=true ; else INSTALL_CHROME=false ; fi
 
-else
-
-	BASH_FUNCTIONS=true
-	INSTALL_SLACK=true
-	AUTOSTART_SLACK=true
-	INSTALL_CHROME=true
-	AUTOSTART_TERMINATOR=true
-	INSTALL_TERMINATOR=true
-	INSTALL_PACKAGES=true
-	INSTALL_FZF=true
-	INSTALL_PEEK=true
-
-fi
-
-if [[ $CONTAINER ]]; then
+elif [[ "$CONTAINER" == true ]]; then
 
 	BASH_FUNCTIONS=true
 	INSTALL_SLACK=false
@@ -130,6 +113,18 @@ if [[ $CONTAINER ]]; then
 	INSTALL_PACKAGES=true
 	INSTALL_FZF=true
 	INSTALL_PEEK=false
+	
+elif [[ "$ALL" == true ]]; then
+
+	BASH_FUNCTIONS=true
+	INSTALL_SLACK=true
+	AUTOSTART_SLACK=true
+	INSTALL_CHROME=true
+	AUTOSTART_TERMINATOR=true
+	INSTALL_TERMINATOR=true
+	INSTALL_PACKAGES=true
+	INSTALL_FZF=true
+	INSTALL_PEEK=true
 fi
 
 
