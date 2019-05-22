@@ -8,6 +8,10 @@ do
 			CONTAINER="$2"
 			shift
 			;;
+		-b|--bash_only)
+			BASH_ONLY="$2"
+			shift
+			;;			
 		-a|--all)
 			ALL="$2"
 			shift
@@ -31,6 +35,10 @@ if [ -z "${CONTAINER}" ]; then
 	CONTAINER=true
 fi
 
+if [ -z "${BASH_ONLY}" ]; then
+	BASH_ONLY=false
+fi
+
 
 echo ""
 echo "================================================================="
@@ -42,12 +50,14 @@ echo ""
 echo "possible options: "
 echo "  * -a or --all                 Set to true to do everything (use on new machine)"
 echo "  * -c or --container           Set to true when installing in a container (e.g. doesn't install chrome)"
+echo "  * -b or --bash_only           Set to true to only install bash functions"
 echo ""
 echo "example:  bash <(curl -Ls https://raw.githubusercontent.com/carebare47/useful_things/master/setup.sh) --all true -c true"
 echo "You might need this: curl -H 'Cache-Control: no-cache'"
 echo ""
 echo "All?	        = ${ALL}"
 echo "Container?        = ${CONTAINER}"
+echo "BASH_ONLY?        = ${BASH_ONLY}"
 
 function confirm() {
 	# call with a prompt string or use a default
@@ -70,61 +80,75 @@ if [[ "${CONTAINER}" == true && "${ALL}" == true ]]; then
 	exit 1
 fi
 
-echo "Do the above settings look correct?"
-if [[ "$(confirm)" == "n" ]]; then echo "exiting..." && exit 0 ; fi
+if [[ "${BASH_ONLY}" == false ]]; then
+	echo "Do the above settings look correct?"
+	if [[ "$(confirm)" == "n" ]]; then echo "exiting..." && exit 0 ; fi
 
-if [[ "$ALL" == false && "$CONTAINER" == false ]]; then
-
-	echo "Install bash functions?"
-	if [[ "$(confirm)" == "y" ]]; then BASH_FUNCTIONS=true ; else BASH_FUNCTIONS=false ; fi
+	if [[ "$ALL" == false && "$CONTAINER" == false ]]; then
 	
-	echo "Install fzf?"
-	if [[ "$(confirm)" == "y" ]]; then INSTALL_FZF=true ; else INSTALL_FZF=false ; fi
-	
-	echo "Install peek?"
-	if [[ "$(confirm)" == "y" ]]; then INSTALL_PEEK=true ; else INSTALL_PEEK=false ; fi
+		echo "Install bash functions?"
+		if [[ "$(confirm)" == "y" ]]; then BASH_FUNCTIONS=true ; else BASH_FUNCTIONS=false ; fi
 		
-	echo "Install packages?"
-	if [[ "$(confirm)" == "y" ]]; then INSTALL_PACKAGES=true ; else INSTALL_PACKAGES=false ; fi
-
-	echo "Install terminator?"
-	if [[ "$(confirm)" == "y" ]]; then INSTALL_TERMINATOR=true ; else INSTALL_TERMINATOR=false ; fi
-
-	echo "Autostart terminator?"
-	if [[ "$(confirm)" == "y" ]]; then AUTOSTART_TERMINATOR=true ; else AUTOSTART_TERMINATOR=false ; fi
-
-	echo "Install slack?"
-	if [[ "$(confirm)" == "y" ]]; then INSTALL_SLACK=true ; else INSTALL_SLACK=false ; fi
-
-	echo "Autostart slack?"
-	if [[ "$(confirm)" == "y" ]]; then AUTOSTART_SLACK=true ; else AUTOSTART_SLACK=false ; fi
-
-	echo "Install chrome?"
-	if [[ "$(confirm)" == "y" ]]; then INSTALL_CHROME=true ; else INSTALL_CHROME=false ; fi
-
-elif [[ "$CONTAINER" == true ]]; then
+		echo "Install fzf?"
+		if [[ "$(confirm)" == "y" ]]; then INSTALL_FZF=true ; else INSTALL_FZF=false ; fi
+		
+		echo "Install peek?"
+		if [[ "$(confirm)" == "y" ]]; then INSTALL_PEEK=true ; else INSTALL_PEEK=false ; fi
+			
+		echo "Install packages?"
+		if [[ "$(confirm)" == "y" ]]; then INSTALL_PACKAGES=true ; else INSTALL_PACKAGES=false ; fi
+	
+		echo "Install terminator?"
+		if [[ "$(confirm)" == "y" ]]; then INSTALL_TERMINATOR=true ; else INSTALL_TERMINATOR=false ; fi
+	
+		echo "Autostart terminator?"
+		if [[ "$(confirm)" == "y" ]]; then AUTOSTART_TERMINATOR=true ; else AUTOSTART_TERMINATOR=false ; fi
+	
+		echo "Install slack?"
+		if [[ "$(confirm)" == "y" ]]; then INSTALL_SLACK=true ; else INSTALL_SLACK=false ; fi
+	
+		echo "Autostart slack?"
+		if [[ "$(confirm)" == "y" ]]; then AUTOSTART_SLACK=true ; else AUTOSTART_SLACK=false ; fi
+	
+		echo "Install chrome?"
+		if [[ "$(confirm)" == "y" ]]; then INSTALL_CHROME=true ; else INSTALL_CHROME=false ; fi
+	
+	elif [[ "$CONTAINER" == true ]]; then
+	
+		BASH_FUNCTIONS=true
+		INSTALL_SLACK=false
+		AUTOSTART_SLACK=false
+		INSTALL_CHROME=false
+		AUTOSTART_TERMINATOR=false
+		INSTALL_TERMINATOR=false
+		INSTALL_PACKAGES=true
+		INSTALL_FZF=true
+		INSTALL_PEEK=false
+		
+	elif [[ "$ALL" == true ]]; then
+	
+		BASH_FUNCTIONS=true
+		INSTALL_SLACK=true
+		AUTOSTART_SLACK=true
+		INSTALL_CHROME=true
+		AUTOSTART_TERMINATOR=true
+		INSTALL_TERMINATOR=true
+		INSTALL_PACKAGES=true
+		INSTALL_FZF=true
+		INSTALL_PEEK=true
+	fi	
+else
 
 	BASH_FUNCTIONS=true
+	INSTALL_FZF=true
+	
 	INSTALL_SLACK=false
 	AUTOSTART_SLACK=false
 	INSTALL_CHROME=false
 	AUTOSTART_TERMINATOR=false
 	INSTALL_TERMINATOR=false
-	INSTALL_PACKAGES=true
-	INSTALL_FZF=true
+	INSTALL_PACKAGES=false
 	INSTALL_PEEK=false
-	
-elif [[ "$ALL" == true ]]; then
-
-	BASH_FUNCTIONS=true
-	INSTALL_SLACK=true
-	AUTOSTART_SLACK=true
-	INSTALL_CHROME=true
-	AUTOSTART_TERMINATOR=true
-	INSTALL_TERMINATOR=true
-	INSTALL_PACKAGES=true
-	INSTALL_FZF=true
-	INSTALL_PEEK=true
 fi
 
 
