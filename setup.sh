@@ -32,7 +32,7 @@ if [ -z "${ALL}" ]; then
 fi
 
 if [ -z "${CONTAINER}" ]; then
-	CONTAINER=true
+	CONTAINER=false
 fi
 
 if [ -z "${BASH_ONLY}" ]; then
@@ -81,9 +81,11 @@ if [[ "${CONTAINER}" == true && "${ALL}" == true ]]; then
 fi
 
 if [[ "${BASH_ONLY}" == false ]]; then
-	echo "Do the above settings look correct?"
-	if [[ "$(confirm)" == "n" ]]; then echo "exiting..." && exit 0 ; fi
-
+	if [[ "${CONTAINER}" == false ]]; then
+		echo "Do the above settings look correct?"
+		if [[ "$(confirm)" == "n" ]]; then echo "exiting..." && exit 0 ; fi
+	fi
+	
 	if [[ "$ALL" == false && "$CONTAINER" == false ]]; then
 	
 		echo "Install bash functions?"
