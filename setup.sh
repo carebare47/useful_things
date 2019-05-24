@@ -254,7 +254,7 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 
 	if [ $(cat ~/.bashrc | grep "grep_all()" | wc -l) = 0 ]; then
 		echo "grep_all function not found, adding..."
-		echo "grep_all() { grep -rnw '.' -e \"\$1\" ; } " >> ~/.bashrc
+		echo "grep_all() { grep -rn '.' -e \"\$1\" ; } " >> ~/.bashrc
 	else
 		echo "grep_all function already here, not adding."
 	fi
