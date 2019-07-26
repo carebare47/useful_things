@@ -1,19 +1,4 @@
 
-function confirm() {
-	# call with a prompt string or use a default
-	read -r -p "${1:-[y/N]} " response
-	case "$response" in
-		[yY][eE][sS]|[yY])
-			echo "y"
-			return 1
-			;;
-		*)
-			echo "n"
-			return 0
-			;;
-	esac
-}
-
 while [[ $# > 1 ]]
 do
 	key="$1"
@@ -41,6 +26,22 @@ do
 	esac
 	shift
 done
+
+
+function confirm() {
+	# call with a prompt string or use a default
+	read -r -p "${1:-[y/N]} " response
+	case "$response" in
+		[yY][eE][sS]|[yY])
+			echo "y"
+			return 1
+			;;
+		*)
+			echo "n"
+			return 0
+			;;
+	esac
+}
 
 if [[ -z "${CONTAINER}" && "${ALL}" == true ]]; then
 	CONTAINER=false
