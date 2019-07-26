@@ -16,6 +16,10 @@ do
 			ALL="$2"
 			shift
 			;;
+		-t|--tom)
+			TOM="$2"
+			shift
+			;;			
 		*)
 			# ignore unknown option
 			;;
@@ -29,6 +33,10 @@ fi
 
 if [ -z "${ALL}" ]; then
 	ALL=false
+fi
+if [ -z "${TOM}" ]; then
+	echo "Are you Tom?"
+	if [[ "$(confirm)" == "y" ]]; then TOM=true ; else TOM=false ; fi
 fi
 
 if [ -z "${CONTAINER}" ]; then
@@ -195,9 +203,11 @@ fi
 
 
 if [[ "${BASH_FUNCTIONS}" == true  ]]; then
-	echo "Configuring git..."
-	git config --global user.email "tom@shadowrobot.com"
-	git config --global user.name "carebare47"
+	if [[ "$(TOM)" == true ]]; then
+		echo "Configuring git..."
+		git config --global user.email "tom@shadowrobot.com"
+		git config --global user.name "carebare47"
+	fi
 	echo "Installing bash functions..."
 	if [ $(cat ~/.bashrc | grep "list_dex()" | wc -l) = 0 ]; then
 		echo "list_dex not found, adding..."
@@ -259,6 +269,13 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 		echo "grep_all() { grep -rn '.' -e \"\$1\" ; } " >> ~/.bashrc
 	else
 		echo "grep_all function already here, not adding."
+	fi
+	
+	if [ $(cat ~/.bashrc | grep "debug_bash" | wc -l) = 0 ]; then
+		echo "debug_bash not found, adding..."
+		echo "debug_bash() { PS4='\033[0;33m+(\${BASH_SOURCE}:\${LINENO}):\033[0m \${FUNCNAME[0]:+\${FUNCNAME[0]}(): }' bash -x \$1 ; }" >> ~/.bashrc
+	else 
+	        echo "debug_bash function already here, not adding."
 	fi
 	source ~/.bashrc
 fi
