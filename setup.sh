@@ -279,6 +279,13 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 	else 
 	        echo "debug_bash function already here, not adding."
 	fi
+	
+	if [ $(cat ~/.bashrc | grep "git_add_ssh" | wc -l) = 0 ]; then
+		echo "git_add_ssh not found, adding"
+		echo "git_add_ssh() { eval \"\$(ssh-agent -s)\"; ssh-add ~/.ssh/id_rsa ; }" >> ~/.bashrc
+	else
+		echo "git_add_ssh function already here, not adding."
+	fi
 	source ~/.bashrc
 fi
 
