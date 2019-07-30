@@ -286,6 +286,23 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 	else
 		echo "git_add_ssh function already here, not adding."
 	fi
+
+	if [ $(cat ~/.bashrc | grep "id_rsa_to_container" | wc -l) = 0 ]; then
+		echo "id_rsa_to_container not found, adding"
+		echo "id_rsa_to_container() { if [ \$(which docker | wc -l) -eq 0 ] ; then
+		echo \"Docker not found. Are you on the host?\"
+		elif [ \$(docker container ls -q | wc -l) -eq 0 ]; then
+		echo \"No currently running containers\"
+		elif [ \$(docker container ls -q | wc -l) -eq 1 ]; then
+		echo \"Copying id_rsa to container \$(docker container ls -q)\"
+		docker cp ~/.ssh/id_rsa \$(docker container ls -q):/home/user/.ssh/
+		elif [ \$(docker container ls -q | wc -l) -gt 1 ]; then
+		echo \"More than one container is running\"
+		fi ; } " >> ~/.bashrc 
+	else
+		echo "id_rsa_to_container function already here, not adding."
+	fi
+
 	source ~/.bashrc
 fi
 
