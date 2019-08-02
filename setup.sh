@@ -303,6 +303,21 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 		echo "id_rsa_to_container function already here, not adding."
 	fi
 
+	if [ $(cat ~/.bashrc | grep "setup_new_shadow_container" | wc -l) = 0 ]; then
+		echo "setup_new_shadow_container not found, adding"
+		echo "setup_new_shadow_container() { git_add_ssh; roscd; cd ../src; git_update_all; cd ../../base_deps/src; git_update_all; }" >> ~/.bashrc
+	else
+		echo "setup_new_shadow_container function already here, not adding."
+	fi
+
+	if [ $(cat ~/.bashrc | grep "test_sr_ur10" | wc -l) = 0 ]; then
+
+		echo "test_sr_ur10 not found, adding"
+		echo "test_sr_ur10() { roslaunch sr_robot_launch sr_right_ur10arm_hand.launch sim:=true scene:=true ; }" >> ~/.bashrc
+	else
+		echo "test_sr_ur10 function already here, not adding."
+	fi
+
 	source ~/.bashrc
 fi
 
