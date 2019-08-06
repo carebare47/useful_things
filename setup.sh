@@ -321,7 +321,7 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 	if [ $(cat ~/.bashrc | grep -E "\\.sshify" | wc -l) = 0 ]; then
 
 		echo "git_global_alias.sshify not found, adding"
-		echo "git config --global alias.sshify '\!f() { git remote set-url origin \$(git remote get-url origin | sed -En \"s/https:\/\/github.com\//git@github.com:/p\") ; }; f'" >> ~/.bashrc	
+		echo -e "git config --global alias.sshify '\x21f() { git remote set-url origin \$(git remote get-url origin | sed -En \"s/https:\/\/github.com\//git@github.com:/p\") ; }; f'" >> ~/.bashrc
 	else
 		echo "git_global_alias.sshify function already here, not adding."
 	fi
@@ -329,7 +329,7 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 	if [ $(cat ~/.bashrc | grep -E "\\.unsshify" | wc -l) = 0 ]; then
 
 		echo "git_global_alias.unsshify not found, adding"
-		echo "git config --global alias.unsshify '\!f() { git remote set-url origin \$(git remote get-url origin | sed -En \"s/git@github.com:/https:\/\/github.com\//p\") ; }; f'" >> ~/.bashrc
+		echo -e "git config --global alias.unsshify '\x21f() { git remote set-url origin \$(git remote get-url origin | sed -En \"s/git@github.com:/https:\/\/github.com\//p\") ; }; f'" >> ~/.bashrc
 	else
 		echo "git_global_alias.unsshify function already here, not adding."
 	fi	
