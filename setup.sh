@@ -270,7 +270,7 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 		echo "grep_all function not found, adding..."
 		echo "grep_all() { grep -rn '.' -e \"\$1\" ; } " >> ~/.bashrc
 	else
-		echo "grep_all function already here, not adding."
+		echo "grep_all function already here, not adding."	
 	fi
 	
 	if [ $(cat ~/.bashrc | grep "debug_bash" | wc -l) = 0 ]; then
@@ -317,7 +317,23 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 	else
 		echo "test_sr_ur10 function already here, not adding."
 	fi
+	
+	if [ $(cat ~/.bashrc | grep -E "\\.sshify" | wc -l) = 0 ]; then
 
+		echo "git_global_alias.sshify not found, adding"
+		echo "git config --global alias.sshify '\!f() { git remote set-url origin \$(git remote get-url origin | sed -En \"s/https:\/\/github.com\//git@github.com:/p\") ; }; f'" >> ~/.bashrc	
+	else
+		echo "git_global_alias.sshify function already here, not adding."
+	fi
+	
+	if [ $(cat ~/.bashrc | grep -E "\\.unsshify" | wc -l) = 0 ]; then
+
+		echo "git_global_alias.unsshify not found, adding"
+		echo "git config --global alias.unsshify '\!f() { git remote set-url origin \$(git remote get-url origin | sed -En \"s/git@github.com:/https:\/\/github.com\//p\") ; }; f'" >> ~/.bashrc
+	else
+		echo "git_global_alias.unsshify function already here, not adding."
+	fi	
+	
 	source ~/.bashrc
 fi
 
