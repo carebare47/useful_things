@@ -311,7 +311,6 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 	fi
 
 	if [ $(cat ~/.bashrc | grep "test_sr_ur10" | wc -l) = 0 ]; then
-
 		echo "test_sr_ur10 not found, adding"
 		echo "test_sr_ur10() { roslaunch sr_robot_launch sr_right_ur10arm_hand.launch sim:=true scene:=true ; }" >> ~/.bashrc
 	else
@@ -319,7 +318,6 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 	fi
 	
 	if [ $(cat ~/.bashrc | grep -E "\\.sshify" | wc -l) = 0 ]; then
-
 		echo "git_global_alias.sshify not found, adding"
 		echo -e "git config --global alias.sshify '\x21f() { git remote set-url origin \$(git remote get-url origin | sed -En \"s/https:\/\/github.com\//git@github.com:/p\") ; }; f'" >> ~/.bashrc
 	else
@@ -327,11 +325,18 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 	fi
 	
 	if [ $(cat ~/.bashrc | grep -E "\\.unsshify" | wc -l) = 0 ]; then
-
 		echo "git_global_alias.unsshify not found, adding"
 		echo -e "git config --global alias.unsshify '\x21f() { git remote set-url origin \$(git remote get-url origin | sed -En \"s/git@github.com:/https:\/\/github.com\//p\") ; }; f'" >> ~/.bashrc
 	else
 		echo "git_global_alias.unsshify function already here, not adding."
+	fi	
+
+	
+	if [ $(cat ~/.bashrc | grep "catkin_make_debug_release" | wc -l) = 0 ]; then
+		echo "catkin_make_debug_release not found, adding"
+		echo "catkin_make_debug_release() { catkin_make -DCMAKE_BUILD_TYPE=RelWithDebInfo ; }" >> ~/.bashrc
+	else
+		echo "catkin_make_debug_release function already here, not adding."
 	fi	
 	
 	source ~/.bashrc
