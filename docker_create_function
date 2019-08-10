@@ -1,0 +1,40 @@
+docker_create() {
+while [[ $# > 1 ]]
+do
+	key="$1"
+
+	case $key in
+		-nv|--nvidia_version)
+			NVIDIA_VERSION="$2"
+			shift
+			;;
+		-c|--container_name)
+			CONTAINER_NAME="$2"
+			shift
+			;;			
+		-i|--image)
+			IMAGE="$2"
+			shift
+			;;			
+		*)
+			# ignore unknown option
+			;;
+	esac
+	shift
+done
+
+if [ -z "${NVIDIA_VERSION}" ]; then echo "Please specify nvidia version (e.g. -nv 2)" ; return ; fi
+if [ -z "${CONTAINER_NAME}" ]; then echo "Please specify desired container name (-c)" ; return ; fi
+if [ -z "${IMAGE}" ]; then echo "Please specify image name (-i)" ; return ; fi
+
+CONTAINER_NAME="${CONTAINER_NAME}_nv${NVIDIA_VERSION}"
+
+if [[ $NVIDIA_VERSION == "0" ]]; then
+  docker create -it --privileged --name $CONTAINER_NAME --ulimit core=-1 --security-opt seccomp=unconfined --network=host --pid=host -e DISPLAY -e QT_X11_NO_MITSHM=1 -e LOCAL_USER_ID=$(id -u) -v /tmp/.X11-unix:/tmp/.X11-unix:rw $IMAGE
+elif  [[ $NVIDIA_VERSION == "1" ]]; then
+  nvidia-docker create -it --privileged --name $CONTAINER_NAME --ulimit core=-1 --security-opt seccomp=unconfined --network=host --pid=host -e DISPLAY -e QT_X11_NO_MITSHM=1 -e LOCAL_USER_ID=$(id -u) -v /tmp/.X11-unix:/tmp/.X11-unix:rw $IMAGE
+elif  [[ $NVIDIA_VERSION == "2" ]]; then
+   docker create -it --privileged --name $CONTAINER_NAME --ulimit core=-1 --security-opt seccomp=unconfined --runtime=nvidia -e NVIDIA_VISIBLE_DEVICES=all --network=host --pid=host -e DISPLAY -e QT_X11_NO_MITSHM=1 -e LOCAL_USER_ID=$(id -u) -v /tmp/.X11-unix:/tmp/.X11-unix:rw $IMAGE
+fi
+}
+
