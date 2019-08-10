@@ -330,13 +330,21 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 	else
 		echo "git_global_alias.unsshify function already here, not adding."
 	fi	
-
 	
 	if [ $(cat ~/.bashrc | grep "catkin_make_debug_release" | wc -l) = 0 ]; then
 		echo "catkin_make_debug_release not found, adding"
 		echo "catkin_make_debug_release() { catkin_make -DCMAKE_BUILD_TYPE=RelWithDebInfo ; }" >> ~/.bashrc
 	else
 		echo "catkin_make_debug_release function already here, not adding."
+	fi	
+	
+	if [ $(cat ~/.bashrc | grep "docker_create" | wc -l) = 0 ]; then
+		echo "docker_create function not found, adding"
+		wget -O /tmp/docker_create_function https://raw.githubusercontent.com/carebare47/useful_things/master/docker_create_function
+		cat /tmp/docker_create_function >> ~/.bashrc
+		rm /tmp/docker_create_function
+	else
+		echo "docker_create function already here, not adding."
 	fi	
 	
 	source ~/.bashrc
