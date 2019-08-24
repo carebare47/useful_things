@@ -337,6 +337,13 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 	else
 		echo "catkin_make_debug_release function already here, not adding."
 	fi	
+
+	if [ $(cat ~/.bashrc | grep "please_alias" | wc -l) = 0 ]; then
+		echo "please alias not found, adding"
+		echo "alias please=\"sudo\" # please_alias" >> ~/.bashrc
+	else
+		echo "please alias already here, not adding."
+	fi	
 	
 	if [ $(cat ~/.bashrc | grep "docker_create" | wc -l) = 0 ]; then
 		echo "docker_create function not found, adding"
