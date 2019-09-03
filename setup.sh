@@ -232,6 +232,20 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 		echo "list_teleop already here, not adding."
 	fi
 
+	if [ $(cat ~/.bashrc | grep "list_haptx()" | wc -l) = 0 ]; then
+		echo "list_haptx not found, adding..."
+		echo "list_haptx() { curl -s 10.6.10.7:5000/v2/shadow-teleop-haptx/tags/list | jq -r ; }" >> ~/.bashrc
+	else
+		echo "list_haptx already here, not adding."
+	fi
+
+	if [ $(cat ~/.bashrc | grep "list_cyber()" | wc -l) = 0 ]; then
+		echo "list_cyber not found, adding..."
+		echo "list_cyber() { curl -s 10.6.10.7:5000/v2/shadow-teleop-cyber/tags/list | jq -r ; }" >> ~/.bashrc
+	else
+		echo "list_cyber already here, not adding."
+	fi
+
 	if [ $(cat ~/.bashrc | grep "oneliner()" | wc -l) = 0 ]; then
 		echo "echo oneliner not found, adding..."
 		echo "oneliner() { echo \"bash <(curl -Ls https://raw.githubusercontent.com/shadow-robot/sr-build-tools/F%23SRC-1077-make-it-work-with-nvidia-docker2/docker/launch.sh) -i 10.6.10.7:5000/flexible-hand:kinetic-v0.2.69 -bt F#SRC-1077-make-it-work-with-nvidia-docker2 -b kinetic_devel -n flexible -sn flex -e enp0s25 -l false -r true -g true -nv 2\" ; }" >> ~/.bashrc
