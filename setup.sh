@@ -366,7 +366,22 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 		rm /tmp/docker_create_function
 	else
 		echo "docker_create function already here, not adding."
+	fi	if [ $(cat ~/.bashrc | grep "docker_create" | wc -l) = 0 ]; then
+		echo "docker_create function not found, adding"
+		wget -O /tmp/docker_create_function https://raw.githubusercontent.com/carebare47/useful_things/master/docker_create_function
+		cat /tmp/docker_create_function >> ~/.bashrc
+		rm /tmp/docker_create_function
+	else
+		echo "docker_create function already here, not adding."
+	
+	if [ $(cat ~/.bashrc | grep "catkin_make_all" | wc -l) = 0 ]; then
+		echo "catkin_make_all not found, adding"
+		echo "catkin_make_all () { roscd; cd ..; catkin_make; cd ../base_deps; catkin_make ; }" >> ~/.bashrc
+	else
+		echo "catkin_make_all already here, not adding."
 	fi	
+
+
 	
 	source ~/.bashrc
 fi
