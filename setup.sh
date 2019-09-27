@@ -376,6 +376,26 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 		echo "catkin_make_all already here, not adding."
 	fi	
 
+	if [ $(cat ~/.bashrc | grep "upload_latest_firmware_from_container" | wc -l) = 0 ]; then
+		echo "catkin_make_all not found, adding"
+                echo "upload_latest_firmware_from_container() 
+{ 
+container_number=$(docker container ls -q); 
+
+latest_arduino_build_path=$(docker exec \$container_number ls -t /tmp | grep arduino | head -n1);
+
+latest_arduino_build_bin=$(docker exec \$container_number ls /tmp/\$latest_arduino_build_path | grep bin); 
+
+rm \$latest_arduino_build_bin || true; 
+
+docker cp \$container_number:/tmp/\$latest_arduino_build_path/\$latest_arduino_build_bin . ;
+
+st-flash --reset write \$latest_arduino_build_bin 0x8000000 ; 
+
+echo \"uploaded \$latest_arduino_build_bin from \$latest_arduino_build_path\" ; 
+}" >> ~/.bashrc
+
+
 
 	
 	source ~/.bashrc
