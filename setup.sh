@@ -377,7 +377,7 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 	fi	
 
 	if [ $(cat ~/.bashrc | grep "upload_latest_firmware_from_container" | wc -l) = 0 ]; then
-		echo "catkin_make_all not found, adding"
+		echo "upload_latest_firmware_from_container not found, adding"
                 echo "upload_latest_firmware_from_container() 
 { 
 container_number=\$(docker container ls -q); 
@@ -394,7 +394,9 @@ st-flash --reset write \$latest_arduino_build_bin 0x8000000 ;
 
 echo \"uploaded \$latest_arduino_build_bin from \$latest_arduino_build_path\" ; 
 }" >> ~/.bashrc
-
+else
+	echo "upload_latest_firmware_from_container already here, not adding."
+fi
 
 
 	
