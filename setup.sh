@@ -345,6 +345,20 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 		echo "git_global_alias.unsshify function already here, not adding."
 	fi	
 
+	if [ $(cat ~/.bashrc | grep "git_sshify_all_both" | wc -l) = 0 ]; then
+		echo "git_sshify_all_both not found, adding"
+		echo "git_sshify_all_both() { roscd; cd ../src; git_sshify_all; cd ../../base_deps/src; git_sshify_all ; }" >> ~/.bashrc
+	else
+		echo "git_sshify_all_both function already here, not adding."
+	fi
+	
+	if [ $(cat ~/.bashrc | grep "git_unsshify_all_both" | wc -l) = 0 ]; then
+		echo "git_unsshify_all_both not found, adding"
+		echo "git_unsshify_all_both() { roscd; cd ../src; git_unsshify_all; cd ../../base_deps/src; git_unsshify_all ; }" >> ~/.bashrc
+	else
+		echo "git_unsshify_all_both function already here, not adding."
+	fi	
+
 	if [ $(cat ~/.bashrc | grep "git_sshify_all" | wc -l) = 0 ]; then
 		echo "git_sshify_all not found, adding"
 		echo "git_sshify_all() { ls | xargs -I{} git -C {} sshify ; }" >> ~/.bashrc
