@@ -344,6 +344,20 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 	else
 		echo "git_global_alias.unsshify function already here, not adding."
 	fi	
+
+	if [ $(cat ~/.bashrc | grep "git_sshify_all" | wc -l) = 0 ]; then
+		echo "git_sshify_all not found, adding"
+		echo "git_sshify_all() { ls | xargs -I{} git -C {} sshify ; }" >> ~/.bashrc
+	else
+		echo "git_sshify_all function already here, not adding."
+	fi
+		
+	if [ $(cat ~/.bashrc | grep "git_unsshify_all" | wc -l) = 0 ]; then
+		echo "git_unsshify_all not found, adding"
+		echo "git_unsshify_all() { ls | xargs -I{} git -C {} unsshify ; }" >> ~/.bashrc
+	else
+		echo "git_unsshify_all function already here, not adding."
+	fi	
 	
 	if [ $(cat ~/.bashrc | grep "catkin_make_debug_release" | wc -l) = 0 ]; then
 		echo "catkin_make_debug_release not found, adding"
@@ -397,6 +411,14 @@ echo \"uploaded \$latest_arduino_build_bin from \$latest_arduino_build_path\" ;
 else
 	echo "upload_latest_firmware_from_container already here, not adding."
 fi
+
+
+	if [ $(cat ~/.bashrc | grep "catkin_make_all_debug_release" | wc -l) = 0 ]; then
+		echo "catkin_make_all_debug_release not found, adding"
+		echo "catkin_make_all_debug_release () { roscd; cd ..; catkin_make_debug_release; cd ../base_deps; catkin_make_debug_release ; }" >> ~/.bashrc
+	else
+		echo "catkin_make_all_debug_release already here, not adding."
+	fi
 
 
 	
