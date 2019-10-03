@@ -300,6 +300,13 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 	else
 		echo "git_add_ssh function already here, not adding."
 	fi
+	
+	if [ $(cat ~/.bashrc | grep "setup_new_shadow_container_build_all" | wc -l) = 0 ]; then
+		echo "setup_new_shadow_container_build_all not found, adding"
+		echo "setup_new_shadow_container_build_all() { mkdir ~/.ssh || true; setup_new_shadow_container; git_sshify_all_both; catkin_make_all_debug_release ; }" >> ~/.bashrc
+	else
+		echo "setup_new_shadow_container_build_all function already here, not adding."
+	fi	
 
 	if [ $(cat ~/.bashrc | grep "id_rsa_to_container" | wc -l) = 0 ]; then
 		echo "id_rsa_to_container not found, adding"
