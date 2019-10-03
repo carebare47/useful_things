@@ -403,6 +403,15 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 		echo "docker_create function already here, not adding."
 	fi
 
+	if [ $(cat ~/.bashrc | grep "winpath_to_linux" | wc -l) = 0 ]; then
+		echo "winpath_to_linux not found, adding"
+		echo "winpath_to_linux(){ echo $1 | sed 's/\\/\//g' | sed 's/C:/\/mnt\/c/'; }" >> ~/.bashrc
+	else
+		echo "winpath_to_linux already here, not adding."
+	fi	
+
+	
+
 	
 	if [ $(cat ~/.bashrc | grep "catkin_make_all" | wc -l) = 0 ]; then
 		echo "catkin_make_all not found, adding"
