@@ -211,104 +211,104 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 		git config --global user.name "carebare47"
 	fi
 	echo "Installing bash functions..."
-	if [ $(cat ~/.bashrc | grep "list_dex()" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "list_dex()" | wc -l) -eq 0 ]; then
 		echo "list_dex not found, adding..."
 		echo "list_dex() { curl -s 10.6.10.7:5000/v2/dexterous-hand/tags/list | jq -r ; }" >> ~/.bashrc
 	else
 		echo "list_dex already here, not adding."
 	fi
 
-	if [ $(cat ~/.bashrc | grep "list_flex()" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "list_flex()" | wc -l) -eq 0 ]; then
 		echo "list_flex not found, adding..."
 		echo "list_flex() { curl -s 10.6.10.7:5000/v2/flexible-hand/tags/list | jq -r ; }" >> ~/.bashrc
 	else
 		echo "list_flex already here, not adding."
 	fi
 
-	if [ $(cat ~/.bashrc | grep "list_teleop()" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "list_teleop()" | wc -l) -eq 0 ]; then
 		echo "list_teleop not found, adding..."
 		echo "list_teleop() { curl -s 10.6.10.7:5000/v2/shadow-teleop/tags/list | jq -r ; }" >> ~/.bashrc
 	else
 		echo "list_teleop already here, not adding."
 	fi
 
-	if [ $(cat ~/.bashrc | grep "list_haptx()" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "list_haptx()" | wc -l) -eq 0 ]; then
 		echo "list_haptx not found, adding..."
 		echo "list_haptx() { curl -s 10.6.10.7:5000/v2/shadow-teleop-haptx/tags/list | jq -r ; }" >> ~/.bashrc
 	else
 		echo "list_haptx already here, not adding."
 	fi
 
-	if [ $(cat ~/.bashrc | grep "list_cyber()" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "list_cyber()" | wc -l) -eq 0 ]; then
 		echo "list_cyber not found, adding..."
 		echo "list_cyber() { curl -s 10.6.10.7:5000/v2/shadow-teleop-cyber/tags/list | jq -r ; }" >> ~/.bashrc
 	else
 		echo "list_cyber already here, not adding."
 	fi
 
-	if [ $(cat ~/.bashrc | grep "oneliner()" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "oneliner()" | wc -l) -eq 0 ]; then
 		echo "echo oneliner not found, adding..."
 		echo "oneliner() { echo \"bash <(curl -Ls https://raw.githubusercontent.com/shadow-robot/sr-build-tools/F%23SRC-1077-make-it-work-with-nvidia-docker2/docker/launch.sh) -i 10.6.10.7:5000/flexible-hand:kinetic-v0.2.69 -bt F#SRC-1077-make-it-work-with-nvidia-docker2 -b kinetic_devel -n flexible -sn flex -e enp0s25 -l false -r true -g true -nv 2\" ; }" >> ~/.bashrc
 	else
 		echo "echo oneliner already here, not adding."
 	fi
 
-	if [ $(cat ~/.bashrc | grep "copy()" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "copy()" | wc -l) -eq 0 ]; then
 		echo "copy function not found, adding..."
 		echo "copy() { \"\$1\" | tr -d '\n' | xsel -ib ; }" >> ~/.bashrc
 	else
 		echo "copy function already here, not adding."
 	fi
-	if [ $(cat ~/.bashrc | grep "git_update_all()" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "git_update_all()" | wc -l) -eq 0 ]; then
 		echo "git_update_all function not found, adding..."
 		echo "git_update_all() { ls | xargs -I{} git -C {} pull ; }" >> ~/.bashrc
 	else
 		echo "git_update_all function already here, not adding."
 	fi
 	
-	if [ $(cat ~/.bashrc | grep "git_print_log()" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "git_print_log()" | wc -l) -eq 0 ]; then
 		echo "git_print_log function not found, adding..."
 		echo "git_print_log() { git log --graph --oneline --decorate --all ; }" >> ~/.bashrc
 	else
 		echo "git_print_log function already here, not adding."
 	fi
 
-	if [ $(cat ~/.bashrc | grep "scan_shadow_ports()" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "scan_shadow_ports()" | wc -l) -eq 0 ]; then
 		echo "scan_shadow_ports function not found, adding..."
 		echo "scan_shadow_ports() { nmap -p 22 --open -sV 10.6.10.0/24 ; } " >> ~/.bashrc
 	else
 		echo "scan_shadow_ports function already here, not adding."
 	fi
 
-	if [ $(cat ~/.bashrc | grep "grep_all()" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "grep_all()" | wc -l) -eq 0 ]; then
 		echo "grep_all function not found, adding..."
 		echo "grep_all() { grep -rn '.' -e \"\$1\" ; } " >> ~/.bashrc
 	else
 		echo "grep_all function already here, not adding."	
 	fi
 	
-	if [ $(cat ~/.bashrc | grep "debug_bash" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "debug_bash" | wc -l) -eq 0 ]; then
 		echo "debug_bash not found, adding..."
 		echo "debug_bash() { PS4='\033[0;33m+(\${BASH_SOURCE}:\${LINENO}):\033[0m \${FUNCNAME[0]:+\${FUNCNAME[0]}(): }' bash -x \$1 ; }" >> ~/.bashrc
 	else 
 	        echo "debug_bash function already here, not adding."
 	fi
 	
-	if [ $(cat ~/.bashrc | grep "git_add_ssh" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "git_add_ssh" | wc -l) -eq 0 ]; then
 		echo "git_add_ssh not found, adding"
 		echo "git_add_ssh() { eval \"\$(ssh-agent -s)\"; ssh-add ~/.ssh/id_rsa ; }" >> ~/.bashrc
 	else
 		echo "git_add_ssh function already here, not adding."
 	fi
 	
-	if [ $(cat ~/.bashrc | grep "setup_new_shadow_container_build_all" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "setup_new_shadow_container_build_all" | wc -l) -eq 0 ]; then
 		echo "setup_new_shadow_container_build_all not found, adding"
 		echo "setup_new_shadow_container_build_all() { mkdir ~/.ssh || true; git_sshify_all_both; setup_new_shadow_container; catkin_make_all_debug_release ; }" >> ~/.bashrc
 	else
 		echo "setup_new_shadow_container_build_all function already here, not adding."
 	fi	
 
-	if [ $(cat ~/.bashrc | grep "id_rsa_to_container" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "id_rsa_to_container" | wc -l) -eq 0 ]; then
 		echo "id_rsa_to_container not found, adding"
 		echo "id_rsa_to_container() { if [ \$(which docker | wc -l) -eq 0 ] ; then
 		echo \"Docker not found. Are you on the host?\"
@@ -324,77 +324,77 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 		echo "id_rsa_to_container function already here, not adding."
 	fi
 
-	if [ $(cat ~/.bashrc | grep "setup_new_shadow_container" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "setup_new_shadow_container" | wc -l) -eq 0 ]; then
 		echo "setup_new_shadow_container not found, adding"
 		echo "setup_new_shadow_container() { git_add_ssh; roscd; cd ../src; git_update_all; cd ../../base_deps/src; git_update_all; }" >> ~/.bashrc
 	else
 		echo "setup_new_shadow_container function already here, not adding."
 	fi
 
-	if [ $(cat ~/.bashrc | grep "test_sr_ur10" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "test_sr_ur10" | wc -l) -eq 0 ]; then
 		echo "test_sr_ur10 not found, adding"
 		echo "test_sr_ur10() { roslaunch sr_robot_launch sr_right_ur10arm_hand.launch sim:=true scene:=true ; }" >> ~/.bashrc
 	else
 		echo "test_sr_ur10 function already here, not adding."
 	fi
 	
-	if [ $(cat ~/.bashrc | grep -E "\\.sshify" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep -E "\\.sshify" | wc -l) -eq 0 ]; then
 		echo "git_global_alias.sshify not found, adding"
 		echo -e "git config --global alias.sshify '\x21f() { git remote set-url origin \$(git remote get-url origin | sed -En \"s/https:\/\/github.com\//git@github.com:/p\") ; }; f'" >> ~/.bashrc
 	else
 		echo "git_global_alias.sshify function already here, not adding."
 	fi
 	
-	if [ $(cat ~/.bashrc | grep -E "\\.unsshify" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep -E "\\.unsshify" | wc -l) -eq 0 ]; then
 		echo "git_global_alias.unsshify not found, adding"
 		echo -e "git config --global alias.unsshify '\x21f() { git remote set-url origin \$(git remote get-url origin | sed -En \"s/git@github.com:/https:\/\/github.com\//p\") ; }; f'" >> ~/.bashrc
 	else
 		echo "git_global_alias.unsshify function already here, not adding."
 	fi	
 
-	if [ $(cat ~/.bashrc | grep "git_sshify_all_both" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "git_sshify_all_both" | wc -l) -eq 0 ]; then
 		echo "git_sshify_all_both not found, adding"
 		echo "git_sshify_all_both() { roscd; cd ../src; git_sshify_all; cd ../../base_deps/src; git_sshify_all ; }" >> ~/.bashrc
 	else
 		echo "git_sshify_all_both function already here, not adding."
 	fi
 	
-	if [ $(cat ~/.bashrc | grep "git_unsshify_all_both" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "git_unsshify_all_both" | wc -l) -eq 0 ]; then
 		echo "git_unsshify_all_both not found, adding"
 		echo "git_unsshify_all_both() { roscd; cd ../src; git_unsshify_all; cd ../../base_deps/src; git_unsshify_all ; }" >> ~/.bashrc
 	else
 		echo "git_unsshify_all_both function already here, not adding."
 	fi	
 
-	if [ $(cat ~/.bashrc | grep "git_sshify_all" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "git_sshify_all" | wc -l) -eq 0 ]; then
 		echo "git_sshify_all not found, adding"
 		echo "git_sshify_all() { ls | xargs -I{} git -C {} sshify ; }" >> ~/.bashrc
 	else
 		echo "git_sshify_all function already here, not adding."
 	fi
 		
-	if [ $(cat ~/.bashrc | grep "git_unsshify_all" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "git_unsshify_all" | wc -l) -eq 0 ]; then
 		echo "git_unsshify_all not found, adding"
 		echo "git_unsshify_all() { ls | xargs -I{} git -C {} unsshify ; }" >> ~/.bashrc
 	else
 		echo "git_unsshify_all function already here, not adding."
 	fi	
 	
-	if [ $(cat ~/.bashrc | grep "catkin_make_debug_release" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "catkin_make_debug_release" | wc -l) -eq 0 ]; then
 		echo "catkin_make_debug_release not found, adding"
 		echo "catkin_make_debug_release() { catkin_make -DCMAKE_BUILD_TYPE=RelWithDebInfo ; }" >> ~/.bashrc
 	else
 		echo "catkin_make_debug_release function already here, not adding."
 	fi	
 
-	if [ $(cat ~/.bashrc | grep "please_alias" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "please_alias" | wc -l) -eq 0 ]; then
 		echo "please alias not found, adding"
 		echo "alias please=\"sudo\" # please_alias" >> ~/.bashrc
 	else
 		echo "please alias already here, not adding."
 	fi	
 	
-	if [ $(cat ~/.bashrc | grep "docker_create" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "docker_create" | wc -l) -eq 0 ]; then
 		echo "docker_create function not found, adding"
 		wget -O /tmp/docker_create_function https://raw.githubusercontent.com/carebare47/useful_things/master/docker_create_function
 		cat /tmp/docker_create_function >> ~/.bashrc
@@ -403,7 +403,7 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 		echo "docker_create function already here, not adding."
 	fi
 
-	if [ $(cat ~/.bashrc | grep "winpath_to_linux" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "winpath_to_linux" | wc -l) -eq 0 ]; then
 		echo "winpath_to_linux not found, adding"
 		echo "winpath_to_linux(){ echo $1 | sed 's/\\/\//g' | sed 's/C:/\/mnt\/c/'; }" >> ~/.bashrc
 	else
@@ -413,14 +413,14 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 	
 
 	
-	if [ $(cat ~/.bashrc | grep "catkin_make_all" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "catkin_make_all" | wc -l) -eq 0 ]; then
 		echo "catkin_make_all not found, adding"
 		echo "catkin_make_all () { roscd; cd ..; catkin_make; cd ../base_deps; catkin_make ; }" >> ~/.bashrc
 	else
 		echo "catkin_make_all already here, not adding."
 	fi	
 
-	if [ $(cat ~/.bashrc | grep "upload_latest_firmware_from_container" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "upload_latest_firmware_from_container" | wc -l) -eq 0 ]; then
 		echo "upload_latest_firmware_from_container not found, adding"
                 echo "upload_latest_firmware_from_container() 
 { 
@@ -443,7 +443,7 @@ else
 fi
 
 
-	if [ $(cat ~/.bashrc | grep "catkin_make_all_debug_release" | wc -l) = 0 ]; then
+	if [ $(cat ~/.bashrc | grep "catkin_make_all_debug_release" | wc -l) -eq 0 ]; then
 		echo "catkin_make_all_debug_release not found, adding"
 		echo "catkin_make_all_debug_release () { roscd; cd ..; catkin_make_debug_release; cd ../base_deps; catkin_make_debug_release ; }" >> ~/.bashrc
 	else
@@ -457,7 +457,7 @@ fi
 
 if [[ "${AUTOSTART_TERMINATOR}" == true  ]]; then
 	echo "Checking for autostart files..."
-	if [ $(ls ~/.config/autostart/ | grep terminator | wc -l) = 0 ]; then
+	if [ $(ls ~/.config/autostart/ | grep terminator | wc -l) -eq 0 ]; then
 		echo "No autostart files found, creating them now ..."
 		wget https://raw.githubusercontent.com/carebare47/useful_things/master/set_startup-script.py -P /tmp/startup_script/
 		cd /tmp/startup_script/
@@ -475,7 +475,7 @@ fi
 
 if [[ "${AUTOSTART_SLACK}" == true ]]; then
 	echo "Checking for autostart files..."
-	if [ $(ls ~/.config/autostart/ | grep slack | wc -l) = 0 ]; then
+	if [ $(ls ~/.config/autostart/ | grep slack | wc -l) -eq 0 ]; then
 		echo "No autostart files found, creating them now ..."
 		wget https://raw.githubusercontent.com/carebare47/useful_things/master/set_startup-script.py -P /tmp/startup_script/
 		cd /tmp/startup_script/
