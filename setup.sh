@@ -300,13 +300,7 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 	else
 		echo "git_add_ssh function already here, not adding."
 	fi
-	
-	if [ $(cat ~/.bashrc | grep "setup_new_shadow_container_build_all" | wc -l) -eq 0 ]; then
-		echo "setup_new_shadow_container_build_all not found, adding"
-		echo "setup_new_shadow_container_build_all() { mkdir ~/.ssh || true; git_sshify_all_both; setup_new_shadow_container; catkin_make_all_debug_release ; }" >> ~/.bashrc
-	else
-		echo "setup_new_shadow_container_build_all function already here, not adding."
-	fi	
+		
 
 	if [ $(cat ~/.bashrc | grep "id_rsa_to_container" | wc -l) -eq 0 ]; then
 		echo "id_rsa_to_container not found, adding"
@@ -324,12 +318,6 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 		echo "id_rsa_to_container function already here, not adding."
 	fi
 
-	if [ $(cat ~/.bashrc | grep "setup_new_shadow_container" | wc -l) -eq 0 ]; then
-		echo "setup_new_shadow_container not found, adding"
-		echo "setup_new_shadow_container() { git_add_ssh; roscd; cd ../src; git_update_all; cd ../../base_deps/src; git_update_all; }" >> ~/.bashrc
-	else
-		echo "setup_new_shadow_container function already here, not adding."
-	fi
 
 	if [ $(cat ~/.bashrc | grep "test_sr_ur10" | wc -l) -eq 0 ]; then
 		echo "test_sr_ur10 not found, adding"
@@ -352,33 +340,21 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 		echo "git_global_alias.unsshify function already here, not adding."
 	fi	
 
-	if [ $(cat ~/.bashrc | grep "git_sshify_all_both" | wc -l) -eq 0 ]; then
-		echo "git_sshify_all_both not found, adding"
-		echo "git_sshify_all_both() { roscd; cd ../src; git_sshify_all; cd ../../base_deps/src; git_sshify_all ; }" >> ~/.bashrc
-	else
-		echo "git_sshify_all_both function already here, not adding."
-	fi
-	
-	if [ $(cat ~/.bashrc | grep "git_unsshify_all_both" | wc -l) -eq 0 ]; then
-		echo "git_unsshify_all_both not found, adding"
-		echo "git_unsshify_all_both() { roscd; cd ../src; git_unsshify_all; cd ../../base_deps/src; git_unsshify_all ; }" >> ~/.bashrc
-	else
-		echo "git_unsshify_all_both function already here, not adding."
-	fi	
 
-	if [ $(cat ~/.bashrc | grep "git_sshify_all" | wc -l) -eq 0 ]; then
-		echo "git_sshify_all not found, adding"
+	if [ $(cat ~/.bashrc | grep "duplicates_added" | wc -l) -eq 0 ]; then
+		echo "duplicates not found, adding"
+		echo "git_sshify_all_both() { roscd; cd ../src; git_sshify_all; cd ../../base_deps/src; git_sshify_all ; }" >> ~/.bashrc
+		echo "setup_new_shadow_container_build_all() { mkdir ~/.ssh || true; git_sshify_all_both; setup_new_shadow_container; catkin_make_all_debug_release ; }" >> ~/.bashrc
+		echo "setup_new_shadow_container() { git_add_ssh; roscd; cd ../src; git_update_all; cd ../../base_deps/src; git_update_all; }" >> ~/.bashrc
+		echo "git_unsshify_all_both() { roscd; cd ../src; git_unsshify_all; cd ../../base_deps/src; git_unsshify_all ; }" >> ~/.bashrc
 		echo "git_sshify_all() { ls | xargs -I{} git -C {} sshify ; }" >> ~/.bashrc
+		echo "git_unsshify_all() { ls | xargs -I{} git -C {} unsshify ; }" >> ~/.bashrc
+		echo "# duplicates_added" >> ~/.bashrc
+		echo "catkin_make_all_debug_release () { roscd; cd ..; catkin_make_debug_release; cd ../base_deps; catkin_make_debug_release ; }" >> ~/.bashrc
 	else
-		echo "git_sshify_all function already here, not adding."
+		echo "duplicates already here, not adding."
 	fi
 		
-	if [ $(cat ~/.bashrc | grep "git_unsshify_all" | wc -l) -eq 0 ]; then
-		echo "git_unsshify_all not found, adding"
-		echo "git_unsshify_all() { ls | xargs -I{} git -C {} unsshify ; }" >> ~/.bashrc
-	else
-		echo "git_unsshify_all function already here, not adding."
-	fi	
 	
 	if [ $(cat ~/.bashrc | grep "catkin_make_debug_release" | wc -l) -eq 0 ]; then
 		echo "catkin_make_debug_release not found, adding"
@@ -441,14 +417,6 @@ echo \"uploaded \$latest_arduino_build_bin from \$latest_arduino_build_path\" ;
 else
 	echo "upload_latest_firmware_from_container already here, not adding."
 fi
-
-
-	if [ $(cat ~/.bashrc | grep "catkin_make_all_debug_release" | wc -l) -eq 0 ]; then
-		echo "catkin_make_all_debug_release not found, adding"
-		echo "catkin_make_all_debug_release () { roscd; cd ..; catkin_make_debug_release; cd ../base_deps; catkin_make_debug_release ; }" >> ~/.bashrc
-	else
-		echo "catkin_make_all_debug_release already here, not adding."
-	fi
 
 
 	
