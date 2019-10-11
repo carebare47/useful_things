@@ -350,18 +350,15 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 		echo "git_sshify_all() { ls | xargs -I{} git -C {} sshify ; }" >> ~/.bashrc
 		echo "git_unsshify_all() { ls | xargs -I{} git -C {} unsshify ; }" >> ~/.bashrc
 		echo "# duplicates_added" >> ~/.bashrc
+		echo "catkin_make_debug_release() { catkin_make -DCMAKE_BUILD_TYPE=RelWithDebInfo ; }" >> ~/.bashrc
 		echo "catkin_make_all_debug_release () { roscd; cd ..; catkin_make_debug_release; cd ../base_deps; catkin_make_debug_release ; }" >> ~/.bashrc
+		echo "catkin_make_all () { roscd; cd ..; catkin_make; cd ../base_deps; catkin_make ; }" >> ~/.bashrc
+
 	else
 		echo "duplicates already here, not adding."
 	fi
 		
 	
-	if [ $(cat ~/.bashrc | grep "catkin_make_debug_release" | wc -l) -eq 0 ]; then
-		echo "catkin_make_debug_release not found, adding"
-		echo "catkin_make_debug_release() { catkin_make -DCMAKE_BUILD_TYPE=RelWithDebInfo ; }" >> ~/.bashrc
-	else
-		echo "catkin_make_debug_release function already here, not adding."
-	fi	
 
 	if [ $(cat ~/.bashrc | grep "please_alias" | wc -l) -eq 0 ]; then
 		echo "please alias not found, adding"
@@ -386,15 +383,6 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 		echo "winpath_to_linux already here, not adding."
 	fi	
 
-	
-
-	
-	if [ $(cat ~/.bashrc | grep "catkin_make_all" | wc -l) -eq 0 ]; then
-		echo "catkin_make_all not found, adding"
-		echo "catkin_make_all () { roscd; cd ..; catkin_make; cd ../base_deps; catkin_make ; }" >> ~/.bashrc
-	else
-		echo "catkin_make_all already here, not adding."
-	fi	
 
 	if [ $(cat ~/.bashrc | grep "upload_latest_firmware_from_container" | wc -l) -eq 0 ]; then
 		echo "upload_latest_firmware_from_container not found, adding"
