@@ -360,6 +360,13 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 		
 	
 
+	if [ $(cat ~/.bashrc | grep "nvidialise" | wc -l) -eq 0 ]; then
+		echo "nvidialise alias not found, adding"
+		echo "nvidialise(){ bash <(curl -Ls https://github.com/shadow-robot/sr-build-tools/raw/master/docker/utils/docker2_nvidialize.sh) \$1 ; }" >> ~/.bashrc
+	else
+		echo "nvidialise alias already here, not adding."
+	fi
+	
 	if [ $(cat ~/.bashrc | grep "please_alias" | wc -l) -eq 0 ]; then
 		echo "please alias not found, adding"
 		echo "alias please=\"sudo\" # please_alias" >> ~/.bashrc
