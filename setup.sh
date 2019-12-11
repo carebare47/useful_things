@@ -50,10 +50,10 @@ fi
 if [ -z "${ALL}" ]; then
 	ALL=false
 fi
-if [ -z "${TOM}" ]; then
-	echo "Are you Tom?"
-	if [[ "$(confirm)" == "y" ]]; then TOM=true ; else TOM=false ; fi
-fi
+#if [ -z "${TOM}" ]; then
+#	echo "Are you Tom?"
+#	if [[ "$(confirm)" == "y" ]]; then TOM=true ; else TOM=false ; fi
+#fi
 
 if [ -z "${CONTAINER}" ]; then
 	CONTAINER=false
@@ -205,11 +205,11 @@ fi
 
 
 if [[ "${BASH_FUNCTIONS}" == true  ]]; then
-	if [[ "$(TOM)" == true ]]; then
-		echo "Configuring git..."
-		git config --global user.email "tom@shadowrobot.com"
-		git config --global user.name "carebare47"
-	fi
+#	if [[ "$(TOM)" == true ]]; then
+#		echo "Configuring git..."
+#		git config --global user.email "tom@shadowrobot.com"
+#		git config --global user.name "carebare47"
+#	fi
 	echo "Installing bash functions..."
 	if [ $(cat ~/.bashrc | grep "list_dex()" | wc -l) -eq 0 ]; then
 		echo "list_dex not found, adding..."
