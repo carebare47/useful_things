@@ -213,35 +213,35 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 	echo "Installing bash functions..."
 	if [ $(cat ~/.bashrc | grep "list_dex()" | wc -l) -eq 0 ]; then
 		echo "list_dex not found, adding..."
-		echo "list_dex() { curl -s 10.6.10.7:5000/v2/dexterous-hand/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/"//g' ; }" >> ~/.bashrc
+		echo "list_dex() { curl -s 10.6.10.7:5000/v2/dexterous-hand/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }" >> ~/.bashrc
 	else
 		echo "list_dex already here, not adding."
 	fi
 
 	if [ $(cat ~/.bashrc | grep "list_flex()" | wc -l) -eq 0 ]; then
 		echo "list_flex not found, adding..."
-		echo "list_flex() { curl -s 10.6.10.7:5000/v2/flexible-hand/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/"//g' ; }" >> ~/.bashrc
+		echo "list_flex() { curl -s 10.6.10.7:5000/v2/flexible-hand/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }" >> ~/.bashrc
 	else
 		echo "list_flex already here, not adding."
 	fi
 
 	if [ $(cat ~/.bashrc | grep "list_teleop()" | wc -l) -eq 0 ]; then
 		echo "list_teleop not found, adding..."
-		echo "list_teleop() { curl -s 10.6.10.7:5000/v2/shadow-teleop/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/"//g' ; }" >> ~/.bashrc
+		echo "list_teleop() { curl -s 10.6.10.7:5000/v2/shadow-teleop/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }" >> ~/.bashrc
 	else
 		echo "list_teleop already here, not adding."
 	fi
 
 	if [ $(cat ~/.bashrc | grep "list_haptx()" | wc -l) -eq 0 ]; then
 		echo "list_haptx not found, adding..."
-		echo "list_haptx() { curl -s 10.6.10.7:5000/v2/shadow-teleop-haptx/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/"//g' ; }" >> ~/.bashrc
+		echo "list_haptx() { curl -s 10.6.10.7:5000/v2/shadow-teleop-haptx/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }" >> ~/.bashrc
 	else
 		echo "list_haptx already here, not adding."
 	fi
 
 	if [ $(cat ~/.bashrc | grep "list_cyber()" | wc -l) -eq 0 ]; then
 		echo "list_cyber not found, adding..."
-		echo "list_cyber() { curl -s 10.6.10.7:5000/v2/shadow-teleop-cyber/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/"//g' ; }" >> ~/.bashrc
+		echo "list_cyber() { curl -s 10.6.10.7:5000/v2/shadow-teleop-cyber/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }" >> ~/.bashrc
 	else
 		echo "list_cyber already here, not adding."
 	fi
