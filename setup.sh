@@ -390,7 +390,9 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 		echo "winpath_to_linux already here, not adding."
 	fi	
 	
-        echo $(curl -Ls https://raw.githubusercontent.com/carebare47/useful_things/master/bash_functions) >> ~/.bashrc
+        wget https://raw.githubusercontent.com/carebare47/useful_things/master/bash_functions /tmp/bash_functions
+	cat /tmp/bash_functions >> ~/.bashrc
+	rm /tmp/bash_functions
 
 	if [ $(cat ~/.bashrc | grep "upload_latest_firmware_from_container" | wc -l) -eq 0 ]; then
 		echo "upload_latest_firmware_from_container not found, adding"
