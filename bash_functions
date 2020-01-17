@@ -17,5 +17,5 @@ alias cgrep="grep --color=always"
 ps_aux() { ps aux | cgrep $1 | grep -v grep ; }
 kill_all_ros() { sudo kill -9 $(ps_aux ros | awk '{print $2}') ; }
 ps_aux_command() { ps -e -o command | cgrep $1 | grep -v grep ; }
-kill_any_process() { ps_aux_command $1; conf="$(confirm "kill these processes? [Y/n]")"; if [[ $conf == "y" ]]; then echo "killing..."; sudo kill -9 $(ps_aux $1 | awk {'print $2}'); else echo "not killing"; fi ; }
+kill_any_process() { ps_aux_command $1; conf="$(confirm "kill these processes? [Y/n]")"; if [[ $conf == "y" ]]; then echo "killing..."; sudo kill -9 $(ps_aux $1 | awk {'print $2}'); sleep 1; echo "remaining: "; ps_aux_command $1 else echo "not killing"; fi ; }
 
