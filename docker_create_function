@@ -8,6 +8,10 @@ do
 			NVIDIA_VERSION="$2"
 			shift
 			;;
+		-x|--xauth)
+			XAUTH="$2"
+			shift
+			;;			
 		-c|--container_name)
 			CONTAINER_NAME="$2"
 			shift
@@ -26,9 +30,14 @@ done
 if [ -z "${NVIDIA_VERSION}" ]; then echo "Please specify nvidia version (e.g. -nv 2)" ; return ; fi
 if [ -z "${CONTAINER_NAME}" ]; then echo "Please specify desired container name (-c)" ; return ; fi
 if [ -z "${IMAGE}" ]; then echo "Please specify image name (-i)" ; return ; fi
+if [ -z "${XAUTH}" ]; then XAUTH="false" echo "xauth not specified, setting to false. re-run with -x true to enable"; return ; fi
 
 CONTAINER_NAME="${CONTAINER_NAME}_nv${NVIDIA_VERSION}"
 
+if [[ $XAUTH == "true" ]]; then
+  docker create -it --name $CONTAINER_NAME --net=host --privileged -e DISPLAY -e QT_X11_NO_MITSHM=1 -e LOCAL_USER_ID=$(id -u) -v ~/.Xauthority:/home/user/.Xauthority -v /tmp/.X11-unix:/tmp/.X11-unix:rw $IMAGE terminator
+  return
+fi  
 if [[ $NVIDIA_VERSION == "0" ]]; then
   docker create -it --privileged --name $CONTAINER_NAME --ulimit core=-1 --security-opt seccomp=unconfined --network=host --pid=host -e DISPLAY -e QT_X11_NO_MITSHM=1 -e LOCAL_USER_ID=$(id -u) -v /tmp/.X11-unix:/tmp/.X11-unix:rw $IMAGE
 elif  [[ $NVIDIA_VERSION == "1" ]]; then
