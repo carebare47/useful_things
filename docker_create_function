@@ -27,7 +27,9 @@ do
 	shift
 done
 
-if [ -z "${NVIDIA_VERSION}" ]; then echo "Please specify nvidia version (e.g. -nv 2)" ; return ; fi
+if [ -z "${XAUTH}" ]; then
+  if [ -z "${NVIDIA_VERSION}" ]; then echo "Please specify nvidia version (e.g. -nv 2)" ; return ; fi
+fi
 if [ -z "${CONTAINER_NAME}" ]; then echo "Please specify desired container name (-c)" ; return ; fi
 if [ -z "${IMAGE}" ]; then echo "Please specify image name (-i)" ; return ; fi
 if [ -z "${XAUTH}" ]; then XAUTH="false" echo "xauth not specified, setting to false. re-run with -x true to enable"; return ; fi
