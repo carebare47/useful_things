@@ -22,3 +22,6 @@ docker_exec () { if [[ $(docker container ls -q | wc -l) -eq 1 ]]; then docker e
 aurora_install() { bash <(curl -Ls bit.ly/run-aurora) install_software software=['$1'] ; }
 aurora_install_vscode() { aurora_install vscode ; }
 grep_gedit() { search_term=$1; grep_all $search_term; read -r -p "${2:-enter substring:} " substring ; file=$(grep_all $search_term | grep $substring | sed -r 's/:.*//g'); echo "opening file: ${file}"; gedit ${file} ; }
+catkin_make_all_debug_release_2 () { tmp_var=$(pwd); roscd; cd ../../base_deps; catkin_make_debug_release; cd ../base; catkin_make_debug_release ; cd $tmp_var;  }
+setup_new_shadow_container_build_all_2() { mkdir ~/.ssh || true; git_sshify_all_both; setup_new_shadow_container; catkin_make_all_debug_release_2 ; }
+
