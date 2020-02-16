@@ -153,7 +153,7 @@ else
 
 	BASH_FUNCTIONS=true
 	INSTALL_FZF=true
-	sudo apt-get update; sudo apt-get install -y xsel jq gedit gedit-plugins nano tree
+	sudo apt-get update; sudo apt-get install -y xsel jq gedit gedit-plugins nano tree iputils-ping
 	INSTALL_SLACK=false
 	AUTOSTART_SLACK=false
 	INSTALL_CHROME=false
@@ -195,7 +195,7 @@ fi
 if [[ "${INSTALL_PACKAGES}" == true  ]]; then
 	echo "Installing packages"
 	sudo apt-get update
-	sudo apt-get install -y gedit nano git curl xsel jq tree nmap gedit-plugins
+	sudo apt-get install -y gedit nano git curl xsel jq tree nmap gedit-plugins iputils-ping
 fi
 
 if [[ "${INSTALL_FZF}" == true  ]]; then
