@@ -19,6 +19,10 @@ do
 		-t|--tom)
 			TOM="$2"
 			shift
+			;;
+		-s|--silent)
+			SILENT="$2"
+			shift
 			;;			
 		*)
 			# ignore unknown option
@@ -63,6 +67,10 @@ if [ -z "${BASH_ONLY}" ]; then
 	BASH_ONLY=false
 fi
 
+if [ -z "${SILENT}" ]; then
+	SILENT=false
+fi
+
 
 echo ""
 echo "================================================================="
@@ -92,8 +100,10 @@ fi
 
 if [[ "${BASH_ONLY}" == false ]]; then
 	if [[ "${CONTAINER}" == false ]]; then
-		echo "Do the above settings look correct?"
-		if [[ "$(confirm)" == "n" ]]; then echo "exiting..." && exit 0 ; fi
+		if [[ "${SILENT}" == false ]]; then
+			echo "Do the above settings look correct?"
+			if [[ "$(confirm)" == "n" ]]; then echo "exiting..." && exit 0 ; fi
+	    	fi
 	fi
 	
 	if [[ "$ALL" == false && "$CONTAINER" == false ]]; then
