@@ -234,6 +234,13 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 	else
 		echo "list_flex already here, not adding."
 	fi
+	
+	if [ $(cat ~/.bashrc | grep "list_polhemus()" | wc -l) -eq 0 ]; then
+		echo "list_polhemus not found, adding..."
+		echo "list_polhemus() { curl -s 10.6.10.7:5000/v2/shadow-teleop-polhemus/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }" >> ~/.bashrc
+	else
+		echo "list_polhemus already here, not adding."
+	fi	
 
 	if [ $(cat ~/.bashrc | grep "list_teleop()" | wc -l) -eq 0 ]; then
 		echo "list_teleop not found, adding..."
