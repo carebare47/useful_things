@@ -45,7 +45,7 @@ if [[ $NVIDIA_VERSION == "0" ]]; then
 elif  [[ $NVIDIA_VERSION == "1" ]]; then
   nvidia-docker create -it --privileged --name $CONTAINER_NAME --ulimit core=-1 --security-opt seccomp=unconfined --network=host --pid=host -e DISPLAY -e QT_X11_NO_MITSHM=1 -e LOCAL_USER_ID=$(id -u) -v /tmp/.X11-unix:/tmp/.X11-unix:rw $IMAGE
 elif  [[ $NVIDIA_VERSION == "2" ]]; then
-   docker create -it --privileged --name $CONTAINER_NAME --ulimit core=-1 --security-opt seccomp=unconfined --runtime=nvidia -e NVIDIA_VISIBLE_DEVICES=all --network=host --pid=host -e DISPLAY -e QT_X11_NO_MITSHM=1 -e LOCAL_USER_ID=$(id -u) -v /tmp/.X11-unix:/tmp/.X11-unix:rw $IMAGE
+   docker create -it --privileged --name $CONTAINER_NAME --ulimit core=-1 --security-opt seccomp=unconfined --runtime=nvidia -e NVIDIA_DRIVER_CAPABILITIES=all -e NVIDIA_VISIBLE_DEVICES=all --network=host --pid=host -e DISPLAY -e QT_X11_NO_MITSHM=1 -e LOCAL_USER_ID=$(id -u) -v /tmp/.X11-unix:/tmp/.X11-unix:rw $IMAGE
 fi
 }
 
