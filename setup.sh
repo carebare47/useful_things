@@ -220,6 +220,8 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 #		git config --global user.email "tom@shadowrobot.com"
 #		git config --global user.name "carebare47"
 #	fi
+        echo "Adding .launch to get xml language file..."
+        sudo sed -i 's/\*\.xml;/\*\.xml;\*\.launch;/g' /usr/share/gtksourceview-3.0/language-specs/xml.lang
 	echo "Installing bash functions..."
 	if [ $(cat ~/.bashrc | grep "list_dex()" | wc -l) -eq 0 ]; then
 		echo "list_dex not found, adding..."
