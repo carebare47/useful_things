@@ -26,6 +26,7 @@ catkin_make_all_debug_release_2 () { tmp_var=$(pwd); roscd; cd ../../base_deps; 
 setup_new_shadow_container_build_all_2() { mkdir ~/.ssh || true; git_sshify_all_both; setup_new_shadow_container; catkin_make_all_debug_release_2 ; }
 copy_etc_hosts() { cat /etc/hosts | grep "10.6" | xsel -ib ; }
 rebuild_root_openlase_from_current_subfolder() { 
+	current_dir=$(pwd)
 	IN="$(pwd)"
 	path_components=$(echo $IN | tr "/" "\n")
 	openlase_folder_name=$(
@@ -43,6 +44,7 @@ rebuild_root_openlase_from_current_subfolder() {
 			mkdir build
 			cd build
 			cmake .. && make
+			cd $current_dir
 		else
 			echo "fine, whatever"
 		fi
