@@ -42,8 +42,7 @@ rebuild_root_openlase_from_current_subfolder() {
 			rm -rf build
 			mkdir build
 			cd build
-			cmake ..
-			make
+			cmake .. && make
 		else
 			echo "fine, whatever"
 		fi
