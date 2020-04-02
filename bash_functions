@@ -25,3 +25,29 @@ grep_gedit() { search_term=$1; grep_all $search_term; read -r -p "${2:-enter sub
 catkin_make_all_debug_release_2 () { tmp_var=$(pwd); roscd; cd ../../base_deps; catkin_make_debug_release; cd ../base; catkin_make_debug_release ; cd $tmp_var;  }
 setup_new_shadow_container_build_all_2() { mkdir ~/.ssh || true; git_sshify_all_both; setup_new_shadow_container; catkin_make_all_debug_release_2 ; }
 copy_etc_hosts() { cat /etc/hosts | grep "10.6" | xsel -ib ; }
+rebuild_root_openlase_from_current_subfolder() { 
+	IN="$(pwd)"
+	path_components=$(echo $IN | tr "/" "\n")
+	openlase_folder_name=$(
+	for addr in $path_components
+	do
+	    echo $addr
+	done | grep openlase)
+
+	if [[ $openlase_folder_name != "" ]]; then
+		openlase_root_folder=$(pwd | sed -r "s;$openlase_folder_name.*;$openlase_folder_name;g")
+		conf="$(confirm "This will remove everything inside ${openlase_root_folder}/build, are you sure? [Y/n]")"
+		if [[ $conf == "y" ]]; then
+			cd $(pwd | sed -r "s;$openlase_folder_name.*;$openlase_folder_name;g")
+			rm -rf build
+			mkdir build
+			cd build
+			cmake ..
+			make
+		else
+			echo "fine, whatever"
+		fi
+	else
+		echo "Can't find openlase root folder, giving up."
+	fi
+}
