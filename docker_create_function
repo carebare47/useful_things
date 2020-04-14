@@ -19,6 +19,10 @@ do
 		-i|--image)
 			IMAGE="$2"
 			shift
+			;;
+		-b|--bash)
+			BASH="$2"
+			shift
 			;;			
 		*)
 			# ignore unknown option
@@ -37,15 +41,15 @@ if [ -z "${XAUTH}" ]; then XAUTH="false" echo "xauth not specified, setting to f
 CONTAINER_NAME="${CONTAINER_NAME}_nv${NVIDIA_VERSION}"
 
 if [[ $XAUTH == "true" ]]; then
-  docker create -it --name $CONTAINER_NAME --net=host --privileged -e DISPLAY -e QT_X11_NO_MITSHM=1 -e LOCAL_USER_ID=$(id -u) -v ~/.Xauthority:/home/user/.Xauthority -v /tmp/.X11-unix:/tmp/.X11-unix:rw $IMAGE terminator
+  docker create -it --name $CONTAINER_NAME --net=host --privileged -e DISPLAY -e QT_X11_NO_MITSHM=1 -e LOCAL_USER_ID=$(id -u) -v ~/.Xauthority:/home/user/.Xauthority -v /tmp/.X11-unix:/tmp/.X11-unix:rw $IMAGE $BASH
   return
 fi  
 if [[ $NVIDIA_VERSION == "0" ]]; then
-  docker create -it --privileged --name $CONTAINER_NAME --ulimit core=-1 --security-opt seccomp=unconfined --network=host --pid=host -e DISPLAY -e QT_X11_NO_MITSHM=1 -e LOCAL_USER_ID=$(id -u) -v /tmp/.X11-unix:/tmp/.X11-unix:rw $IMAGE
+  docker create -it --privileged --name $CONTAINER_NAME --ulimit core=-1 --security-opt seccomp=unconfined --network=host --pid=host -e DISPLAY -e QT_X11_NO_MITSHM=1 -e LOCAL_USER_ID=$(id -u) -v /tmp/.X11-unix:/tmp/.X11-unix:rw $IMAGE $BASH
 elif  [[ $NVIDIA_VERSION == "1" ]]; then
-  nvidia-docker create -it --privileged --name $CONTAINER_NAME --ulimit core=-1 --security-opt seccomp=unconfined --network=host --pid=host -e DISPLAY -e QT_X11_NO_MITSHM=1 -e LOCAL_USER_ID=$(id -u) -v /tmp/.X11-unix:/tmp/.X11-unix:rw $IMAGE
+  nvidia-docker create -it --privileged --name $CONTAINER_NAME --ulimit core=-1 --security-opt seccomp=unconfined --network=host --pid=host -e DISPLAY -e QT_X11_NO_MITSHM=1 -e LOCAL_USER_ID=$(id -u) -v /tmp/.X11-unix:/tmp/.X11-unix:rw $IMAGE $BASH
 elif  [[ $NVIDIA_VERSION == "2" ]]; then
-   docker create -it --privileged --name $CONTAINER_NAME --ulimit core=-1 --security-opt seccomp=unconfined --runtime=nvidia -e NVIDIA_DRIVER_CAPABILITIES=all -e NVIDIA_VISIBLE_DEVICES=all --network=host --pid=host -e DISPLAY -e QT_X11_NO_MITSHM=1 -e LOCAL_USER_ID=$(id -u) -v /tmp/.X11-unix:/tmp/.X11-unix:rw $IMAGE
+   docker create -it --privileged --name $CONTAINER_NAME --ulimit core=-1 --security-opt seccomp=unconfined --runtime=nvidia -e NVIDIA_DRIVER_CAPABILITIES=all -e NVIDIA_VISIBLE_DEVICES=all --network=host --pid=host -e DISPLAY -e QT_X11_NO_MITSHM=1 -e LOCAL_USER_ID=$(id -u) -v /tmp/.X11-unix:/tmp/.X11-unix:rw $IMAGE $BASH
 fi
 }
 
