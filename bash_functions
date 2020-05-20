@@ -52,4 +52,4 @@ rebuild_root_openlase_from_current_subfolder() {
 		echo "Can't find openlase root folder, giving up."
 	fi
 }
-docker_add_insecure_nuc() {cd /etc/docker; cat daemon.json | jq '. + {"insecure-registries": ["10.6.10.7:5000"]}' | sudo tee daemon.json; sudo systemctl restart docker.service; }
+docker_add_insecure_nuc() { cd /etc/docker; cat daemon.json | jq '. + {"insecure-registries": ["10.6.10.7:5000"]}' | sudo tee daemon.json; sudo systemctl restart docker.service; }
