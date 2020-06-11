@@ -53,3 +53,11 @@ rebuild_root_openlase_from_current_subfolder() {
 	fi
 }
 docker_add_insecure_nuc() { cd /etc/docker; cat daemon.json | jq '. + {"insecure-registries": ["10.6.10.7:5000"]}' | sudo tee daemon.json; sudo systemctl restart docker.service; }
+catkin_make_debug_release_python3() { catkin_make --cmake-args \
+            -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+            -DPYTHON_EXECUTABLE=/usr/bin/python3.8 \
+            -DPYTHON_INCLUDE_DIR=/usr/include/python3.8 \
+            -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.8.so \
+            -DPYTHON_VERSION=3 ; }
+
+catkin_make_all_debug_release_python3 () { tmp_var=/home/user; roscd; cd ..; catkin_make_debug_release_python3; cd ../base_deps; catkin_make_debug_release_python3 ; cd ;  }
