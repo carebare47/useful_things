@@ -52,7 +52,7 @@ rebuild_root_openlase_from_current_subfolder() {
 		echo "Can't find openlase root folder, giving up."
 	fi
 }
-docker_add_insecure_nuc() { cd /etc/docker; cat daemon.json | jq '. + {"insecure-registries": ["10.6.10.7:5000"]}' | sudo tee daemon.json; sudo systemctl restart docker.service; }
+docker_add_insecure_nuc() { cd /etc/docker; if [[ $(ls | grep daemon | wc -l) == 0 ]]; then touch daemon.json; fi; cat daemon.json | jq '. + {"insecure-registries": ["10.6.10.7:5000"]}' | sudo tee daemon.json; sudo systemctl restart docker.service; }
 catkin_make_debug_release_python3() { catkin_make --cmake-args \
             -DCMAKE_BUILD_TYPE=RelWithDebInfo \
             -DPYTHON_EXECUTABLE=/usr/bin/python3.8 \
