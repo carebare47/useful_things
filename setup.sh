@@ -163,7 +163,7 @@ else
 
 	BASH_FUNCTIONS=true
 	INSTALL_FZF=true
-	sudo apt-get update; sudo apt-get install -y xsel jq gedit gedit-plugins nano tree iputils-ping iproute2
+	sudo apt-get update; sudo apt-get install -y xsel jq gedit gedit-plugins nano tree iputils-ping iproute2 highlight
 	INSTALL_SLACK=false
 	AUTOSTART_SLACK=false
 	INSTALL_CHROME=false
