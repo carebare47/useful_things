@@ -61,3 +61,4 @@ catkin_make_debug_release_python3() { catkin_make --cmake-args \
             -DPYTHON_VERSION=3 ; }
 
 catkin_make_all_debug_release_python3 () { tmp_var=/home/user; roscd; cd ..; catkin_make_debug_release_python3; cd ../base_deps; catkin_make_debug_release_python3 ; cd ;  }
+alias cats='highlight -O ansi --force'
