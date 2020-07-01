@@ -165,6 +165,7 @@ else
 	INSTALL_FZF=true
 	sudo apt-get update; sudo apt-get install -y xsel jq gedit gedit-plugins nano tree iputils-ping iproute2 highlight
 	cat /etc/highlight/filetypes.conf | sed -r 's/\{ Lang=\"xml\", Extensions=\{/\{ Lang=\"xml\", Extensions=\{\"launch\", /g' | sudo tee /etc/highlight/filetypes.conf
+	cat /etc/highlight/filetypes.conf | sed -r 's/\{ Lang=\"xml\", Extensions=\{/\{ Lang=\"xml\", Extensions=\{\"xacro\", /g' | sudo tee /etc/highlight/filetypes.conf
 	INSTALL_SLACK=false
 	AUTOSTART_SLACK=false
 	INSTALL_CHROME=false
