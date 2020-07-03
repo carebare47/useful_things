@@ -1,3 +1,28 @@
+id_rsa_to_container() { 
+  has_input_args=$(if [[ $(for i in $@; do echo $i; done | wc -l) -eq 0 ]]; then echo false; else echo true; fi)
+  if [[ $has_input_args == 'true' ]]; then 
+    for container in $@; do 
+      docker exec -it $container bash -c "gosu user mkdir /home/user/.ssh"
+      docker cp ~/.ssh/id_rsa ${container}:/home/user/.ssh/
+    done
+  else
+    if [ $(which docker | wc -l) -eq 0 ] ; then
+      echo "Docker not found. Are you on the host?"
+      elif [ $(docker container ls -q | wc -l) -eq 0 ]; then
+      echo "No currently running containers"
+      elif [ $(docker container ls -q | wc -l) -eq 1 ]; then
+      echo "Copying id_rsa to container $(docker container ls -q)"
+      docker cp ~/.ssh/id_rsa $(docker container ls -q):/home/user/.ssh/
+      elif [ $(docker container ls -q | wc -l) -gt 1 ]; then
+      echo "More than one container is running"
+    fi
+  fi
+}
+initialise_container() {
+  docker start $1
+  id_rsa_to_container $1
+  docker exec -it $1 bash -c "gosu user wget bit.ly/tom_setup -O /tmp/tom_setup && gosu user sudo chmod +x /tmp/tom_setup && gosu user bash /tmp/tom_setup -b true -t true"
+}
 docker_create() {
 while [[ $# > 1 ]]
 do
