@@ -163,7 +163,7 @@ else
 
 	BASH_FUNCTIONS=true
 	INSTALL_FZF=true
-	sudo apt-get update; sudo apt-get install -y xsel jq gedit gedit-plugins nano tree iputils-ping iproute2 highlight
+	sudo apt-get update; sudo apt-get install -y xsel jq gedit gedit-plugins nano tree iputils-ping iproute2 highlight speedometer
 	cat /etc/highlight/filetypes.conf | sed -r 's/\{ Lang=\"xml\", Extensions=\{/\{ Lang=\"xml\", Extensions=\{\"launch\", /g' | sudo tee /etc/highlight/filetypes.conf
 	cat /etc/highlight/filetypes.conf | sed -r 's/\{ Lang=\"xml\", Extensions=\{/\{ Lang=\"xml\", Extensions=\{\"xacro\", /g' | sudo tee /etc/highlight/filetypes.conf
 	INSTALL_SLACK=false
@@ -207,7 +207,7 @@ fi
 if [[ "${INSTALL_PACKAGES}" == true  ]]; then
 	echo "Installing packages"
 	sudo apt-get update
-	sudo apt-get install -y gedit nano git curl xsel jq tree nmap gedit-plugins iputils-ping
+	sudo apt-get install -y gedit nano git curl xsel jq tree nmap gedit-plugins iputils-ping speedometer
 fi
 
 if [[ "${INSTALL_FZF}" == true  ]]; then
