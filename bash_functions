@@ -65,3 +65,4 @@ cats() { for input_file in $@; do echo -e "${input_file}: \n"; highlight -O ansi
 grep_all_multi() { str=$(for t in $@; do printf "$t|"; done); str2="($(echo $str | rev | cut -c 2- | rev))"; grep -rnE '.' -e "$str2" ; }
 diagnostics() { rostopic echo --filter "m.status[0].name == 'Realtime Control Loop'" /diagnostics; }
 network_speed() { speedometer -l  -r $1 -t $1 -m $(( 1024 * 1024 * 3 / 2 )) ; }
+git_store_credentials() { git config credential.helper cache $1 ; }
