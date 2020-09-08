@@ -226,10 +226,17 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
         sudo sed -i 's/\*\.xml;/\*\.xml;\*\.launch;/g' /usr/share/gtksourceview-3.0/language-specs/xml.lang
 	echo "Installing bash functions..."
 
-        wget https://raw.githubusercontent.com/carebare47/useful_things/master/bash_functions ~/.bash_functions
+        cur_dir=$(pwd)
+        cd ~/
+        if [[ $(ls -a | grep -x ".bash_functions" | wc -l) -gt 0 ]]; then
+          rm ~/.bash_functions
+        fi
+        wget https://raw.githubusercontent.com/carebare47/useful_things/master/bash_functions ~/bash_functions
+        mv bash_functions .bash_functions
         if [[ $(cat ~/.bashrc  | grep "source ~/.bash_functions" | wc -l) -eq 0 ]]; then
           echo "source ~/.bash_functions" >> ~/.bashrc
         fi
+        cd $cur_dir
 
 	if [ $(cat ~/.bashrc | grep "oneliner()" | wc -l) -eq 0 ]; then
 		echo "echo oneliner not found, adding..."
