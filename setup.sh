@@ -234,7 +234,7 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
           echo "source ~/.bash_functions" >> ~/.bashrc
         fi
 
-	if [ $(cat ~/.bashrc | grep "docker_create" | wc -l) -eq 0 ]; then
+	if [ $(cat ~/.bash_functions | grep "docker_create" | wc -l) -eq 0 ]; then
 		echo "docker_create function not found, adding"
 		wget -O /tmp/docker_create_function https://raw.githubusercontent.com/carebare47/useful_things/master/docker_create_function
 		cat /tmp/docker_create_function >> ~/.bash_functions
@@ -242,38 +242,6 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 	else
 		echo "docker_create function already here, not adding."
 	fi
-
-	if [ $(cat ~/.bashrc | grep "winpath_to_linux" | wc -l) -eq 0 ]; then
-		echo "winpath_to_linux not found, adding"
-		echo "winpath_to_linux(){ echo $1 | sed 's/\\/\//g' | sed 's/C:/\/mnt\/c/'; }" >> ~/.bashrc
-	else
-		echo "winpath_to_linux already here, not adding."
-	fi	
-
-
-	if [ $(cat ~/.bashrc | grep "upload_latest_firmware_from_container" | wc -l) -eq 0 ]; then
-		echo "upload_latest_firmware_from_container not found, adding"
-                echo "upload_latest_firmware_from_container() 
-{ 
-container_number=\$(docker container ls -q); 
-
-latest_arduino_build_path=\$(docker exec \$container_number ls -t /tmp | grep arduino | head -n1);
-
-latest_arduino_build_bin=\$(docker exec \$container_number ls /tmp/\$latest_arduino_build_path | grep bin); 
-
-rm \$latest_arduino_build_bin || true; 
-
-docker cp \$container_number:/tmp/\$latest_arduino_build_path/\$latest_arduino_build_bin . ;
-
-st-flash --reset write \$latest_arduino_build_bin 0x8000000 ; 
-
-echo \"uploaded \$latest_arduino_build_bin from \$latest_arduino_build_path\" ; 
-}" >> ~/.bashrc
-else
-	echo "upload_latest_firmware_from_container already here, not adding."
-fi
-
-
 	
 	source ~/.bashrc
 fi

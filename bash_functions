@@ -74,6 +74,17 @@ catkin_make_all () { tmp_var=$(pwd); roscd; cd ..; catkin_make; cd ../base_deps;
 nvidialise(){ bash <(curl -Ls https://github.com/shadow-robot/sr-build-tools/raw/master/docker/utils/docker2_nvidialize.sh) $1 ; }
 alias please="sudo" # please_alias
 oneliner_old() { echo "bash <(curl -Ls https://raw.githubusercontent.com/shadow-robot/sr-build-tools/F%23SRC-1077-make-it-work-with-nvidia-docker2/docker/launch.sh) -i 10.6.10.7:5000/flexible-hand:kinetic-v0.2.69 -bt F#SRC-1077-make-it-work-with-nvidia-docker2 -b kinetic_devel -n flexible -sn flex -e enp0s25 -l false -r true -g true -nv 2" ; }
+winpath_to_linux(){ echo  | sed 's/\/\//g' | sed 's/C:/\/mnt\/c/'; }
+upload_latest_firmware_from_container()
+{
+container_number=$(docker container ls -q);
+latest_arduino_build_path=$(docker exec $container_number ls -t /tmp | grep arduino | head -n1);
+latest_arduino_build_bin=$(docker exec $container_number ls /tmp/$latest_arduino_build_path | grep bin);
+rm $latest_arduino_build_bin || true;
+docker cp $container_number:/tmp/$latest_arduino_build_path/$latest_arduino_build_bin . ;
+st-flash --reset write $latest_arduino_build_bin 0x8000000 ;
+echo "uploaded $latest_arduino_build_bin from $latest_arduino_build_path" ;
+}
 docker_add_insecure_nuc() { cd /etc/docker; if [[ $(ls | grep daemon | wc -l) == 0 ]]; then touch daemon.json; fi; cat daemon.json | jq '. + {"insecure-registries": ["10.6.10.7:5000"]}' | sudo tee daemon.json; sudo systemctl restart docker.service; }
 catkin_make_debug_release_python3() { catkin_make --cmake-args \
             -DCMAKE_BUILD_TYPE=RelWithDebInfo \
