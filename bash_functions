@@ -52,6 +52,28 @@ rebuild_root_openlase_from_current_subfolder() {
 		echo "Can't find openlase root folder, giving up."
 	fi
 }
+copy() { "$1" | tr -d '\n' | xsel -ib ; }
+git_update_all() { ls | xargs -I{} git -C {} pull ; }
+git_print_log() { git log --graph --oneline --decorate --all ; }
+scan_shadow_ports() { nmap -p 22 --open -sV 10.6.10.0/24 ; }
+grep_all() { grep -rn '.' -e "$1" ; }
+debug_bash() { PS4='\033[0;33m+(\${BASH_SOURCE}:\${LINENO}):\033[0m \${FUNCNAME[0]:+\${FUNCNAME[0]}(): }' bash -x $1 ; }
+git_add_ssh() { eval "$(ssh-agent -s)"; ssh-add ~/.ssh/id_rsa ; }
+test_sr_ur10() { roslaunch sr_robot_launch sr_right_ur10arm_hand.launch sim:=true scene:=true ; }
+git config --global alias.sshify '!f() { git remote set-url origin $(git remote get-url origin | sed -En "s/https:\/\/github.com\//git@github.com:/p") ; }; f'
+git config --global alias.unsshify '!f() { git remote set-url origin $(git remote get-url origin | sed -En "s/git@github.com:/https:\/\/github.com\//p") ; }; f'
+git_sshify_all_both() { roscd; cd ../src; git_sshify_all; cd ../../base_deps/src; git_sshify_all ; }
+setup_new_shadow_container_build_all() { mkdir ~/.ssh || true; git_sshify_all_both; setup_new_shadow_container; catkin_make_all_debug_release ; }
+setup_new_shadow_container() { git_add_ssh; roscd; cd ../src; git_update_all; cd ../../base_deps/src; git_update_all; }
+git_unsshify_all_both() { roscd; cd ../src; git_unsshify_all; cd ../../base_deps/src; git_unsshify_all ; }
+git_sshify_all() { ls | xargs -I{} git -C {} sshify ; }
+git_unsshify_all() { ls | xargs -I{} git -C {} unsshify ; }
+catkin_make_debug_release() { catkin_make -DCMAKE_BUILD_TYPE=RelWithDebInfo ; }
+catkin_make_all_debug_release () { tmp_var=$(pwd); roscd; cd ..; catkin_make_debug_release; cd ../base_deps; catkin_make_debug_release ; cd $tmp_var;  }
+catkin_make_all () { tmp_var=$(pwd); roscd; cd ..; catkin_make; cd ../base_deps; catkin_make ; cd $tmp_var; }
+nvidialise(){ bash <(curl -Ls https://github.com/shadow-robot/sr-build-tools/raw/master/docker/utils/docker2_nvidialize.sh) $1 ; }
+alias please="sudo" # please_alias
+oneliner_old() { echo "bash <(curl -Ls https://raw.githubusercontent.com/shadow-robot/sr-build-tools/F%23SRC-1077-make-it-work-with-nvidia-docker2/docker/launch.sh) -i 10.6.10.7:5000/flexible-hand:kinetic-v0.2.69 -bt F#SRC-1077-make-it-work-with-nvidia-docker2 -b kinetic_devel -n flexible -sn flex -e enp0s25 -l false -r true -g true -nv 2" ; }
 docker_add_insecure_nuc() { cd /etc/docker; if [[ $(ls | grep daemon | wc -l) == 0 ]]; then touch daemon.json; fi; cat daemon.json | jq '. + {"insecure-registries": ["10.6.10.7:5000"]}' | sudo tee daemon.json; sudo systemctl restart docker.service; }
 catkin_make_debug_release_python3() { catkin_make --cmake-args \
             -DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -75,3 +97,4 @@ list_teleop() { curl -s $docker_registry_nuc_ip:5000/v2/shadow-teleop/tags/list 
 list_haptx() { curl -s $docker_registry_nuc_ip:5000/v2/shadow-teleop-haptx/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }
 list_cyber() { curl -s $docker_registry_nuc_ip:5000/v2/shadow-teleop-cyber/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }
 list_other() { curl -s $docker_registry_nuc_ip:5000/v2/other/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }
+
