@@ -61,8 +61,17 @@ catkin_make_debug_release_python3() { catkin_make --cmake-args \
             -DPYTHON_VERSION=3 ; }
 
 catkin_make_all_debug_release_python3 () { tmp_var=/home/user; roscd; cd ..; catkin_make_debug_release_python3; cd ../base_deps; catkin_make_debug_release_python3 ; cd ;  }
-cats() { for input_file in $@; do echo -e "${input_file}: \n"; highlight -O ansi --force -n $input_file; echo -e "\n"; done; }
+cats() { for input_file in $@; do echo -e "${input_file}: \n"; highlight -O ansi --force $input_file; echo -e "\n"; done; }
+catsn() { for input_file in $@; do echo -e "${input_file}: \n"; highlight -O ansi --force -n $input_file; echo -e "\n"; done; }
 grep_all_multi() { str=$(for t in $@; do printf "$t|"; done); str2="($(echo $str | rev | cut -c 2- | rev))"; grep -rnE '.' -e "$str2" ; }
 diagnostics() { rostopic echo --filter "m.status[0].name == 'Realtime Control Loop'" /diagnostics; }
 network_speed() { speedometer -l  -r $1 -t $1 -m $(( 1024 * 1024 * 3 / 2 )) ; }
 git_store_credentials() { git config credential.helper cache $1 ; }
+docker_registry_nuc_ip="10.6.10.7"
+list_dex() { curl -s $docker_registry_nuc_ip:5000/v2/dexterous-hand/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }
+list_flex() { curl -s $docker_registry_nuc_ip:5000/v2/flexible-hand/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }
+list_polhemus() { curl -s $docker_registry_nuc_ip:5000/v2/shadow-teleop-polhemus/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }
+list_teleop() { curl -s $docker_registry_nuc_ip:5000/v2/shadow-teleop/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }
+list_haptx() { curl -s $docker_registry_nuc_ip:5000/v2/shadow-teleop-haptx/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }
+list_cyber() { curl -s $docker_registry_nuc_ip:5000/v2/shadow-teleop-cyber/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }
+list_other() { curl -s $docker_registry_nuc_ip:5000/v2/other/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }

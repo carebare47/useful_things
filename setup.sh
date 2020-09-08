@@ -225,47 +225,11 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
         echo "Adding .launch to get xml language file..."
         sudo sed -i 's/\*\.xml;/\*\.xml;\*\.launch;/g' /usr/share/gtksourceview-3.0/language-specs/xml.lang
 	echo "Installing bash functions..."
-	if [ $(cat ~/.bashrc | grep "list_dex()" | wc -l) -eq 0 ]; then
-		echo "list_dex not found, adding..."
-		echo "list_dex() { curl -s 10.6.10.7:5000/v2/dexterous-hand/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }" >> ~/.bashrc
-	else
-		echo "list_dex already here, not adding."
-	fi
 
-	if [ $(cat ~/.bashrc | grep "list_flex()" | wc -l) -eq 0 ]; then
-		echo "list_flex not found, adding..."
-		echo "list_flex() { curl -s 10.6.10.7:5000/v2/flexible-hand/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }" >> ~/.bashrc
-	else
-		echo "list_flex already here, not adding."
-	fi
-	
-	if [ $(cat ~/.bashrc | grep "list_polhemus()" | wc -l) -eq 0 ]; then
-		echo "list_polhemus not found, adding..."
-		echo "list_polhemus() { curl -s 10.6.10.7:5000/v2/shadow-teleop-polhemus/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }" >> ~/.bashrc
-	else
-		echo "list_polhemus already here, not adding."
-	fi	
-
-	if [ $(cat ~/.bashrc | grep "list_teleop()" | wc -l) -eq 0 ]; then
-		echo "list_teleop not found, adding..."
-		echo "list_teleop() { curl -s 10.6.10.7:5000/v2/shadow-teleop/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }" >> ~/.bashrc
-	else
-		echo "list_teleop already here, not adding."
-	fi
-
-	if [ $(cat ~/.bashrc | grep "list_haptx()" | wc -l) -eq 0 ]; then
-		echo "list_haptx not found, adding..."
-		echo "list_haptx() { curl -s 10.6.10.7:5000/v2/shadow-teleop-haptx/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }" >> ~/.bashrc
-	else
-		echo "list_haptx already here, not adding."
-	fi
-
-	if [ $(cat ~/.bashrc | grep "list_cyber()" | wc -l) -eq 0 ]; then
-		echo "list_cyber not found, adding..."
-		echo "list_cyber() { curl -s 10.6.10.7:5000/v2/shadow-teleop-cyber/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }" >> ~/.bashrc
-	else
-		echo "list_cyber already here, not adding."
-	fi
+        wget https://raw.githubusercontent.com/carebare47/useful_things/master/bash_functions ~/.bash_functions
+        if [[ $(cat ~/.bashrc  | grep "source ~/.bash_functions" | wc -l) -eq 0 ]]; then
+          echo "source ~/.bash_functions" >> ~/.bashrc
+        fi
 
 	if [ $(cat ~/.bashrc | grep "oneliner()" | wc -l) -eq 0 ]; then
 		echo "echo oneliner not found, adding..."
@@ -393,13 +357,7 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 	else
 		echo "winpath_to_linux already here, not adding."
 	fi	
-	
-	tmp_loc=$(pwd)
-	cd /tmp
-        wget https://raw.githubusercontent.com/carebare47/useful_things/master/bash_functions /tmp/bash_functions
-	cat /tmp/bash_functions >> ~/.bashrc
-	rm /tmp/bash_functions
-	cd $tmp_loc
+
 
 	if [ $(cat ~/.bashrc | grep "upload_latest_firmware_from_container" | wc -l) -eq 0 ]; then
 		echo "upload_latest_firmware_from_container not found, adding"
