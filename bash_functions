@@ -108,4 +108,23 @@ list_teleop() { curl -s $docker_registry_nuc_ip:5000/v2/shadow-teleop/tags/list 
 list_haptx() { curl -s $docker_registry_nuc_ip:5000/v2/shadow-teleop-haptx/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }
 list_cyber() { curl -s $docker_registry_nuc_ip:5000/v2/shadow-teleop-cyber/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }
 list_other() { curl -s $docker_registry_nuc_ip:5000/v2/other/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }
+list_all() { registry_repo_list_all=$(curl -s $docker_registry_nuc_ip:5000/v2/_catalog | jq -r '.repositories[]')
+             registry_repo_list_valid=""
+             for repo in $registry_repo_list_all; do
+               if [[ $(curl -s $docker_registry_nuc_ip:5000/v2/$repo/tags/list | jq -r '.tags') != 'null' ]]; then registry_repo_list_valid=$(echo "${registry_repo_list_valid}"; echo $repo); fi
+             done
 
+             echo "Repos currently in registry: "
+             for repo in $registry_repo_list_valid; do
+               echo " \"$repo\""
+             done
+             echo
+
+             echo "Images currently in registry: "
+             for repo in $registry_repo_list_valid; do
+               repo_name=$(jq ".name" <(curl -s $docker_registry_nuc_ip:5000/v2/$repo/tags/list))
+               echo " Images in $repo_name:"
+               jq -C ".tags[]" <(curl -s $docker_registry_nuc_ip:5000/v2/$repo/tags/list) | sed 's/^/  /'
+               echo
+             done
+}
