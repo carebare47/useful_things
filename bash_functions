@@ -143,3 +143,5 @@ delete_image_from_registry() {
   echo "Now run garbage collection: "
   echo "docker exec -i registry_2 sh -c \"bin/registry garbage-collect /etc/docker/registry/config.yml\""
 }
+print_git_config_tom(){echo -e "git config --global user.name carebare47\ngit config --global user.email tom@shadowrobot.com"; }
+
