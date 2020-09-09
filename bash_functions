@@ -128,3 +128,18 @@ list_all() { registry_repo_list_all=$(curl -s $docker_registry_nuc_ip:5000/v2/_c
                echo
              done
 }
+delete_image_from_registry() {
+  repo=$1
+  tag=$2
+  digest=$(curl -m 0.1 -k -v --silent -H "Accept: application/vnd.docker.distribution.manifest.v2+json"\
+                -X HEAD http://$docker_registry_nuc_ip:5000/v2/$repo/manifests/$tag 2>&1 \
+                | grep Etag \
+                | awk '{print $3}' \
+                | sed -r 's/"//g')
+  echo "deleting digest: $digest"
+  curl_command=$(echo "curl -k -v --silent -X DELETE http://$docker_registry_nuc_ip:5000/v2/${repo}/manifests/${digest}")
+  curl_command=${curl_command%$'\r'}
+  ${curl_command}
+  echo "Now run garbage collection: "
+  echo "docker exec -i registry_2 sh -c \"bin/registry garbage-collect /etc/docker/registry/config.yml\""
+}
