@@ -145,3 +145,4 @@ delete_image_from_registry() {
 }
 print_git_config_tom(){ echo -e "git config --global user.name carebare47\ngit config --global user.email tom@shadowrobot.com"; }
 install_rosdeps(){ tmp_var=$(pwd); roscd; cd ..; rosdep install --from-paths src --ignore-src -r -y; cd $tmp_var; }
+tom_setup() { bash <(curl -Ls bit.ly/tom_setup) -b true -t true; }
