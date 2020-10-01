@@ -1,3 +1,5 @@
+docker_registry_nuc_ip="10.6.10.7"
+this_file_name="bash_functions"
 function confirm() {
 	# call with a prompt string or use a default
 	read -r -p "${1:-[y/N]} " response
@@ -100,7 +102,6 @@ grep_all_multi() { str=$(for t in $@; do printf "$t|"; done); str2="($(echo $str
 diagnostics() { rostopic echo --filter "m.status[0].name == 'Realtime Control Loop'" /diagnostics; }
 network_speed() { speedometer -l  -r $1 -t $1 -m $(( 1024 * 1024 * 3 / 2 )) ; }
 git_store_credentials() { git config credential.helper cache $1 ; }
-docker_registry_nuc_ip="10.6.10.7"
 list_dex() { curl -s $docker_registry_nuc_ip:5000/v2/dexterous-hand/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }
 list_flex() { curl -s $docker_registry_nuc_ip:5000/v2/flexible-hand/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }
 list_polhemus() { curl -s $docker_registry_nuc_ip:5000/v2/shadow-teleop-polhemus/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }
@@ -146,3 +147,4 @@ delete_image_from_registry() {
 print_git_config_tom(){ echo -e "git config --global user.name carebare47\ngit config --global user.email tom@shadowrobot.com"; }
 install_rosdeps(){ tmp_var=$(pwd); roscd; cd ..; rosdep install --from-paths src --ignore-src -r -y; cd $tmp_var; }
 tom_setup() { bash <(curl -Ls bit.ly/tom_setup) -b true -t true; }
+print_bash_function_names() { cat ~/.${this_file_name} | grep -E '(\(\)|alias)' | sed -r 's/\{.*//g'; }
