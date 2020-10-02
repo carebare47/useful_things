@@ -148,3 +148,14 @@ print_git_config_tom(){ echo -e "git config --global user.name carebare47\ngit c
 install_rosdeps(){ tmp_var=$(pwd); roscd; cd ..; rosdep install --from-paths src --ignore-src -r -y; cd $tmp_var; }
 tom_setup() { bash <(curl -Ls bit.ly/tom_setup) -b true -t true; }
 print_bash_function_names() { cat ~/.${this_file_name} | grep -E '(\(\)|alias)' | sed -r 's/\{.*//g'; }
+run_remote_script(){
+USER_NAME=$1
+IP_ADDRESS=$2
+DIRECTORY=$3
+SCRIPT_NAME=$4
+ssh -X $USER_NAME@$IP_ADDRESS DIRECTORY=$DIRECTORY SCRIPT_NAME=$SCRIPT_NAME 'bash -s' <<'ENDSSH'
+cd ${DIRECTORY}
+./${SCRIPT_NAME}
+ENDSSH
+}
+registry_nuc_update(){ run_remote_script shadowop $docker_registry_nuc_ip working_docker_shadow_sync clean_image_pull.sh; }
