@@ -181,3 +181,14 @@ do
 done
 echo -e $output | column -t -s ', ' 
 }
+bfg(){
+BFG_FILENAME="bfg-1.13.0.jar"
+BFG_URL="https://repo1.maven.org/maven2/com/madgag/bfg/1.13.0/bfg-1.13.0.jar"
+if [[ $(ls ~/ | grep $BFG_FILENAME | wc -l ) -eq 0 ]]; then
+  wget $BFG_URL -O ~/${BFG_FILENAME}
+fi
+CUR_DIR=$(pwd)
+cd ~/
+java -jar $BFG_FILENAME $@ $CUR_DIR
+cd $CUR_DIR
+}
