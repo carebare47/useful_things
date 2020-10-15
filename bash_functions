@@ -192,3 +192,17 @@ cd ~/
 java -jar $BFG_FILENAME $@ $CUR_DIR
 cd $CUR_DIR
 }
+set_PID() { joint=$1; p=$2; i=$3; d=$4; rosservice call /ra_trajectory_controller/gains/ra_${joint}_joint/set_parameters "config:
+  bools:
+  - {name: '', value: false}
+  ints:
+  - {name: '', value: 0}
+  strs:
+  - {name: '', value: ''}
+  doubles:
+  - {name: 'p', value: $p}
+  - {name: 'i', value: $i}
+  - {name: 'd', value: $d}
+  - {name: 'i_clamp', value: 1.0}
+  groups:
+  - {name: '', state: false, id: 0, parent: 0}"; }
