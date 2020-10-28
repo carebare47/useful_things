@@ -207,4 +207,4 @@ set_PID() { joint=$1; p=$2; i=$3; d=$4; rosservice call /ra_trajectory_controlle
   groups:
   - {name: '', state: false, id: 0, parent: 0}"; }
 bristol_network_speed() { network_speed $(ip addr show | grep 10.6 | awk '{print $8}'); }
-remove_moveit() { base_ws="/home/user/projects/shadow_robot/base/src" && cd $base_ws && rm -rf moveit && sudo apt-get install -y ros-melodic-moveit* && install_rosdeps && cd $base_ws && cd .. && catkin_make_debug_release && catkin_make_all_debug_release ; }
+remove_moveit() { base_ws="/home/user/projects/shadow_robot/base/src" && cd $base_ws && rm -rf moveit && sudo apt-get install -y ros-melodic-moveit* && install_rosdeps && cd $base_ws && cd .. && rm -rf build devel && catkin_make_debug_release && catkin_make_all_debug_release ; }
