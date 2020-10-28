@@ -66,3 +66,4 @@ grep_all_multi() { str=$(for t in $@; do printf "$t|"; done); str2="($(echo $str
 diagnostics() { rostopic echo --filter "m.status[0].name == 'Realtime Control Loop'" /diagnostics; }
 network_speed() { speedometer -l  -r $1 -t $1 -m $(( 1024 * 1024 * 3 / 2 )) ; }
 git_store_credentials() { git config credential.helper cache $1 ; }
+bristol_network_speed() { network_speed $(ip addr show | grep 10.6 | awk '{print $8}'); }
