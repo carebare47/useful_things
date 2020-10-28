@@ -224,206 +224,27 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 #	fi
         echo "Adding .launch to get xml language file..."
         sudo sed -i 's/\*\.xml;/\*\.xml;\*\.launch;/g' /usr/share/gtksourceview-3.0/language-specs/xml.lang
+
+        echo "Adding .xacro to get xml language file..."
+        sudo sed -i 's/\*\.xml;/\*\.xml;\*\.xacro;/g' /usr/share/gtksourceview-3.0/language-specs/xml.lang
+
 	echo "Installing bash functions..."
-	if [ $(cat ~/.bashrc | grep "list_dex()" | wc -l) -eq 0 ]; then
-		echo "list_dex not found, adding..."
-		echo "list_dex() { curl -s 10.6.10.7:5000/v2/dexterous-hand/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }" >> ~/.bashrc
-	else
-		echo "list_dex already here, not adding."
-	fi
+        if [[ $(ls ~/ -a | grep -x ".bash_functions" | wc -l) -gt 0 ]]; then
+          rm ~/.bash_functions
+        fi
+        wget -O ~/.bash_functions https://raw.githubusercontent.com/carebare47/useful_things/master/bash_functions
+        if [[ $(cat ~/.bashrc  | grep "source ~/.bash_functions" | wc -l) -eq 0 ]]; then
+          echo "source ~/.bash_functions" >> ~/.bashrc
+        fi
 
-	if [ $(cat ~/.bashrc | grep "list_flex()" | wc -l) -eq 0 ]; then
-		echo "list_flex not found, adding..."
-		echo "list_flex() { curl -s 10.6.10.7:5000/v2/flexible-hand/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }" >> ~/.bashrc
-	else
-		echo "list_flex already here, not adding."
-	fi
-	
-	if [ $(cat ~/.bashrc | grep "list_polhemus()" | wc -l) -eq 0 ]; then
-		echo "list_polhemus not found, adding..."
-		echo "list_polhemus() { curl -s 10.6.10.7:5000/v2/shadow-teleop-polhemus/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }" >> ~/.bashrc
-	else
-		echo "list_polhemus already here, not adding."
-	fi	
-
-	if [ $(cat ~/.bashrc | grep "list_teleop()" | wc -l) -eq 0 ]; then
-		echo "list_teleop not found, adding..."
-		echo "list_teleop() { curl -s 10.6.10.7:5000/v2/shadow-teleop/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }" >> ~/.bashrc
-	else
-		echo "list_teleop already here, not adding."
-	fi
-
-	if [ $(cat ~/.bashrc | grep "list_haptx()" | wc -l) -eq 0 ]; then
-		echo "list_haptx not found, adding..."
-		echo "list_haptx() { curl -s 10.6.10.7:5000/v2/shadow-teleop-haptx/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }" >> ~/.bashrc
-	else
-		echo "list_haptx already here, not adding."
-	fi
-
-	if [ $(cat ~/.bashrc | grep "list_cyber()" | wc -l) -eq 0 ]; then
-		echo "list_cyber not found, adding..."
-		echo "list_cyber() { curl -s 10.6.10.7:5000/v2/shadow-teleop-cyber/tags/list | jq -S '.tags[]' | sort -r | sed -r 's/\"//g' ; }" >> ~/.bashrc
-	else
-		echo "list_cyber already here, not adding."
-	fi
-
-	if [ $(cat ~/.bashrc | grep "oneliner()" | wc -l) -eq 0 ]; then
-		echo "echo oneliner not found, adding..."
-		echo "oneliner() { echo \"bash <(curl -Ls https://raw.githubusercontent.com/shadow-robot/sr-build-tools/F%23SRC-1077-make-it-work-with-nvidia-docker2/docker/launch.sh) -i 10.6.10.7:5000/flexible-hand:kinetic-v0.2.69 -bt F#SRC-1077-make-it-work-with-nvidia-docker2 -b kinetic_devel -n flexible -sn flex -e enp0s25 -l false -r true -g true -nv 2\" ; }" >> ~/.bashrc
-	else
-		echo "echo oneliner already here, not adding."
-	fi
-
-	if [ $(cat ~/.bashrc | grep "copy()" | wc -l) -eq 0 ]; then
-		echo "copy function not found, adding..."
-		echo "copy() { \"\$1\" | tr -d '\n' | xsel -ib ; }" >> ~/.bashrc
-	else
-		echo "copy function already here, not adding."
-	fi
-	if [ $(cat ~/.bashrc | grep "git_update_all()" | wc -l) -eq 0 ]; then
-		echo "git_update_all function not found, adding..."
-		echo "git_update_all() { ls | xargs -I{} git -C {} pull ; }" >> ~/.bashrc
-	else
-		echo "git_update_all function already here, not adding."
-	fi
-	
-	if [ $(cat ~/.bashrc | grep "git_print_log()" | wc -l) -eq 0 ]; then
-		echo "git_print_log function not found, adding..."
-		echo "git_print_log() { git log --graph --oneline --decorate --all ; }" >> ~/.bashrc
-	else
-		echo "git_print_log function already here, not adding."
-	fi
-
-	if [ $(cat ~/.bashrc | grep "scan_shadow_ports()" | wc -l) -eq 0 ]; then
-		echo "scan_shadow_ports function not found, adding..."
-		echo "scan_shadow_ports() { nmap -p 22 --open -sV 10.6.10.0/24 ; } " >> ~/.bashrc
-	else
-		echo "scan_shadow_ports function already here, not adding."
-	fi
-
-	if [ $(cat ~/.bashrc | grep "grep_all()" | wc -l) -eq 0 ]; then
-		echo "grep_all function not found, adding..."
-		echo "grep_all() { grep -rn '.' -e \"\$1\" ; } " >> ~/.bashrc
-	else
-		echo "grep_all function already here, not adding."	
-	fi
-	
-	if [ $(cat ~/.bashrc | grep "debug_bash" | wc -l) -eq 0 ]; then
-		echo "debug_bash not found, adding..."
-		echo "debug_bash() { PS4='\033[0;33m+(\${BASH_SOURCE}:\${LINENO}):\033[0m \${FUNCNAME[0]:+\${FUNCNAME[0]}(): }' bash -x \$1 ; }" >> ~/.bashrc
-	else 
-	        echo "debug_bash function already here, not adding."
-	fi
-	
-	if [ $(cat ~/.bashrc | grep "git_add_ssh" | wc -l) -eq 0 ]; then
-		echo "git_add_ssh not found, adding"
-		echo "git_add_ssh() { eval \"\$(ssh-agent -s)\"; ssh-add ~/.ssh/id_rsa ; }" >> ~/.bashrc
-	else
-		echo "git_add_ssh function already here, not adding."
-	fi
-
-
-	if [ $(cat ~/.bashrc | grep "test_sr_ur10" | wc -l) -eq 0 ]; then
-		echo "test_sr_ur10 not found, adding"
-		echo "test_sr_ur10() { roslaunch sr_robot_launch sr_right_ur10arm_hand.launch sim:=true scene:=true ; }" >> ~/.bashrc
-	else
-		echo "test_sr_ur10 function already here, not adding."
-	fi
-	
-	if [ $(cat ~/.bashrc | grep -E "\\.sshify" | wc -l) -eq 0 ]; then
-		echo "git_global_alias.sshify not found, adding"
-		echo -e "git config --global alias.sshify '\x21f() { git remote set-url origin \$(git remote get-url origin | sed -En \"s/https:\/\/github.com\//git@github.com:/p\") ; }; f'" >> ~/.bashrc
-	else
-		echo "git_global_alias.sshify function already here, not adding."
-	fi
-	
-	if [ $(cat ~/.bashrc | grep -E "\\.unsshify" | wc -l) -eq 0 ]; then
-		echo "git_global_alias.unsshify not found, adding"
-		echo -e "git config --global alias.unsshify '\x21f() { git remote set-url origin \$(git remote get-url origin | sed -En \"s/git@github.com:/https:\/\/github.com\//p\") ; }; f'" >> ~/.bashrc
-	else
-		echo "git_global_alias.unsshify function already here, not adding."
-	fi	
-
-
-	if [ $(cat ~/.bashrc | grep "duplicates_added" | wc -l) -eq 0 ]; then
-		echo "duplicates not found, adding"
-		echo "git_sshify_all_both() { roscd; cd ../src; git_sshify_all; cd ../../base_deps/src; git_sshify_all ; }" >> ~/.bashrc
-		echo "setup_new_shadow_container_build_all() { mkdir ~/.ssh || true; git_sshify_all_both; setup_new_shadow_container; catkin_make_all_debug_release ; }" >> ~/.bashrc
-		echo "setup_new_shadow_container() { git_add_ssh; roscd; cd ../src; git_update_all; cd ../../base_deps/src; git_update_all; }" >> ~/.bashrc
-		echo "git_unsshify_all_both() { roscd; cd ../src; git_unsshify_all; cd ../../base_deps/src; git_unsshify_all ; }" >> ~/.bashrc
-		echo "git_sshify_all() { ls | xargs -I{} git -C {} sshify ; }" >> ~/.bashrc
-		echo "git_unsshify_all() { ls | xargs -I{} git -C {} unsshify ; }" >> ~/.bashrc
-		echo "# duplicates_added" >> ~/.bashrc
-		echo "catkin_make_debug_release() { catkin_make -DCMAKE_BUILD_TYPE=RelWithDebInfo ; }" >> ~/.bashrc
-		echo "catkin_make_all_debug_release () { tmp_var=$(pwd); roscd; cd ..; catkin_make_debug_release; cd ../base_deps; catkin_make_debug_release ; cd $tmp_var;  }" >> ~/.bashrc
-		echo "catkin_make_all () { tmp_var=$(pwd); roscd; cd ..; catkin_make; cd ../base_deps; catkin_make ; cd $tmp_var; }" >> ~/.bashrc
-
-	else
-		echo "duplicates already here, not adding."
-	fi
-		
-	
-
-	if [ $(cat ~/.bashrc | grep "nvidialise" | wc -l) -eq 0 ]; then
-		echo "nvidialise alias not found, adding"
-		echo "nvidialise(){ bash <(curl -Ls https://github.com/shadow-robot/sr-build-tools/raw/master/docker/utils/docker2_nvidialize.sh) \$1 ; }" >> ~/.bashrc
-	else
-		echo "nvidialise alias already here, not adding."
-	fi
-	
-	if [ $(cat ~/.bashrc | grep "please_alias" | wc -l) -eq 0 ]; then
-		echo "please alias not found, adding"
-		echo "alias please=\"sudo\" # please_alias" >> ~/.bashrc
-	else
-		echo "please alias already here, not adding."
-	fi	
-	
-	if [ $(cat ~/.bashrc | grep "docker_create" | wc -l) -eq 0 ]; then
+	if [ $(cat ~/.bash_functions | grep "docker_create" | wc -l) -eq 0 ]; then
 		echo "docker_create function not found, adding"
 		wget -O /tmp/docker_create_function https://raw.githubusercontent.com/carebare47/useful_things/master/docker_create_function
-		cat /tmp/docker_create_function >> ~/.bashrc
+		cat /tmp/docker_create_function >> ~/.bash_functions
 		rm /tmp/docker_create_function
 	else
 		echo "docker_create function already here, not adding."
 	fi
-
-	if [ $(cat ~/.bashrc | grep "winpath_to_linux" | wc -l) -eq 0 ]; then
-		echo "winpath_to_linux not found, adding"
-		echo "winpath_to_linux(){ echo $1 | sed 's/\\/\//g' | sed 's/C:/\/mnt\/c/'; }" >> ~/.bashrc
-	else
-		echo "winpath_to_linux already here, not adding."
-	fi	
-	
-	tmp_loc=$(pwd)
-	cd /tmp
-        wget https://raw.githubusercontent.com/carebare47/useful_things/master/bash_functions /tmp/bash_functions
-	cat /tmp/bash_functions >> ~/.bashrc
-	rm /tmp/bash_functions
-	cd $tmp_loc
-
-	if [ $(cat ~/.bashrc | grep "upload_latest_firmware_from_container" | wc -l) -eq 0 ]; then
-		echo "upload_latest_firmware_from_container not found, adding"
-                echo "upload_latest_firmware_from_container() 
-{ 
-container_number=\$(docker container ls -q); 
-
-latest_arduino_build_path=\$(docker exec \$container_number ls -t /tmp | grep arduino | head -n1);
-
-latest_arduino_build_bin=\$(docker exec \$container_number ls /tmp/\$latest_arduino_build_path | grep bin); 
-
-rm \$latest_arduino_build_bin || true; 
-
-docker cp \$container_number:/tmp/\$latest_arduino_build_path/\$latest_arduino_build_bin . ;
-
-st-flash --reset write \$latest_arduino_build_bin 0x8000000 ; 
-
-echo \"uploaded \$latest_arduino_build_bin from \$latest_arduino_build_path\" ; 
-}" >> ~/.bashrc
-else
-	echo "upload_latest_firmware_from_container already here, not adding."
-fi
-
-
 	
 	source ~/.bashrc
 fi
