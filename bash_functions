@@ -210,3 +210,4 @@ set_PID() { joint=$1; p=$2; i=$3; d=$4; rosservice call /ra_trajectory_controlle
   - {name: '', state: false, id: 0, parent: 0}"; }
 bristol_network_speed() { network_speed $(ip addr show | grep 10.6 | awk '{print $8}'); }
 remove_moveit() { cd $base_ws && rm -rf moveit && sudo apt-get install -y ros-melodic-moveit* && install_rosdeps && cd $base_ws && cd .. && rm -rf build devel && catkin_make_debug_release && catkin_make_all_debug_release ; }
+set_PID_all() { p=$1; i=$2; d=$3; for joint in $(echo "elbow shoulder_lift shoulder_pan wrist_1 wrist_2 wrist_3"); do echo $joint; set_PID $joint $p $i $d; done; }
