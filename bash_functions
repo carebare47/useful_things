@@ -1,3 +1,4 @@
+base_ws="/home/user/projects/shadow_robot/base/src"
 docker_registry_nuc_ip="10.6.10.7"
 this_file_name="bash_functions"
 function confirm() {
@@ -145,7 +146,8 @@ delete_image_from_registry() {
   echo "docker exec -i registry_2 sh -c \"bin/registry garbage-collect /etc/docker/registry/config.yml\""
 }
 print_git_config_tom(){ echo -e "git config --global user.name carebare47\ngit config --global user.email tom@shadowrobot.com"; }
-install_rosdeps(){ tmp_var=$(pwd); roscd; cd ..; rosdep install --from-paths src --ignore-src -r -y; cd $tmp_var; }
+rosdep_install() { rosdep install --from-paths src --ignore-src -r -y ; }
+install_rosdeps(){ tmp_var=$(pwd); cd $base_ws; cd ../../base_deps; rosdep_install; cd $base_ws; cd ..; rosdep_install; cd $tmp_var; }
 tom_setup() { bash <(curl -Ls bit.ly/tom_setup) -b true -t true; }
 print_bash_function_names() { cat ~/.${this_file_name} | grep -E '(\(\)|alias)' | sed -r 's/\{.*//g'; }
 run_remote_script(){
@@ -207,4 +209,4 @@ set_PID() { joint=$1; p=$2; i=$3; d=$4; rosservice call /ra_trajectory_controlle
   groups:
   - {name: '', state: false, id: 0, parent: 0}"; }
 bristol_network_speed() { network_speed $(ip addr show | grep 10.6 | awk '{print $8}'); }
-remove_moveit() { base_ws="/home/user/projects/shadow_robot/base/src" && cd $base_ws && rm -rf moveit && sudo apt-get install -y ros-melodic-moveit* && install_rosdeps && cd $base_ws && cd .. && rm -rf build devel && catkin_make_debug_release && catkin_make_all_debug_release ; }
+remove_moveit() { cd $base_ws && rm -rf moveit && sudo apt-get install -y ros-melodic-moveit* && install_rosdeps && cd $base_ws && cd .. && rm -rf build devel && catkin_make_debug_release && catkin_make_all_debug_release ; }
