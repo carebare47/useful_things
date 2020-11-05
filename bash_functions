@@ -129,6 +129,16 @@ list_all() { registry_repo_list_all=$(curl -s $docker_registry_nuc_ip:5000/v2/_c
                jq -C ".tags[]" <(curl -s $docker_registry_nuc_ip:5000/v2/$repo/tags/list) | sed 's/^/  /'
                echo
              done
+
+             echo "Night build dates: "
+             for repo in $registry_repo_list_valid; do 
+               repo_name=$(jq ".name" <(curl -s $docker_registry_nuc_ip:5000/v2/$repo/tags/list))
+               night_build_tags=$(jq -C ".tags[]" <(curl -s $docker_registry_nuc_ip:5000/v2/$repo/tags/list) | sed 's/^/  /' | grep "melodic-night-build" )
+               if [[ $(echo $night_build_tags) != "" ]]; then
+                 date=$(curl -s -X GET http://$docker_registry_nuc_ip:5000/v2/$repo/manifests/melodic-night-build | jq -r '.history[].v1Compatibility' | jq '.created' | sort | tail -n1)
+                 echo "Date ${repo}:melodic-night-build was created: $date"
+               fi
+             done
 }
 delete_image_from_registry() {
   repo=$1
