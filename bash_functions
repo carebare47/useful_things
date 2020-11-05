@@ -1,6 +1,10 @@
 base_ws="/home/user/projects/shadow_robot/base/src"
 docker_registry_nuc_ip="10.6.10.7"
 this_file_name="bash_functions"
+Red='\033[0;31m'          # Red
+Green='\033[0;32m'        # Green
+Yellow='\033[0;33m'       # Yellow
+Color_Off='\033[0m'       # Text Reset
 function confirm() {
 	# call with a prompt string or use a default
 	read -r -p "${1:-[y/N]} " response
