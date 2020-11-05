@@ -136,7 +136,13 @@ list_all() { registry_repo_list_all=$(curl -s $docker_registry_nuc_ip:5000/v2/_c
                night_build_tags=$(jq -C ".tags[]" <(curl -s $docker_registry_nuc_ip:5000/v2/$repo/tags/list) | sed 's/^/  /' | grep "melodic-night-build" )
                if [[ $(echo $night_build_tags) != "" ]]; then
                  date=$(curl -s -X GET http://$docker_registry_nuc_ip:5000/v2/$repo/manifests/melodic-night-build | jq -r '.history[].v1Compatibility' | jq '.created' | sort | tail -n1)
-                 echo "Date ${repo}:melodic-night-build was created: $date"
+                 image_date=$(date -d $(echo $date | tr -d "\"" | cut -c1-19) +%Y%m%d)
+                 current_date=$(date +%Y%m%d)
+                 if [[ $image_date -ge $current_date ]]; then 
+                   echo -e "${Green}Date ${repo}:melodic-night-build was created: $(date -d $(echo $date | tr -d "\"" | cut -c1-19) +%Y-%m-%d). Up to date! ${Color_Off}"
+                 else
+                   echo -e "${Yellow}Date ${repo}:melodic-night-build was created: $(date -d $(echo $date | tr -d "\"" | cut -c1-19) +%Y-%m-%d), whereas todays date is $(date +%Y-%m-%d). There should be a newer image out by now. Please run registry_nuc_update. ${Color_Off}"
+                 fi
                fi
              done
 }
