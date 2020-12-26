@@ -232,3 +232,4 @@ bristol_network_speed() { network_speed $(ip addr show | grep 10.6 | awk '{print
 remove_moveit() { cd $base_ws && rm -rf moveit && sudo apt-get install -y ros-melodic-moveit* && install_rosdeps && cd $base_ws && cd .. && rm -rf build devel && catkin_make_debug_release && catkin_make_all_debug_release ; }
 set_PID_all() { p=$1; i=$2; d=$3; for joint in $(echo "elbow shoulder_lift shoulder_pan wrist_1 wrist_2 wrist_3"); do echo $joint; set_PID $joint $p $i $d; done; }
 get_PID_all() { if [[ $1 == "" ]]; then side="ra"; else side=$1; fi; for joint in $(echo "elbow shoulder_lift shoulder_pan wrist_1 wrist_2 wrist_3"); do for var in $(echo "p i d"); do value=$(rosparam get "/${side}_trajectory_controller/gains/${side}_${joint}_joint/${var}"); echo "${joint}_${var}: $value" ;done; done; }
+autostart_program() { curl -Ls https://raw.githubusercontent.com/carebare47/useful_things/master/set_startup-script.py | python - $1 $1 ; }
