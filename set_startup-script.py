@@ -17,5 +17,6 @@ if not os.path.exists(file):
             l = l+name if l == "Name=" else l
             l = l+command if l == "Exec=" else l
             out.write(l+"\n")
+    print("success, created autostart for " + str(name) + ": " + str(command))
 else:
     print("file exists, choose another name")
