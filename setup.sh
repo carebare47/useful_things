@@ -47,6 +47,17 @@ function confirm() {
 	esac
 }
 
+function autostart() {
+	echo "Checking for autostart files..."
+	if [ $(ls ~/.config/autostart/ | grep $1 | wc -l) -eq 0 ]; then
+		echo "No autostart files found, creating them now ..."
+		curl -Ls https://raw.githubusercontent.com/carebare47/useful_things/master/set_startup-script.py | python - $1 $1
+	else
+		echo "Autostart files found."
+	fi
+}
+
+
 if [[ -z "${CONTAINER}" && "${ALL}" == true ]]; then
 	CONTAINER=false
 fi
@@ -250,16 +261,7 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 fi
 
 if [[ "${AUTOSTART_TERMINATOR}" == true  ]]; then
-	echo "Checking for autostart files..."
-	if [ $(ls ~/.config/autostart/ | grep terminator | wc -l) -eq 0 ]; then
-		echo "No autostart files found, creating them now ..."
-		wget https://raw.githubusercontent.com/carebare47/useful_things/master/set_startup-script.py -P /tmp/startup_script/
-		cd /tmp/startup_script/
-		python3 set_startup-script.py 'terminator' 'terminator'
-		cd -
-	else
-		echo "Autostart files found."
-	fi
+	autostart 'terminator'
 fi
 
 if [[ "${INSTALL_SLACK}" == true  ]]; then
@@ -267,17 +269,8 @@ if [[ "${INSTALL_SLACK}" == true  ]]; then
 	sudo snap install slack --classic
 fi
 
-if [[ "${AUTOSTART_SLACK}" == true ]]; then
-	echo "Checking for autostart files..."
-	if [ $(ls ~/.config/autostart/ | grep slack | wc -l) -eq 0 ]; then
-		echo "No autostart files found, creating them now ..."
-		wget https://raw.githubusercontent.com/carebare47/useful_things/master/set_startup-script.py -P /tmp/startup_script/
-		cd /tmp/startup_script/
-		python3 set_startup-script.py 'slack' 'slack'
-		cd -
-	else
-		echo "Autostart files found."
-	fi
+if [[ "${AUTOSTART_SLACK}" == true  ]]; then
+	autostart 'slack'
 fi
 
 if [[ "${INSTALL_CHROME}" == true  ]]; then
