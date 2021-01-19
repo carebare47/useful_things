@@ -234,17 +234,17 @@ set_PID_all() { p=$1; i=$2; d=$3; for joint in $(echo "elbow shoulder_lift shoul
 get_PID_all() { if [[ $1 == "" ]]; then side="ra"; else side=$1; fi; for joint in $(echo "elbow shoulder_lift shoulder_pan wrist_1 wrist_2 wrist_3"); do for var in $(echo "p i d"); do value=$(rosparam get "/${side}_trajectory_controller/gains/${side}_${joint}_joint/${var}"); echo "${joint}_${var}: $value" ;done; done; }
 autostart_program() { curl -Ls https://raw.githubusercontent.com/carebare47/useful_things/master/set_startup-script.py | python - $1 $1 ; }
 
-f_name(){ echo "TFQ_${1}"; }
-FILENAME="$(f_name remote_mouse_keepalive)"
-DIRECTORY="/home/user/RemoteMouse"
-PID_SEARCH_1="mono"
-PID_SEARCH_2="RemoteMouse" 
-COMMAND_STR="mono RemoteMouse.exe"
+# f_name(){ echo "TFQ_${1}"; }
+# FILENAME="$(f_name remote_mouse_keepalive)"
+# DIRECTORY="/home/user/RemoteMouse"
+# PID_SEARCH_1="mono"
+# PID_SEARCH_2="RemoteMouse" 
+# COMMAND_STR="mono RemoteMouse.exe"
 
-echo_keepalive_script(){ echo '#!/bin/bash
-ps_aux() { ps aux | grep $1 | grep -v grep ; }'; echo "cd $2
-while true; do if [[ \$(ps_aux $3 | grep $4 | wc -l) -eq 0 ]]; then $5; else sleep 1; fi; sleep 1; done
-" ;}
+# echo_keepalive_script(){ echo '#!/bin/bash
+# ps_aux() { ps aux | grep $1 | grep -v grep ; }'; echo "cd $2
+# while true; do if [[ \$(ps_aux $3 | grep $4 | wc -l) -eq 0 ]]; then $5; else sleep 1; fi; sleep 1; done
+# " ;}
 
-echo_keepalive_script ${FILENAME} ${DIRECTORY} ${PID_SEARCH_1} ${PID_SEARCH_2} ${COMMAND_STR} >> ~/.local/bin/${FILENAME}
-autostart_program ${FILENAME}
+# echo_keepalive_script ${FILENAME} ${DIRECTORY} ${PID_SEARCH_1} ${PID_SEARCH_2} ${COMMAND_STR} >> ~/.local/bin/${FILENAME}
+# autostart_program ${FILENAME}
