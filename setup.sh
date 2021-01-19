@@ -20,6 +20,10 @@ do
 			TOM="$2"
 			shift
 			;;
+		-g|--gui)
+			GUI="$2"
+			shift
+			;;
 		-s|--silent)
 			SILENT="$2"
 			shift
@@ -64,6 +68,11 @@ fi
 
 if [ -z "${ALL}" ]; then
 	ALL=false
+fi
+
+
+if [ -z "${GUI}" ]; then
+	GUI=true
 fi
 #if [ -z "${TOM}" ]; then
 #	echo "Are you Tom?"
@@ -174,7 +183,11 @@ else
 
 	BASH_FUNCTIONS=true
 	INSTALL_FZF=true
-	sudo apt-get update; sudo apt-get install -y xsel jq gedit gedit-plugins nano tree iputils-ping iproute2 highlight speedometer
+        if [[ ${GUI} == true ]]; then 
+		sudo apt-get update; sudo apt-get install -y xsel jq gedit gedit-plugins nano tree iputils-ping iproute2 highlight speedometer
+	else
+		sudo apt-get update; sudo apt-get install -y jq nano tree iputils-ping iproute2 highlight speedometer
+	fi
 	cat /etc/highlight/filetypes.conf | sed -r 's/\{ Lang=\"xml\", Extensions=\{/\{ Lang=\"xml\", Extensions=\{\"launch\", /g' | sudo tee /etc/highlight/filetypes.conf
 	cat /etc/highlight/filetypes.conf | sed -r 's/\{ Lang=\"xml\", Extensions=\{/\{ Lang=\"xml\", Extensions=\{\"xacro\", /g' | sudo tee /etc/highlight/filetypes.conf
 	INSTALL_SLACK=false
