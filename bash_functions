@@ -92,7 +92,7 @@ docker cp $container_number:/tmp/$latest_arduino_build_path/$latest_arduino_buil
 st-flash --reset write $latest_arduino_build_bin 0x8000000 ;
 echo "uploaded $latest_arduino_build_bin from $latest_arduino_build_path" ;
 }
-docker_add_insecure_nuc() { cd /etc/docker; if [[ $(ls | grep daemon | wc -l) == 0 ]]; then touch daemon.json; fi; cat daemon.json | jq '. + {"insecure-registries": ["10.6.10.7:5000"]}' | sudo tee daemon.json; sudo systemctl restart docker.service; }
+docker_add_insecure_nuc() { cd /etc/docker; if [[ $(ls | grep daemon | wc -l) == 0 ]]; then sudo touch daemon.json; echo -e "{\n\n}" | sudo tee daemon.json; fi; cat daemon.json | jq '. + {"insecure-registries": ["10.6.10.7:5000"]}' | sudo tee daemon.json; sudo systemctl restart docker.service; }
 catkin_make_debug_release_python3() { catkin_make --cmake-args \
             -DCMAKE_BUILD_TYPE=RelWithDebInfo \
             -DPYTHON_EXECUTABLE=/usr/bin/python3.8 \
