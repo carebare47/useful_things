@@ -253,3 +253,19 @@ excluded_packages_base_deps=$(rospack list | grep /home/user/projects/shadow_rob
 excluded_packages_base=$(rospack list | grep /home/user/projects/shadow_robot/base/src/moveit | awk '{print $1}' | paste -s -d ';')
 tmp_var=$(pwd); roscd; cd ..; catkin_make -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCATKIN_BLACKLIST_PACKAGES="$excluded_packages_base"; cd ../base_deps; catkin_make -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCATKIN_BLACKLIST_PACKAGES="$excluded_packages_base_deps" ; cd $tmp_var;  }
 ros_lint_py_here() { for file in $(find . -name "*py"); do echo $file; rosrun roslint pep8 --max-line-length=120 $file; done ; }
+dev_diff(){
+  ls /dev | sed -r $'s/ /\\n/g' > /tmp/diff_1 ;
+  bool_dev_diff=false ;
+  echo "Please plug or unplug device now..." ;
+  while [[ $bool_dev_diff == false ]]; do 
+    ls /dev | sed -r $'s/ /\\n/g' > /tmp/diff_2;
+    if [[ $(diff /tmp/diff_1 /tmp/diff_2) ]]; then
+      echo -E "device diff detected, waiting a few seconds for other drivers to start..." ;
+      echo
+      sleep 3 ;
+      ls /dev | sed -r $'s/ /\\n/g' > /tmp/diff_2;
+      bool_dev_diff=true;
+      break;
+    fi;
+  done ;
+  diff /tmp/diff_1 /tmp/diff_2 ; }
