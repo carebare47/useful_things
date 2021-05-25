@@ -269,4 +269,4 @@ dev_diff(){
     fi;
   done ;
   diff /tmp/diff_1 /tmp/diff_2 ; }
-google() { if [[ $(which sr | wc -l) -eq 0 ]]; then sudo apt-get install -y surfraw; else str="$*"; echo "google $str"; bash -c "sr google $str"; fi; }
+google() { if [[ $(which sr | wc -l) -eq 0 ]]; then sudo apt-get install -y surfraw; fi; str="$*"; echo "google $str"; bash -c "sr google $str"; }
