@@ -269,4 +269,4 @@ dev_diff(){
     fi;
   done ;
   diff /tmp/diff_1 /tmp/diff_2 ; }
-google() { if [[ $(which sr | wc -l) -eq 0 ]]; then sudo apt-get install -y surfraw; fi; str="$*"; echo "google $str"; bash -c "sr google $str"; }
+google() { if [[ $(which sr | wc -l) -eq 0 ]]; then sudo apt-get install -y surfraw && mkdir -p ~/.config/surfraw/ && for line in $(echo "SURFRAW_text_browser=/usr/bin/www-browser"; echo "SURFRAW_graphical=no"); do echo $line >> ~/.config/surfraw/conf ; done; fi; str="$*"; echo "google $str"; bash -c "sr google $str"; }
