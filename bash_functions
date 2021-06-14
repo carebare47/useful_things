@@ -271,3 +271,4 @@ dev_diff(){
   diff /tmp/diff_1 /tmp/diff_2 ; }
 google() { if [[ $(which sr | wc -l) -eq 0 ]]; then sudo apt-get install -y surfraw && mkdir -p ~/.config/surfraw/ && for line in $(echo "SURFRAW_text_browser=/usr/bin/www-browser"; echo "SURFRAW_graphical=no"); do echo $line >> ~/.config/surfraw/conf ; done; fi; str="$*"; echo "google $str"; bash -c "sr google $str"; }
 fix_ros_keys() { sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654; }
+dump_ros_params(){ python -c "import rospy; import rosparam; rospy.init_node('a'); rosparam.dump_params('parameter_dump.txt', '/')"; }
