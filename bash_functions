@@ -90,7 +90,7 @@ latest_arduino_build_bin=$(docker exec $container_number ls /tmp/$latest_arduino
 rm $latest_arduino_build_bin || true;
 docker cp $container_number:/tmp/$latest_arduino_build_path/$latest_arduino_build_bin . ;
 st-flash --reset write $latest_arduino_build_bin 0x8000000 ;
-echo "uploaded $latest_arduino_build_bin from $latest_arduino_build_path" ;
+	echo "uploaded $latest_arduino_build_bin from $latest_arduino_build_path" ;
 }
 docker_add_insecure_nuc() { cd /etc/docker; if [[ $(ls | grep daemon | wc -l) == 0 ]]; then sudo touch daemon.json; echo -e "{\n\n}" | sudo tee daemon.json; fi; cat daemon.json | jq '. + {"insecure-registries": ["10.6.10.7:5000"]}' | sudo tee daemon.json; sudo systemctl restart docker.service; }
 catkin_make_debug_release_python3() { catkin_make --cmake-args \
@@ -274,3 +274,4 @@ fix_ros_keys() { sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --
 dump_ros_params_custom_name(){ python -c "import rospy; import datetime; import rosparam; rospy.init_node('a'); filename = str(datetime.datetime.now().hour) + '_' + str(datetime.datetime.now().minute) + '_' + str(datetime.datetime.now().second) + '__' + str(datetime.datetime.now().day) + '_' + str(datetime.datetime.now().month) + '_' + str(datetime.datetime.now().year) + '_parameter_dump' + $1 + '.txt'; rosparam.dump_params(filename, '/')"; }
 dump_ros_params(){ python -c "import rospy; import datetime; import rosparam; rospy.init_node('a'); filename = str(datetime.datetime.now().hour) + '_' + str(datetime.datetime.now().minute) + '_' + str(datetime.datetime.now().second) + '__' + str(datetime.datetime.now().day) + '_' + str(datetime.datetime.now().month) + '_' + str(datetime.datetime.now().year) + '_parameter_dump.txt'; rosparam.dump_params(filename, '/')"; }
 docker_rmi_all(){ for image_tag in $(docker images | awk '{OFS = ":"; print $1, $2}' | grep -v "REPOSITORY:TAG"); do docker rmi $image_tag; done; }
+sync_gcode(){ rsync -azP /home/user/3d_PRINTER/gcode_upload/ pi@10.6.10.5:/home/pi/.octoprint/uploads;  }
