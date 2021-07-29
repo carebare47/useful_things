@@ -278,3 +278,4 @@ dump_ros_params_custom_name(){ python -c "import rospy; import datetime; import 
 dump_ros_params(){ python -c "import rospy; import datetime; import rosparam; rospy.init_node('a'); filename = str(datetime.datetime.now().hour) + '_' + str(datetime.datetime.now().minute) + '_' + str(datetime.datetime.now().second) + '__' + str(datetime.datetime.now().day) + '_' + str(datetime.datetime.now().month) + '_' + str(datetime.datetime.now().year) + '_parameter_dump.txt'; rosparam.dump_params(filename, '/')"; }
 docker_rmi_all(){ for image_tag in $(docker images | awk '{OFS = ":"; print $1, $2}' | grep -v "REPOSITORY:TAG"); do docker rmi $image_tag; done; }
 sync_gcode(){ rsync -azP /home/user/3d_PRINTER/gcode_upload/ pi@10.6.10.5:/home/pi/.octoprint/uploads;  }
+fix_ros_apt_key() { curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -; }
