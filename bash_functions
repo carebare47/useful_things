@@ -251,7 +251,7 @@ autostart_program() { curl -Ls https://raw.githubusercontent.com/carebare47/usef
 catkin_make_all_n(){ 
 excluded_packages_base_deps=$(rospack list | grep /home/user/projects/shadow_robot/base_deps/src/moveit | awk '{print $1}' | paste -s -d ';')
 excluded_packages_base=$(rospack list | grep /home/user/projects/shadow_robot/base/src/moveit | awk '{print $1}' | paste -s -d ';')
-tmp_var=$(pwd); roscd; cd ../; catkin_make -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCATKIN_BLACKLIST_PACKAGES="$excluded_packages_base"; roscd; cd ../../base_deps; catkin_make -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCATKIN_BLACKLIST_PACKAGES="$excluded_packages_base_deps" ; cd $tmp_var;  }
+tmp_var=$(pwd); roscd; cd ../; catkin_make -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCATKIN_BLACKLIST_PACKAGES="$excluded_packages_base" && roscd && cd ../../base_deps && catkin_make -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCATKIN_BLACKLIST_PACKAGES="$excluded_packages_base_deps"; cd $tmp_var;  }
 ros_cpp_py_list() { find . -name "*\.cpp" -or -name "*\.py" -or -name "*\.h" -or -name "*\.hpp"; }
 ros_noetic_lint_here() { for f in $(ros_cpp_py_list); do if [[ $(echo $f | grep -E '(cpp|hpp|h)' | wc -l) -gt 0 ]]; then rosrun roslint cpplint $f; else echo "${f}: "; rosrun roslint pycodestyle $f; fi; done; }
 ros_melodic_lint_here() { for f in $(ros_cpp_py_list); do if [[ $(echo $f | grep -E '(cpp|hpp|h)' | wc -l) -gt 0 ]]; then rosrun roslint cpplint $f; else echo "${f}: "; rosrun roslint pep8 $f; fi; done; }
