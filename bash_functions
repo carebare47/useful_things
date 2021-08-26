@@ -279,7 +279,7 @@ dump_ros_params(){ python -c "import rospy; import datetime; import rosparam; ro
 docker_rmi_all(){ for image_tag in $(docker images | awk '{OFS = ":"; print $1, $2}' | grep -v "REPOSITORY:TAG"); do docker rmi $image_tag; done; }
 sync_gcode(){ rsync -azP /home/user/3d_PRINTER/gcode_upload/ pi@10.6.10.5:/home/pi/.octoprint/uploads;  }
 fix_ros_apt_key() { curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -; }
-chungus() { echo <(curl -Ls https://raw.githubusercontent.com/carebare47/useful_things/master/chungus); } 
+chungus() { cat <(curl -Ls https://raw.githubusercontent.com/carebare47/useful_things/master/chungus); } 
 
 replace_j_threshold() { for x in $(ls | grep $1); do echo $x; sed -i 's/negative_threshold:.*/negative_threshold: -'$2'/g' $x; sed -i 's/positive_threshold:.*/positive_threshold: '$2'/g' $x;done; }
 
