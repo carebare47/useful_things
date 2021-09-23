@@ -270,6 +270,13 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 		echo "docker_create function already here, not adding."
 	fi
 	
+	echo "Installing eplot & ec..."
+	cd /usr/local/bin
+	sudo wget https://raw.githubusercontent.com/chriswolfvision/eplot/master/ec
+	sudo wget https://raw.githubusercontent.com/chriswolfvision/eplot/master/eplot
+	sudo chmod +x ec
+	sudo chmod +x eplot
+	
 	source ~/.bashrc
 fi
 
