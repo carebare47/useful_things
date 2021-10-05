@@ -302,3 +302,5 @@ dump_all_here() { d=$(pwd); for x in $(rosrun dynamic_reconfigure dynparam list 
 load_all_here() { d=$(pwd); for x in $(ls $d | grep _dump | sed -r 's/_dump//g'); do echo $x; rosrun dynamic_reconfigure dynparam load $x $d/${x}_dump; done; }
 load_all_here_filter() { d=$(pwd); for x in $(ls $d | grep _dump | grep $1 | sed -r 's/_dump//g'); do echo $x; rosrun dynamic_reconfigure dynparam load $x $d/${x}_dump; done; }
 docker_cp(){ docker cp $1 $(docker container ls -q):/home/user; }
+check_apt_dpkg(){ ps -C apt-get,dpkg >/dev/null && echo "installing software" || echo "all clear"; }
+check_apt_dpkg_bash(){ ps -C apt-get,dpkg >/dev/null && echo 1 || echo 0; }
