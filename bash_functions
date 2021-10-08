@@ -304,3 +304,5 @@ load_all_here_filter() { d=$(pwd); for x in $(ls $d | grep _dump | grep $1 | sed
 docker_cp(){ docker cp $1 $(docker container ls -q):/home/user; }
 check_apt_dpkg(){ ps -C apt-get,dpkg >/dev/null && echo "installing software" || echo "all clear"; }
 check_apt_dpkg_is_locked(){ ps -C apt-get,dpkg >/dev/null && echo 0 || echo 1; }
+check_ros_logs_containers(){ for x in $(docker ps -a | grep -v CONT | awk '{print $1}'); do docker start $x; docker exec -it --user user $x /ros_entrypoint.sh bash -c "xhost +local:3xs-bristol;export DISPLAY=:0;source /home/user/projects/shadow_robot/base_deps/devel/setup.bash;source /home/user/projects/shadow_robot/base/devel/setup.bash; rosclean check"; docker stop $x; done | grep node; }
+purge_ros_logs_containers(){ for x in $(docker ps -a | grep -v CONT | awk '{print $1}'); do docker start $x; docker exec -it --user user $x /ros_entrypoint.sh bash -c "xhost +local:3xs-bristol;export DISPLAY=:0;source /home/user/projects/shadow_robot/base_deps/devel/setup.bash;source /home/user/projects/shadow_robot/base/devel/setup.bash; rosclean check && rosclean purge -y"; docker stop $x; done; }
