@@ -252,6 +252,9 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
         echo "Adding .xacro to get xml language file..."
         sudo sed -i 's/\*\.xml;/\*\.xml;\*\.xacro;/g' /usr/share/gtksourceview-3.0/language-specs/xml.lang
 
+	echo "Adding .xacro to get xml language file..."
+        sudo sed -i 's/\*\.xml;/\*\.xml;\*\.urdf;/g' /usr/share/gtksourceview-3.0/language-specs/xml.lang
+
 	echo "Installing bash functions..."
         if [[ $(ls ~/ -a | grep -x ".bash_functions" | wc -l) -gt 0 ]]; then
           rm ~/.bash_functions
