@@ -308,3 +308,4 @@ check_ros_logs_containers(){ for x in $(docker ps -a | grep -v CONT | awk '{prin
 purge_ros_logs_containers(){ for x in $(docker ps -a | grep -v CONT | awk '{print $1}'); do docker start $x; docker exec -it --user user $x /ros_entrypoint.sh bash -c "xhost +local:3xs-bristol;export DISPLAY=:0;source /home/user/projects/shadow_robot/base_deps/devel/setup.bash;source /home/user/projects/shadow_robot/base/devel/setup.bash; rosclean check && rosclean purge -y"; docker stop $x; done; }
 web_server_here() { python -m http.server 8080; }
 python3ize_all_here(){ sed -i '1s/^/#!\/usr\/bin\/python3\n/' * && sudo chmod +x *; }
+scan_for_ssh_servers() { nmap -p 22 $1/24 ; }
