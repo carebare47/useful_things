@@ -311,4 +311,4 @@ python3ize_all_here(){ sed -i '1s/^/#!\/usr\/bin\/python3\n/' * && sudo chmod +x
 scan_for_ssh_servers() { nmap -p 22 $1/24 ; }
 install_keras() { bash <(curl -Ls https://raw.githubusercontent.com/carebare47/useful_things/master/install_keras.sh ) ; }
 install_fzf() { git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all && source ~/.bashrc; }
-cd_ltr(){ cd $1$(ls $1 -ltr | tail -n 1 | awk '{print $9}'); }
+cd_ltr(){ cd $1$(ls $1 -ltr -d */ | tail -n 1 | awk '{print $9}'); }
