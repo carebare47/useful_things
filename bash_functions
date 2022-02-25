@@ -253,8 +253,8 @@ excluded_packages_base_deps=$(rospack list | grep /home/user/projects/shadow_rob
 excluded_packages_base=$(rospack list | grep /home/user/projects/shadow_robot/base/src/moveit | awk '{print $1}' | paste -s -d ';')
 tmp_var=$(pwd); roscd; cd ../; catkin_make -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCATKIN_BLACKLIST_PACKAGES="$excluded_packages_base" && roscd && cd ../../base_deps && catkin_make -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCATKIN_BLACKLIST_PACKAGES="$excluded_packages_base_deps"; cd $tmp_var;  }
 ros_cpp_py_list() { find . -name "*\.cpp" -or -name "*\.py" -or -name "*\.h" -or -name "*\.hpp"; }
-ros_noetic_lint_here() { for f in $(ros_cpp_py_list); do if [[ $(echo $f | grep -E '(cpp|hpp|h)' | wc -l) -eq 0 ]]; then rosrun roslint cpplint $f; else echo "${f}: "; rosrun roslint pycodestyle $f; fi; done; }
-ros_melodic_lint_here() { for f in $(ros_cpp_py_list); do if [[ $(echo $f | grep -E '(cpp|hpp|h)' | wc -l) -eq 0 ]]; then rosrun roslint cpplint $f; else echo "${f}: "; rosrun roslint pep8 $f; fi; done; }
+ros_noetic_lint_here() { for f in $(ros_cpp_py_list); do if [[ $(echo $f | grep -E '(cpp|hpp|h)' | wc -l) -gt 0 ]]; then rosrun roslint cpplint $f; else echo "${f}: "; rosrun roslint pycodestyle $f; fi; done; }
+ros_melodic_lint_here() { for f in $(ros_cpp_py_list); do if [[ $(echo $f | grep -E '(cpp|hpp|h)' | wc -l) -gt 0 ]]; then rosrun roslint cpplint $f; else echo "${f}: "; rosrun roslint pep8 $f; fi; done; }
 ros_lint_here() { if [[ $ROS_DISTRO == "noetic" ]]; then ros_noetic_lint_here; else ros_melodic_lint_here; fi; }
 dev_diff(){
   ls /dev | sed -r $'s/ /\\n/g' > /tmp/diff_1 ;
