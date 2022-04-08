@@ -312,4 +312,4 @@ scan_for_ssh_servers() { nmap -p 22 $1/24 ; }
 install_keras() { bash <(curl -Ls https://raw.githubusercontent.com/carebare47/useful_things/master/install_keras.sh ) ; }
 install_fzf() { git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all && source ~/.bashrc; }
 cd_ltr(){ cd $1$(ls $1 -ltr -d */ | tail -n 1 | awk '{print $9}'); }
-find_newest() {find . -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "; }
+find_newest() { find . -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "; }
