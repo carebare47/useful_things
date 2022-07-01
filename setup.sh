@@ -184,9 +184,9 @@ else
 	BASH_FUNCTIONS=true
 	INSTALL_FZF=true
         if [[ ${GUI} == true ]]; then 
-		sudo apt-get update; sudo apt-get install -y xsel jq gedit gedit-plugins nano tree iputils-ping iproute2 highlight speedometer
+		sudo apt-get update; sudo apt-get install -y xsel jq gedit gedit-plugins nano tree iputils-ping iproute2 highlight speedometer screen
 	else
-		sudo apt-get update; sudo apt-get install -y jq nano tree iputils-ping iproute2 highlight speedometer
+		sudo apt-get update; sudo apt-get install -y jq nano tree iputils-ping iproute2 highlight speedometer screen
 	fi
 	cat /etc/highlight/filetypes.conf | sed -r 's/\{ Lang=\"xml\", Extensions=\{/\{ Lang=\"xml\", Extensions=\{\"launch\", /g' | sudo tee /etc/highlight/filetypes.conf
 	cat /etc/highlight/filetypes.conf | sed -r 's/\{ Lang=\"xml\", Extensions=\{/\{ Lang=\"xml\", Extensions=\{\"xacro\", /g' | sudo tee /etc/highlight/filetypes.conf
