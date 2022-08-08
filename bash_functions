@@ -77,6 +77,8 @@ git_sshify_all() { ls | xargs -I{} git -C {} sshify ; }
 git_unsshify_all() { ls | xargs -I{} git -C {} unsshify ; }
 catkin_make_debug_release() { catkin_make -DCMAKE_BUILD_TYPE=RelWithDebInfo ; }
 catkin_make_all_debug_release () { tmp_var=$(pwd); roscd; cd ..; catkin_make_debug_release; cd ../base_deps; catkin_make_debug_release ; cd $tmp_var;  }
+catkin_make_debug_release_tests() { catkin_make -DCMAKE_BUILD_TYPE=RelWithDebInfo run_tests; }
+catkin_make_all_debug_release_tests () { tmp_var=$(pwd); roscd; cd ..; catkin_make_debug_release_tests; cd ../base_deps; catkin_make_debug_release_tests ; cd $tmp_var;  }
 catkin_make_all () { tmp_var=$(pwd); roscd; cd ..; catkin_make; cd ../base_deps; catkin_make ; cd $tmp_var; }
 nvidialise(){ bash <(curl -Ls https://github.com/shadow-robot/sr-build-tools/raw/master/docker/utils/docker2_nvidialize.sh) $1 ; }
 alias please="sudo" # please_alias
