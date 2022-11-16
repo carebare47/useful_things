@@ -333,3 +333,9 @@ install_keras() { bash <(curl -Ls https://raw.githubusercontent.com/carebare47/u
 install_fzf() { git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all && source ~/.bashrc; }
 cd_ltr(){ cd $1$(ls $1 -ltr -d */ | tail -n 1 | awk '{print $9}'); }
 find_newest() { find . -type f -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d" "; }
+docker_start_latest(){
+  CHECK_FOR_AMBIGUITY=$(docker ps -a | grep -v Created | grep -v 'Up' | grep -v ID | grep "About a")
+  if [[ $( echo "${CHECK_FOR_AMBIGUITY}" | wc -l) -gt 1 ]]; then echo "Multiple ambigious most_recently_exited times detected: "; echo $CHECK_FOR_AMBIGUITY; fi
+  MOST_RECENTLY_EXITED_CONTAINER_TIME=$(docker ps -a | grep -v 'Up' | sed -r 's/.*Exited//g' | grep -v Created | grep -v ID | awk '{print $2" "$3}' | sed -r 'h;s/(month|week|day|hour|minute|second)\>/&s/g;s/,//g;s/.*/date -d "+&" +%s/e;G;s/\n/\t/' | sort | cut -f 2 | head -n 1 )
+  docker start $(docker ps -a | grep "${MOST_RECENTLY_EXITED_CONTAINER_TIME}" | awk '{print $1}')
+  }
