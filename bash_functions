@@ -338,4 +338,12 @@ docker_start_latest(){
   if [[ $( echo "${CHECK_FOR_AMBIGUITY}" | wc -l) -gt 1 ]]; then echo "Multiple ambigious most_recently_exited times detected: "; echo $CHECK_FOR_AMBIGUITY; fi
   MOST_RECENTLY_EXITED_CONTAINER_TIME=$(docker ps -a | grep -v 'Up' | sed -r 's/.*Exited//g' | grep -v Created | grep -v ID | awk '{print $2" "$3}' | sed -r 'h;s/(month|week|day|hour|minute|second)\>/&s/g;s/,//g;s/.*/date -d "+&" +%s/e;G;s/\n/\t/' | sort | cut -f 2 | head -n 1 )
   docker start $(docker ps -a | grep "${MOST_RECENTLY_EXITED_CONTAINER_TIME}" | awk '{print $1}')
-  }
+}
+tom_install_pycharm(){ 
+  start_dir=$(pwd)
+  cd ~/
+  https://download-cdn.jetbrains.com/python/pycharm-community-2022.2.3.tar.gz
+  tar -xzvf pycharm-community-2022.2.3.tar.gz
+  rm pycharm-community-2022.2.3.tar.gz
+  cd $start_dir
+}
