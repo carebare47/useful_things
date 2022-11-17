@@ -342,7 +342,7 @@ docker_start_latest(){
 tom_install_pycharm(){ 
   start_dir=$(pwd)
   cd ~/
-  https://download-cdn.jetbrains.com/python/pycharm-community-2022.2.3.tar.gz
+  wget https://download-cdn.jetbrains.com/python/pycharm-community-2022.2.3.tar.gz
   tar -xzvf pycharm-community-2022.2.3.tar.gz
   rm pycharm-community-2022.2.3.tar.gz
   cd $start_dir
