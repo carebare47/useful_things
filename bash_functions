@@ -347,3 +347,11 @@ tom_install_pycharm(){
   rm pycharm-community-2022.2.3.tar.gz
   cd $start_dir
 }
+tom_install_vscode(){ 
+  start_dir=$(pwd)
+  cd ~/
+  wget -O vscode.deb 'https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64'
+  sudo dpkg -i vscode.deb
+  rm vscode.deb
+  cd $start_dir
+}
