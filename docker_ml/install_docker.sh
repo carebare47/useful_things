@@ -12,7 +12,7 @@ sudo pip3 install PyYAML==5.4.1 --ignore-installed
 
 # Clean up useful_things
 rm -rf $aurora_folder
-git clone --depth 1 git@github.com:shadow-robot/aurora/ $aurora_home
+git clone --depth 1 git@github.com:shadow-robot/aurora/ $aurora_folder
 cd $aurora_folder/ansible
 
 sudo pip3 install -r data/requirements.txt
