@@ -1,4 +1,8 @@
-export aurora_folder="$HOME/useful_things"
+#!/usr/bin/env bash
+
+set -e
+
+export aurora_folder="$HOME/aurora"
 
 sudo apt-get update
 
