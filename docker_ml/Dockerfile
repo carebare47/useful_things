@@ -13,8 +13,8 @@ ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES graphics,utility,compute
 ENV NO_AT_BRIDGE=1
 
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-COPY terminator_config /tmp/terminator_config
+# COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+# COPY terminator_config /tmp/terminator_config
 
 ENV DEBIAN_FRONTEND="noninteractive" TZ="Europe/London"
 
