@@ -39,9 +39,9 @@ RUN set -x && \
     cat /tmp/additional_bashrc_cmds >> /home/user/.bashrc && \
     \
     echo "Setting default terminator config" && \
-    mkdir -p /home/$MY_USERNAME/.config/terminator/ && \
-    mv /tmp/terminator_config /home/$MY_USERNAME/.config/terminator/config && \
-    chown -R $MY_USERNAME:$MY_USERNAME /home/$MY_USERNAME/.config
+    mkdir -p /home/$MY_USERNAME/.config/terminator/
+    # mv /tmp/terminator_config /home/$MY_USERNAME/.config/terminator/config && \
+    # chown -R $MY_USERNAME:$MY_USERNAME /home/$MY_USERNAME/.config
 # Layer 2 Rest of libraries
 RUN set -x && \
     \
