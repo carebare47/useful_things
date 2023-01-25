@@ -279,7 +279,7 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 	sudo wget https://raw.githubusercontent.com/chriswolfvision/eplot/master/eplot
 	sudo chmod +x ec
 	sudo chmod +x eplot
-	
+	echo "existential_cow" >> ~/.bashrc
 	source ~/.bashrc
 fi
 
