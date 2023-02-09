@@ -280,6 +280,7 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 	sudo chmod +x ec
 	sudo chmod +x eplot
 	sudo apt-get install -y cowsay
+	echo "pathadd \"/usr/games\"" >> ~/.bashrc
 	echo "existential_cow" >> ~/.bashrc
 	source ~/.bashrc
 fi
