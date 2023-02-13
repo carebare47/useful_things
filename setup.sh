@@ -280,10 +280,10 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 	sudo chmod +x ec
 	sudo chmod +x eplot
 	sudo apt-get install -y cowsay
-	if ! grep -Fxq "existential_cow" .bashrc; then
+	if ! grep -Fxq "existential_cow" ~/.bashrc; then
 	  echo "existential_cow" >> ~/.bashrc
 	fi
-	if ! grep -Fxq "pathadd" .bashrc; then
+	if ! grep -Fxq "pathadd" ~/.bashrc; then
 	  echo "pathadd \"/usr/games\"" >> ~/.bashrc
 	fi
 	source ~/.bashrc
