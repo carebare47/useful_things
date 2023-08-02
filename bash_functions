@@ -361,3 +361,4 @@ pathadd() {
     fi
 }
 existential_cow() { TAG='existential'; PAGE=$(( ( RANDOM % 10 )  + 1 )) && cowsay "$(shuf -n 1 <(cat <(curl -Ls https://www.goodreads.com/quotes/tag/${TAG}?page=${PAGE}) | grep '&ldquo' | awk -F ';' '{print $2}' | sed -r 's/.&rdquo//g' | grep -v '<br'))" ; }
+vscode_dev_container() { bash <(curl -s https://raw.githubusercontent.com/shadow-robot/sr-build-tools/F_%23SP-476_vs_code_setup_lint/ansible/roles/dev_machine/files/vs_code_setup.sh) ; }
