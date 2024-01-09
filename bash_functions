@@ -368,3 +368,4 @@ check_pylintrc() { if ! [ -f /tmp/pylintrc ]; then wget -O /tmp/pylintrc https:/
 check_apt_package() { if [[ $(dpkg -l | grep -w $1 | wc -l) -eq 0 ]]; then sudo apt install -y $1; fi; }
 sr_flake8_here() { check_pylintrc; check_apt_package "flake8";  flake8 --config /tmp/pylintrc --max-line-length 120; }
 sr_pylint_here() { check_pylintrc; check_apt_package "pylint";  pylint --rcfile /tmp/pylintrc --max-line-length 120 *; }
+sr_pylint_sorted_here() { sr_pylint_here | sort -V | grep -v "\*\*\*\*\*\*\*\*"; }
