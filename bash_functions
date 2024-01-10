@@ -361,7 +361,7 @@ pathadd() {
     fi
 }
 existential_cow() { TAG='existential'; PAGE=$(( ( RANDOM % 10 )  + 1 )) && cowsay "$(shuf -n 1 <(cat <(curl -Ls https://www.goodreads.com/quotes/tag/${TAG}?page=${PAGE}) | grep '&ldquo' | awk -F ';' '{print $2}' | sed -r 's/.&rdquo//g' | grep -v '<br'))" ; }
-vscode_dev_container() { bash <(curl -s https://raw.githubusercontent.com/shadow-robot/sr-build-tools/F_%23SP-476_vs_code_setup_lint/ansible/roles/dev_machine/files/vs_code_setup.sh) ; }
+vscode_dev_container() { bash <(curl -s https://raw.githubusercontent.com/shadow-robot/sr-build-tools/lint/ansible/roles/dev_machine/files/vs_code_setup.sh) ; }
 heart_string() { python3 -c "input_str='$1'; print('\n'.join([''.join([(input_str[(x-y)%len(input_str) ]if((x*0.05)**2+(y*0.1)**2-1)**3-(x*0.05)**2*(y*0.1)**3<=0 else' ')for x in range(-30,30)])for y in range(15,-15,-1)]))"; }
 awk_line_length() { if [[ -z $2 ]]; then MAX_LINE_LENGTH=200; else MAX_LINE_LENGTH=$2; fi; cat $1 | awk 'length($0) < '"$MAX_LINE_LENGTH"''; }
 check_pylintrc() { if ! [ -f /tmp/pylintrc ]; then wget -O /tmp/pylintrc https://raw.githubusercontent.com/shadow-robot/sr-build-tools/fd2350484fec1004838e41c3f643aad888be0170/ansible/roles/ci/code_style_check/python/files/pylintrc; fi; }
