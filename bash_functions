@@ -369,3 +369,7 @@ check_apt_package() { if [[ $(dpkg -l | grep -w $1 | wc -l) -eq 0 ]]; then sudo 
 sr_flake8_here() { check_pylintrc; check_apt_package "flake8";  flake8 --config /tmp/pylintrc --max-line-length 120; }
 sr_pylint_here() { check_pylintrc; check_apt_package "pylint";  pylint --rcfile /tmp/pylintrc --max-line-length 120 *; }
 sr_pylint_sorted_here() { sr_pylint_here | sort -V | grep -v "\*\*\*\*\*\*\*\*"; }
+wsl_start_docker() { if [ -z "$WSL_DISTRO_NAME" ]; then
+  echo "Can't read \$WSL_DISTRO_NAME variable, don't think we're in a wsl instance. Not running the command"
+  else wsl.exe --distribution "${WSL_DISTRO_NAME}" --user root --exec /usr/sbin/service docker start
+fi; }
