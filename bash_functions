@@ -373,3 +373,21 @@ wsl_start_docker() { if [ -z "$WSL_DISTRO_NAME" ]; then
   echo "Can't read \$WSL_DISTRO_NAME variable, don't think we're in a wsl instance. Not running the command"
   else wsl.exe --distribution "${WSL_DISTRO_NAME}" --user root --exec /usr/sbin/service docker start
 fi; }
+timer_secs() { 
+  CLR="\033[K"
+  C_RET="\r"
+  C_RET_CLR="${C_RET}${CLR}"
+
+  START=$(date +%s)
+  TOTAL_SECS=$1
+  REMAINING=2
+  while [[ $REMAINING -gt 0 ]]; do
+    REMAINING=$(( $TOTAL_SECS - $(( $(date +%s) - $START)) ))
+    echo -en "${C_RET_CLR}Time remaining: $REMAINING"
+    sleep 1
+  done
+}
+multiply_by() { echo "$1 * $2" | bc | sed -r 's/\..*//g'; }
+shutdown_timer_secs() { if [[ $USER != *"root"* ]]; then echo "Must be root to use this. Run 'sudo su' first"; else timer_secs $1; poweroff; fi; }
+shutdown_timer_mins() { shutdown_timer_secs $(multiply_by $1 60); }
+shutdown_timer_hours() { shutdown_timer_mins $(multiply_by $1 60); }
