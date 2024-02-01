@@ -408,6 +408,7 @@ wait_for_filesize_bits() {
     sleep 1
   done
 
+  echo
   echo "Filename:            ${FILENAME}"
   echo "Goal size:           ${GOAL_SIZE}"
   echo "Current size:        $( ls -ltr | grep $FILENAME | awk '{print $5}' )"
