@@ -393,6 +393,7 @@ shutdown_timer_mins() { shutdown_timer_secs $(multiply_by $1 60); }
 shutdown_timer_hours() { shutdown_timer_mins $(multiply_by $1 60); }
 size_diff() { GOAL_SIZE=$1; FILENAME=$2; echo $(( $GOAL_SIZE - $(ls -ltr | grep $FILENAME | awk '{print $5}' ) )); }
 
+
 wait_for_filesize_bits() {
   CLR="\033[K"
   C_RET="\r"
@@ -401,14 +402,16 @@ wait_for_filesize_bits() {
   GOAL_SIZE=$1
   FILENAME=$2
   SIZE_DIFF=2
+
+  while ! [ -f $FILENAME ]; do
+    echo -en "${C_RET_CLR}Waiting for $FILENAME to exist... $(date)"
+    sleep 1
+  done
+
   echo "Filename:            ${FILENAME}"
   echo "Goal size:           ${GOAL_SIZE}"
   echo "Current size:        $( ls -ltr | grep $FILENAME | awk '{print $5}' )"
   echo "Current remaining:   $( size_diff $GOAL_SIZE $FILENAME )"
-
-  while [ ! test -f $FILENAME ]; do
-    echo -en "${C_RET_CLR}Waiting for $FILENAME to exist... $(date)"
-  fi
 
   while [[ $SIZE_DIFF -gt 0 ]]; do
     SIZE_DIFF=$( size_diff $GOAL_SIZE $FILENAME )
@@ -416,7 +419,6 @@ wait_for_filesize_bits() {
     sleep 1
   done
 }
-
 
 wait_for_filesize_kb() { wait_for_filesize_bits $(multiply_by $1 1024) $2; }
 wait_for_filesize_mb() { wait_for_filesize_bits $(multiply_by $(multiply_by $1 1024) 1024) $2; }
