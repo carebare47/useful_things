@@ -401,16 +401,17 @@ wait_for_filesize_bits() {
   GOAL_SIZE=$1
   FILENAME=$2
   SIZE_DIFF=2
-  echo "Filename: ${FILENAME}"
-  echo "Goal size: ${GOAL_SIZE}"
-  echo "Current size: $( ls -ltr | grep $FILENAME | awk '{print $5}' )"
-  echo "Current remaining: $( size_diff $GOAL_SIZE $FILENAME )"
+  echo "Filename:            ${FILENAME}"
+  echo "Goal size:           ${GOAL_SIZE}"
+  echo "Current size:        $( ls -ltr | grep $FILENAME | awk '{print $5}' )"
+  echo "Current remaining:   $( size_diff $GOAL_SIZE $FILENAME )"
   while [[ $SIZE_DIFF -gt 0 ]]; do
     SIZE_DIFF=$( size_diff $GOAL_SIZE $FILENAME )
     echo -en "${C_RET_CLR}Size diff remaining: $SIZE_DIFF"
     sleep 1
   done
 }
+
 wait_for_filesize_kb() { wait_for_filesize_bits $(multiply_by $1 1024) $2; }
 wait_for_filesize_mb() { wait_for_filesize_bits $(multiply_by $(multiply_by $1 1024) 1024) $2; }
 wait_for_filesize_gb() { wait_for_filesize_bits $(multiply_by $(multiply_by $(multiply_by $1 1024) 1024) 1024) $2; }
