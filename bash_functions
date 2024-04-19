@@ -424,3 +424,6 @@ wait_for_filesize_bits() {
 wait_for_filesize_kb() { wait_for_filesize_bits $(multiply_by $1 1024) $2; }
 wait_for_filesize_mb() { wait_for_filesize_bits $(multiply_by $(multiply_by $1 1024) 1024) $2; }
 wait_for_filesize_gb() { wait_for_filesize_bits $(multiply_by $(multiply_by $(multiply_by $1 1024) 1024) 1024) $2; }
+
+recursive_parse_rosinstall() { last_x=''; for x in $(parse_rosinstall $1); do echo $x; echo $last_x; if [[ $x == $last_x ]]; then recursive_parse_rosinstall $x; else last_x=$x; fi; done; }
+parse_rosinstall() { for x in $(curl -Ls https://raw.githubusercontent.com/shadow-robot/shadow_dexterous_hand/noetic-devel/repository.rosinstall | grep uri | awk '{print $NF}'  | sed -r 's/.*shadow-robot/shadow-robot/g' | grep shadow-robot | sed -r 's/.git//g'); do echo $x; done; }
