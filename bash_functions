@@ -429,3 +429,6 @@ recursive_parse_rosinstall() { last_x=''; for x in $(parse_rosinstall $1); do ec
 parse_rosinstall() { for x in $(curl -Ls https://raw.githubusercontent.com/shadow-robot/shadow_dexterous_hand/noetic-devel/repository.rosinstall | grep uri | awk '{print $NF}'  | sed -r 's/.*shadow-robot/shadow-robot/g' | grep shadow-robot | sed -r 's/.git//g'); do echo $x; done; }
 get_existential_quote() { MAX_CHARS=$1; MY_STR=""; while [[ ${#MY_STR} -lt $MAX_CHARS ]]; do MY_STR=$(TAG='existential'; PAGE=$(( ( RANDOM % 10 )  + 1 )) && shuf -n 1 <(cat <(curl -Ls https://www.goodreads.com/quotes/tag/${TAG}?page=${PAGE}) | grep '&ldquo' | awk -F ';' '{print $2}' | sed -r 's/.&rdquo//g' | grep -v '<br')); done; }
 existential_fish() { python /home/tom/frankenfish/python/tts_in.py "$(get_existential_quote 200)"; }
+
+aws_ecr_public() { aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/shadowrobot; }
+aws_ecr_private() { aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 080653068785.dkr.ecr.eu-west-2.amazonaws.com; }
