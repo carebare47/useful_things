@@ -432,3 +432,12 @@ existential_fish() { python /home/tom/frankenfish/python/tts_in.py "$(get_existe
 
 aws_ecr_public() { aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/shadowrobot; }
 aws_ecr_private() { aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 080653068785.dkr.ecr.eu-west-2.amazonaws.com; }
+kill_all_vnc() {
+sudo echo; for x in $(echo -e "teamviewerd.service\nanydesk\nrustdesk.service"); do sudo systemctl stop $x; done
+for x in $(echo -e "shadow-support\nanydesk"); do
+  PROC_PID=$(ps aux | grep $x | grep -v grep | awk '{print $2}')
+  if [[ $(echo ${#PROC_PID}) -gt 0 ]]; then
+    sudo kill -9 ${PROC_PID}
+  fi
+done
+}
