@@ -266,9 +266,9 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
 
 	if [ $(cat ~/.bash_functions_tom | grep "docker_create" | wc -l) -eq 0 ]; then
 		echo "docker_create function not found, adding"
-		wget -O /tmp/docker_create_function https://raw.githubusercontent.com/carebare47/useful_things/master/docker_create_function
-		cat /tmp/docker_create_function >> ~/.bash_functions_tom
-		rm /tmp/docker_create_function
+		# wget -O /tmp/docker_create_function https://raw.githubusercontent.com/carebare47/useful_things/master/docker_create_function
+		# cat /tmp/docker_create_function >> ~/.bash_functions_tom
+		# rm /tmp/docker_create_function
 	else
 		echo "docker_create function already here, not adding."
 	fi
