@@ -256,18 +256,18 @@ if [[ "${BASH_FUNCTIONS}" == true  ]]; then
         sudo sed -i 's/\*\.xml;/\*\.xml;\*\.urdf;/g' /usr/share/gtksourceview-3.0/language-specs/xml.lang
 
 	echo "Installing bash functions..."
-        if [[ $(ls ~/ -a | grep -x ".bash_functions" | wc -l) -gt 0 ]]; then
-          rm ~/.bash_functions
+        if [[ $(ls ~/ -a | grep -x ".bash_functions_tom" | wc -l) -gt 0 ]]; then
+          rm ~/.bash_functions_tom
         fi
-        wget -O ~/.bash_functions https://raw.githubusercontent.com/carebare47/useful_things/master/bash_functions
-        if [[ $(cat ~/.bashrc  | grep "source ~/.bash_functions" | wc -l) -eq 0 ]]; then
-          echo "source ~/.bash_functions" >> ~/.bashrc
+        wget -O ~/.bash_functions_tom https://raw.githubusercontent.com/carebare47/useful_things/master/bash_functions
+        if [[ $(cat ~/.bashrc  | grep "source ~/.bash_functions_tom" | wc -l) -eq 0 ]]; then
+          echo "source ~/.bash_functions_tom" >> ~/.bashrc
         fi
 
-	if [ $(cat ~/.bash_functions | grep "docker_create" | wc -l) -eq 0 ]; then
+	if [ $(cat ~/.bash_functions_tom | grep "docker_create" | wc -l) -eq 0 ]; then
 		echo "docker_create function not found, adding"
 		wget -O /tmp/docker_create_function https://raw.githubusercontent.com/carebare47/useful_things/master/docker_create_function
-		cat /tmp/docker_create_function >> ~/.bash_functions
+		cat /tmp/docker_create_function >> ~/.bash_functions_tom
 		rm /tmp/docker_create_function
 	else
 		echo "docker_create function already here, not adding."
