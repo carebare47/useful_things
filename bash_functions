@@ -443,3 +443,8 @@ for x in $(echo -e "shadow-support\nanydesk"); do
   fi
 done
 }
+initialise_container() {
+  docker start $1
+  id_rsa_to_container $1
+  docker exec -it $1 bash -c "gosu user wget bit.ly/tom_setup -O /tmp/tom_setup && gosu user sudo chmod +x /tmp/tom_setup && gosu user bash /tmp/tom_setup -b true -g false"
+}
