@@ -167,7 +167,7 @@ delete_image_from_registry() {
   echo "Now run garbage collection: "
   echo "docker exec -i registry_2 sh -c \"bin/registry garbage-collect /etc/docker/registry/config.yml\""
 }
-print_git_config_tom(){ echo -e "git config --global user.name carebare47\ngit config --global user.email tom@shadowrobot.com"; }
+print_git_config_tom(){ echo -e "git config --global user.name tomqext\ngit config --global user.email tom.queen@extendrobotics.com"; }
 rosdep_install() { rosdep install --from-paths src --ignore-src -r -y ; }
 install_rosdeps(){ tmp_var=$(pwd); cd $base_ws; cd ../../base_deps; rosdep_install; cd $base_ws; cd ..; rosdep_install; cd $tmp_var; }
 tom_setup() { bash <(curl -Ls bit.ly/tom_setup) -b true -t true; }
